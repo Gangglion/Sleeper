@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:title="푸시 알림"/>
+    <ListPreference
+        android:title="알림 종류"
+        android:key="alarmlist"
+        android:entries="@array/alarmlist"
+        android:entryValues="@array/alarmlist"
+        android:summary="알림 방식의 종류"/>
+    <ListPreference
+        android:title="알림음 설정"/>
+</PreferenceScreen>
+
+    <!-- entries : 리스트에 표시되는 항목 글씨 -->
+    <!-- entryValues : 파일에 저장되는 값 , 밸류스 xml에 리스트를 만들고 키값으로 연결  -->
