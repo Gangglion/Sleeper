@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "741846607454",
+    "project_id": "sleepapp-36968",
+    "storage_bucket": "sleepapp-36968.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741846607454:android:3d27fb1301bd8bf2caf6cf",
+        "android_client_info": {
+          "package_name": "com.example.sleep_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741846607454-9mek60kl5upskcksoidv9u4o3ljn22eb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sleep_project",
+            "certificate_hash": "83e62f36999ebe8dded9f034b66209967dca1d19"
+          }
+        },
+        {
+          "client_id": "741846607454-8jg548l83066ap18d8scimntofkuukvm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbthmInq7hYRZAZGHh_RwmQwvfKqz4NiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741846607454-8jg548l83066ap18d8scimntofkuukvm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
