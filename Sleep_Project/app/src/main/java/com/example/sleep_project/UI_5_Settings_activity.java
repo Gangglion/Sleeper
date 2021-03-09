@@ -39,3 +39,5 @@ public class UI_5_Settings_activity extends AppCompatActivity {
         }
     }
 }
+
+//good
