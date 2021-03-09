@@ -8,12 +8,10 @@ import androidx.preference.PreferenceFragmentCompat;
 
 public class UI_6_Settings_activity extends AppCompatActivity {
 
-    // 셋팅 액티비티의 기능을 구현할 자바 클래스
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ui_6_setting_layout);
+        setContentView(R.layout.settings_activity);
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -26,10 +24,10 @@ public class UI_6_Settings_activity extends AppCompatActivity {
         }
     }
 
-     public static class SettingsFragment extends PreferenceFragmentCompat {
+    public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.ui_6_setting, rootKey); // 셋팅 액티비티의 xml을 가져옴
+            setPreferencesFromResource(R.xml.ui_6_settings_activity, rootKey);
         }
     }
 }

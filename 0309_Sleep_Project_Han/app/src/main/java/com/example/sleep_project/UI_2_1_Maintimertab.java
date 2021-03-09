@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class UI_2_1_Maintimertab extends AppCompatActivity {
-    Button main, music, statistics, accountbtn, setBtn, lockbtn, ringbtn,setting;
+    Button main, music, statistics, accountbtn, setBtn, lockbtn, ringbtn, setbtn2;
     private FirebaseAuth mAuth ;
 
     @Override
@@ -25,8 +25,8 @@ public class UI_2_1_Maintimertab extends AppCompatActivity {
         music = (Button) findViewById(R.id.music); //음악기능 버튼
         statistics = (Button) findViewById(R.id.statistics); //통계기능 버튼
         accountbtn = (Button) findViewById(R.id.accountTab); //계정관리기능 버튼
-        setBtn = (Button) findViewById(R.id.setBtn);
-        setting=(Button)findViewById(R.id.settingbtn);
+        setBtn = (Button) findViewById(R.id.setBtn); //설정완료 버튼
+        setbtn2=(Button)findViewById(R.id.setbtn2); // 설정 버튼
 
         main.setBackgroundColor(Color.GREEN);
 
@@ -79,8 +79,8 @@ public class UI_2_1_Maintimertab extends AppCompatActivity {
                 finish();
             }
         });
-        setting.setOnClickListener(new View.OnClickListener() { // UI변경 후 좌측 상단 설정버튼 - 태현
-            @Override
+        setbtn2.setOnClickListener(new View.OnClickListener() { // UI변경 후 좌측 상단 설정버튼 - 태현
+            @Override  // 6번 UI 액티비티 불러오기
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), UI_6_Settings_activity.class);
                 startActivity(intent);

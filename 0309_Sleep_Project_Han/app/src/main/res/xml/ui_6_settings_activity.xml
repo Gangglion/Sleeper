@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:title="설정">
+
+
         <ListPreference
             android:title="밝기 조절"
             android:key="rightcontrol"
@@ -17,7 +19,7 @@
 
         <PreferenceScreen
             android:title="알림음 설정"
-            android:fragment="com.example.sleep_project.UI_6_Alarm_Settings_activity$SettingsFragment">
+            android:fragment="com.example.sleep_project.UI_6_Arlam_Settings_activity$SettingsFragment">
         </PreferenceScreen>
         <!-- 하위 계층으로 이동하기 위해선 프리페어런스 스크린 태그 속성 프라그먼트 사용함 -->
 

@@ -19,4 +19,8 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="title_activity_u_i_6__alarm__settings_activity">UI_6_Alarm_Settings_activity
     </string>
+    <string name="title_activity_u_i_5__arlam__settings_activity">UI_5_Arlam_Settings_activity
+    </string>
+    <string name="title_activity_u_i_6__arlam__settings_activity">UI_6_Arlam_Settings_activity
+    </string>
 </resources>

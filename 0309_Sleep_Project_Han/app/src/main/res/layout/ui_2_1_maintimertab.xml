@@ -15,7 +15,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom"
-            android:id="@+id/settingbtn"
+            android:id="@+id/setbtn2"
             android:text="설정" />
         <Button
             android:layout_width="wrap_content"
