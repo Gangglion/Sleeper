@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -50,7 +51,10 @@ public class UI_5_AccountTab extends AppCompatActivity {
         account.setBackgroundColor(Color.GRAY);
         sign_out=(Button)findViewById(R.id.sign_out); //로그아웃 버튼
         mAuth = FirebaseAuth.getInstance();
-
+        //상단 액션바 숨기는 코드
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        /////////////////////////////////////////////
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -76,7 +80,7 @@ public class UI_5_AccountTab extends AppCompatActivity {
                 if(user!=null){
                     signOut();
                     Toast.makeText(UI_5_AccountTab.this, "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(getApplicationContext(), UI_2_1_Maintimertab.class);
+                    Intent intent=new Intent(getApplicationContext(), UI_2_Maintimertab.class);
                     startActivity(intent);
                     finish();
                 }else{
@@ -89,7 +93,7 @@ public class UI_5_AccountTab extends AppCompatActivity {
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_2_1_Maintimertab.class);
+                Intent intent = new Intent(getApplicationContext(), UI_2_Maintimertab.class);
                 startActivity(intent);
                 finish();
             }
@@ -160,7 +164,7 @@ public class UI_5_AccountTab extends AppCompatActivity {
     }
     private void updateUI(FirebaseUser user) { //update ui code here
         if (user != null) {
-            Intent intent = new Intent(this, UI_2_1_Maintimertab.class);
+            Intent intent = new Intent(this, UI_2_Maintimertab.class);
             startActivity(intent);
             finish();
         }

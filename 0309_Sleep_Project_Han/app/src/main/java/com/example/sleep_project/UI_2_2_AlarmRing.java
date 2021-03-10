@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 
-public class UI_2_MaintimertabRing extends Service {
+public class UI_2_2_AlarmRing extends Service {
     MediaPlayer mediaPlayer;
     int startId;
     boolean isRunning;
@@ -42,17 +42,14 @@ public class UI_2_MaintimertabRing extends Service {
                     .setContentTitle("알람시작")
                     .setContentText("알람음이 재생됩니다.")
                     .setSmallIcon(R.mipmap.ic_launcher)
-
                     .build();
-
             startForeground(1, notification);
         }
     }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        String getState = intent.getExtras().getString("state");
+        String getState = intent.getExtras().getString("state"); //alarm on 이라는 문자열이 넘어옴
 
         assert getState != null;
         switch (getState) {
@@ -79,7 +76,6 @@ public class UI_2_MaintimertabRing extends Service {
 
         // 알람음 재생 O , 알람음 종료 버튼 클릭
         else if (this.isRunning && startId == 0) {
-
             mediaPlayer.stop();
             mediaPlayer.reset();
             mediaPlayer.release();
@@ -90,15 +86,12 @@ public class UI_2_MaintimertabRing extends Service {
 
         // 알람음 재생 X , 알람음 종료 버튼 클릭
         else if (!this.isRunning && startId == 0) {
-
             this.isRunning = false;
             this.startId = 0;
-
         }
 
         // 알람음 재생 O , 알람음 시작 버튼 클릭
         else if (this.isRunning && startId == 1) {
-
             this.isRunning = true;
             this.startId = 1;
         } else {

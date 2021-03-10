@@ -14,11 +14,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
-public class UI_2_2_Lock_activity extends AppCompatActivity {
+public class UI_2_1_Lock_activity extends AppCompatActivity {
 
     private WindowManager.LayoutParams params;
     private float brightness; // 밝기값은 float형으로 저장되어 있습니다.
@@ -27,7 +28,11 @@ public class UI_2_2_Lock_activity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ui_2_2_lock_layout);
+        setContentView(R.layout.ui_2_1_lock_layout);
+        //상단 액션바 숨기는 코드
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        /////////////////////////////////////////////
         final ImageView imgoff=(ImageView)findViewById(R.id.lockImg);
         params = getWindow().getAttributes();//화면 정보 불러오기
         brightness = params.screenBrightness; //기존밝기 미리 저장
@@ -42,7 +47,7 @@ public class UI_2_2_Lock_activity extends AppCompatActivity {
                 // 밝기 설정 적용
                 getWindow().setAttributes(params);
                 String nowbright = Float.toString(brightness);//바뀐 이후의 밝기 String 타입으로 저장
-                Toast.makeText(UI_2_2_Lock_activity.this, nowbright, Toast.LENGTH_SHORT).show();
+                Toast.makeText(UI_2_1_Lock_activity.this, nowbright, Toast.LENGTH_SHORT).show();
                 count = false;
             } else {
                 //기능켰을때
@@ -53,7 +58,7 @@ public class UI_2_2_Lock_activity extends AppCompatActivity {
                 getWindow().setAttributes(params);
                 changeable = params.screenBrightness; //변경된 밝기 저장
                 String nowbright = Float.toString(changeable);//바뀐 이후의 밝기 String 타입으로 저장
-                Toast.makeText(UI_2_2_Lock_activity.this, nowbright, Toast.LENGTH_SHORT).show();
+                Toast.makeText(UI_2_1_Lock_activity.this, nowbright, Toast.LENGTH_SHORT).show();
                 count = true;
             }
         });

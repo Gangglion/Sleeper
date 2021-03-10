@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class UI_4_Statisticstab extends AppCompatActivity {
@@ -15,7 +16,10 @@ public class UI_4_Statisticstab extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ui_4_statistictab);
-
+        //상단 액션바 숨기는 코드
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        /////////////////////////////////////////////
         main = (Button) findViewById(R.id.main); //메인기능버튼
         music = (Button) findViewById(R.id.music); //음악기능 버튼
         statistics = (Button) findViewById(R.id.statistics); //통계기능 버튼
@@ -27,7 +31,7 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_2_1_Maintimertab.class);
+                Intent intent = new Intent(getApplicationContext(), UI_2_Maintimertab.class);
                 startActivity(intent);
                 finish();
             }

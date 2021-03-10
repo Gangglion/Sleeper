@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.tabs.TabLayout;
@@ -33,6 +34,10 @@ public class UI_3_Musictab extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ui_3_musictab);
+        //상단 액션바 숨기는 코드
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        /////////////////////////////////////////////
         setTitle("음악");
         main = (Button)findViewById(R.id.main); //메인기능버튼
         music = (Button)findViewById(R.id.music); //음악기능 버튼
@@ -162,7 +167,7 @@ public class UI_3_Musictab extends AppCompatActivity {
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_2_1_Maintimertab.class);
+                Intent intent = new Intent(getApplicationContext(), UI_2_Maintimertab.class);
                 startActivity(intent);
                 finish();
             }

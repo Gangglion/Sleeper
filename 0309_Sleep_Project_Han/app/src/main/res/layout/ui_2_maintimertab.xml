@@ -4,30 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI_2_1_Maintimertab"
+    tools:context=".UI_2_Maintimertab"
     android:orientation="vertical"
     android:gravity="center_horizontal">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <Button
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="bottom"
             android:id="@+id/setbtn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:text="설정" />
         <Button
+            android:id="@+id/lock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/lock"
+            android:layout_centerInParent="true"
             android:text="잠금화면 예시"/>
         <Button
+            android:id="@+id/Ring"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/Ring"
+            android:layout_toRightOf="@+id/lock"
             android:text="알람화면 예시"/>
-    </LinearLayout>
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,10 +63,9 @@
             />
 
         <Button
+            android:id="@+id/setBtn"
             android:layout_width="500px"
             android:layout_height="wrap_content"
-
-            android:id="@+id/setBtn"
             android:text="설정완료" />
     </LinearLayout>
 

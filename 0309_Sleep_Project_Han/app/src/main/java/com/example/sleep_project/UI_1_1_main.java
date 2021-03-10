@@ -1,6 +1,7 @@
 package com.example.sleep_project;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -24,7 +25,10 @@ public class UI_1_1_main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ui_1_1_main);
-
+        //상단 액션바 숨기는 코드
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        /////////////////////////////////////////////
         //ViewPager2
         mPager = findViewById(R.id.viewpager); // UI_1_main.xml의 viewpager2의 id 값 불러옴
         //Adapter

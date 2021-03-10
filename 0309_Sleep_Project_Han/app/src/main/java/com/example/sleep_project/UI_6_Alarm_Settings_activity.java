@@ -6,12 +6,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
-public class UI_6_Arlam_Settings_activity extends AppCompatActivity {
+public class UI_6_Alarm_Settings_activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+        setContentView(R.layout.ui_6_settings_layout);
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()

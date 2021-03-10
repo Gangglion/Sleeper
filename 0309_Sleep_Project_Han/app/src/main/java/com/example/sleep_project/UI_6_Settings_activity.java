@@ -11,7 +11,7 @@ public class UI_6_Settings_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+        setContentView(R.layout.ui_6_settings_layout);
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -21,6 +21,8 @@ public class UI_6_Settings_activity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("설정");  //액션바 제목설정
+            //TODO : 액션바 뒤로가기
         }
     }
 
