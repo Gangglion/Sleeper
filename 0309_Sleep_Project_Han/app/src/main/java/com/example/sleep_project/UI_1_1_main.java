@@ -8,6 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ public class UI_1_1_main extends AppCompatActivity {
     private FragmentStateAdapter pagerAdapter;
     private int num_page = 4;
     private CircleIndicator3 mIndicator;
+    public SharedPreferences prefs; //어플 최초실행 여부 판단하기 위한 SharedPreferences 선언부
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,10 @@ public class UI_1_1_main extends AppCompatActivity {
         //상단 액션바 숨기는 코드
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-        /////////////////////////////////////////////
+
+        //어플 최초실행 여부 판단하기 위한 정의부
+        prefs = getSharedPreferences("Pref", MODE_PRIVATE);
+
         //ViewPager2
         mPager = findViewById(R.id.viewpager); // UI_1_main.xml의 viewpager2의 id 값 불러옴
         //Adapter
@@ -97,4 +102,15 @@ public class UI_1_1_main extends AppCompatActivity {
             }
         });
     }
+    //TODO : 첫 실행여부 판단하는 메소드 -> 처음 실행하면 UI_1_1_main 을 띄워주고, 첫 실행이 아니라면 UI_2_Maintimertab을 띄워줌
+/*    public void checkFirstRun(){
+        boolean isFirstRun = prefs.getBoolean("isFirstRun",true);
+        if(isFirstRun)
+        {
+            Intent newIntent = new Intent(UI_1_1_main.this, UI_2_Maintimertab.class);
+            startActivity(newIntent);
+
+            prefs.edit().putBoolean("isFirstRun",false).apply();
+        }
+    }*/
 }
