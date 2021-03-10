@@ -94,7 +94,7 @@ public class UI_2_Maintimertab extends AppCompatActivity {
         ringbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), UI_2_2_Maintimertabqna.class);
+                Intent intent = new Intent(getApplicationContext(), UI_2_2_AlarmImg_Activity.class);
                 startActivity(intent);
             }
         });
