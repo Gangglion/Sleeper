@@ -17,9 +17,3 @@ public class UI_1_1_Fragement1 extends Fragment {
             return rootView;
         }
 }
-
-// 테스트
-//merge Test
-//branch merge test
-// 03 11 태현
-

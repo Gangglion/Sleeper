@@ -17,4 +17,3 @@ public class UI_1_1_Fragement3 extends Fragment {
             return rootView;
         }
 }
-//merge Test by Han

@@ -17,5 +17,3 @@ public class UI_1_1_Fragement2 extends Fragment {
             return rootView;
         }
 }
-//Test by User2
-//Test by notebook

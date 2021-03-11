@@ -56,4 +56,3 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         });
     }
 }
-//주석 - 승
