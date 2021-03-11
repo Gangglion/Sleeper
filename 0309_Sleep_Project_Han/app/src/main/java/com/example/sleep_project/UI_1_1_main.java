@@ -23,6 +23,7 @@ public class UI_1_1_main extends AppCompatActivity {
     private CircleIndicator3 mIndicator;
     public SharedPreferences prefs; //어플 최초실행 여부 판단하기 위한 SharedPreferences 선언부
 
+    //변경
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
