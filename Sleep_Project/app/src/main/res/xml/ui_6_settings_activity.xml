@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:title="설정">
+
+
+        <ListPreference
+            android:title="밝기 조절"
+            android:key="rightcontrol"
+            android:summary="어플 사용 시 설정할 밝기 조절"
+            android:entries="@array/rightcontrol"
+            android:entryValues="@array/rightcontrol"/>
+        <!-- 밝기 조절은 시크바로 작업 이어나가야 함, 연계작업이 이루어지지 않은 리스트 클릭시 앱이 죽거나 초기 화면으로 돌아감  -->
+
+
+        <!-- entries : 리스트에 표시되는 항목 글씨 -->
+        <!-- entryValues : 파일에 저장되는  -->
+
+        <PreferenceScreen
+            android:title="알림음 설정"
+            android:fragment="com.example.sleep_project.UI_6_Alarm_Settings_activity$SettingsFragment">
+        </PreferenceScreen>
+        <!-- 하위 계층으로 이동하기 위해선 프리페어런스 스크린 태그 속성 프라그먼트 사용함 -->
+
+
+        <ListPreference
+            android:title="선택적 잠금 어플"
+            android:key="selectlock"
+            android:summary="어플을 선택하여 잠금설정"/>
+
+        <SwitchPreference
+            android:title="모닝콜 문제"
+            android:key="morningcall"
+            android:summary="모닝콜 문제 on/off 설정"/>
+    </PreferenceCategory>
+</PreferenceScreen>
+
+
+
+

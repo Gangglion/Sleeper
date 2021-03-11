@@ -1,105 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    tools:context=".UI_2_Maintimertab"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     >
-
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/lock2"
-            android:id="@+id/lockImg"
-            />
+            android:id="@+id/profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:layout_gravity="center"
-        >
+        android:layout_weight="1">
         <TextView
+            android:id="@+id/profile_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="잠은 행복입니다."
-            android:id="@+id/famoussay"
-            android:gravity="center"
-            />
+            android:textSize="14sp"
+            android:text="유저이메일 나오는 칸"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/profile_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="유저닉네임 나오는 칸"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <Button
+            android:id="@+id/sign_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="로그아웃"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_weight="0.5">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lockcall"
-            android:text="전화"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lockclear"
-            android:text="잠금해제"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lockmsg"
-            android:text="문자"
-            />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center"
-        android:layout_gravity="center"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/waketxt"
-            android:text="3시간 12분 뒤 잠금이 해제됩니다."/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        >
+        android:gravity="bottom">
 
         <Button
+            android:id="@+id/main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/main"
             android:layout_weight="1"
+
             android:text="메인기능" />
 
         <Button
+            android:id="@+id/music"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/music"
             android:layout_weight="1"
             android:text="음악기능" />
 
         <Button
+            android:id="@+id/statistics"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/statistics"
             android:layout_weight="1"
             android:text="통계기능" />
 
@@ -110,5 +84,4 @@
             android:layout_weight="1"
             android:text="설정" />
     </LinearLayout>
-
 </LinearLayout>
