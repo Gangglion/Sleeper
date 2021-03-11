@@ -229,7 +229,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
             }
         }
     }
-
+/////하단 부분은 다른 앱 실행 감지시 종료 혹은 이 앱으로 덮어씌우기 위한 메소드 입니다/////
     @Override
     protected void onStop() {
         super.onStop();
