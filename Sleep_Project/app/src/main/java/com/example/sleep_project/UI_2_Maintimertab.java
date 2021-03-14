@@ -18,6 +18,7 @@ import android.util.LongSparseArray;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
-    Button main, music, statistics, accountbtn, setBtn, setbtn2, confirm;
+    Button main, music, statistics, accountbtn, setBtn, setbtn2, confirm,plusBtn;
     private FirebaseAuth mAuth;
     AlarmManager alarm_manager;
     TimePicker sleep_timePicker, alarm_timePicker;
@@ -44,7 +45,10 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     LinearLayout locklayout, timelayout, belllayout;
     Calendar cal = Calendar.getInstance();
     int hour, minute, second;
-    TextView waketxt;
+    TextView question,waketxt;
+    int firstNum;
+    int secondNum;
+    EditText answer;
     //화면밝기 관련 선언부
     private WindowManager.LayoutParams params;
     private float brightness; // 밝기값은 float형으로 저장되어 있습니다.
@@ -67,9 +71,19 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         accountbtn = (Button) findViewById(R.id.accountTab); //계정관리기능 버튼
         setBtn = (Button) findViewById(R.id.setBtn); //설정완료 버튼
         setbtn2 = (Button) findViewById(R.id.settingbtn); // 설정 버튼
+        plusBtn = (Button)findViewById(R.id.plusBtn);
+        plusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UI_List.class);
+                startActivity(intent);
+            }
+        });
         main.setBackgroundColor(Color.GREEN);
         //알람소리 관련 선언부
         this.context = this;
+        answer = (EditText)findViewById(R.id.answer);
+        question = (TextView)findViewById(R.id.question);
 
         alarm_manager = (AlarmManager) getSystemService(ALARM_SERVICE); // 알람매니저 설정
 
@@ -91,15 +105,22 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         final ImageView imgoff=(ImageView)findViewById(R.id.lockImg);
         params = getWindow().getAttributes();//화면 정보 불러오기
         brightness = params.screenBrightness; //기존밝기 미리 저장
-
+        firstNum = (int)(Math.random() * 100)+1;
+        secondNum = (int)(Math.random() * 100)+1;
+        final String result = answer.getText().toString();
+        question.setText(firstNum +" + " + secondNum);
+        String sum = Integer.toString(firstNum + secondNum);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timelayout.setVisibility(View.VISIBLE);
-                locklayout.setVisibility(View.INVISIBLE);
-                setbtn2.setVisibility(View.VISIBLE);
-                belllayout.setVisibility(View.INVISIBLE);
-                th.interrupt();
+
+                    timelayout.setVisibility(View.VISIBLE);
+                    locklayout.setVisibility(View.INVISIBLE);
+                    setbtn2.setVisibility(View.VISIBLE);
+                    belllayout.setVisibility(View.INVISIBLE);
+                    th.interrupt();
+
+
             }
         });
         //설정완료 버튼 누르면 실행되는 스레드 - 화면전환도 관련되어있음
@@ -165,7 +186,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     }
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-            if (minute == sleep_timePicker.getMinute()) {
+            if (hour == sleep_timePicker.getHour() &&minute == sleep_timePicker.getMinute()) {
                 // 최저 밝기로 설정
                 params.screenBrightness = 0.1f;
                 // 밝기 설정 적용
@@ -183,7 +204,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                             + (alarm_timePicker.getMinute() - minute) + "분 남았습니다");
                 }
                 Log.i("성공", "성공");
-            } else if (minute == alarm_timePicker.getMinute()) {
+            } else if (hour == sleep_timePicker.getHour() && minute == alarm_timePicker.getMinute()) {
                 // 기존 밝기로 설정
                 params.screenBrightness = brightness;
                 // 밝기 설정 적용
@@ -216,8 +237,8 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 hour++;
                 minute = 0;
             }
-            if (hour > 12 && hour < 24) {
-                hour -= 12;
+            if (hour > 23) {
+                hour = 0;
             }
             Message msg = handler.obtainMessage();
             handler.sendMessage(msg);

@@ -122,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="100 - 8"
+
                     android:textSize="30sp" />
             </LinearLayout>
 
@@ -196,6 +196,11 @@
                 android:layout_width="500px"
                 android:layout_height="wrap_content"
                 android:text="설정완료" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/plusBtn"
+                android:text="+"/>
         </LinearLayout>
     </FrameLayout>
     <!--하단 메뉴탭-->
