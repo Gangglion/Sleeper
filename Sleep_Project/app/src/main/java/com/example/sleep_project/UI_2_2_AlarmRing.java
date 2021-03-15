@@ -63,7 +63,6 @@ public class UI_2_2_AlarmRing extends Service {
                 startId = 0;
                 break;
         }
-
         // 알람음 재생 X , 알람음 시작 클릭
         if (!this.isRunning && startId == 1) {
 
@@ -102,7 +101,9 @@ public class UI_2_2_AlarmRing extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        mediaPlayer.stop();
+        mediaPlayer.reset();
+        mediaPlayer.release();
         Log.d("onDestory() 실행", "서비스 파괴");
 
     }

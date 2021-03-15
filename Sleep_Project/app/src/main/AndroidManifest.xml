@@ -9,6 +9,7 @@
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
 
     <application
         android:allowBackup="true"
@@ -17,12 +18,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sleep_Project">
-
+        <service
+            android:name=".UI_2_1_backgroundService"
+            android:enabled="true"
+            android:exported="true"></service>
         <service
             android:name=".UI_2_2_AlarmRing"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true" />
 
         <receiver
             android:name=".UI_2_2_AlarmReceiver"
@@ -46,11 +49,11 @@
         <activity android:name=".UI_2_2_AlarmImg_Activity" />
         <activity
             android:name=".UI_6_Alarm_Settings_activity"
-            android:label="@string/title_activity_u_i_6__arlam__settings_activity"/>
+            android:label="@string/title_activity_u_i_6__arlam__settings_activity" />
         <activity
             android:name=".UI_6_Settings_activity"
             android:label="@string/title_activity_u_i_6__settings_activity"
-            android:parentActivityName=".UI_2_Maintimertab"/>
+            android:parentActivityName=".UI_2_Maintimertab" />
     </application>
 
 </manifest>

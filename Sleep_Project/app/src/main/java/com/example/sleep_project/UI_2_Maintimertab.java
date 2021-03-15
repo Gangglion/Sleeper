@@ -8,6 +8,9 @@ import android.app.usage.UsageStatsManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +35,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -53,8 +57,16 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     private WindowManager.LayoutParams params;
     private float brightness; // 밝기값은 float형으로 저장되어 있습니다.
     private float changeable; //변동되는 밝기값
-    private boolean count=false;
-
+    boolean checkTh=false;
+    //특정조건에 맞춰 취소키 안먹게 하기
+    @Override
+    public void onBackPressed() {
+        if(locklayout.getVisibility()==View.VISIBLE){
+            //lock 레이아웃이 보일 경우 뒤로가기 키가 안먹는다
+        }else{
+            super.onBackPressed();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,13 +97,13 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         answer = (EditText)findViewById(R.id.answer);
         question = (TextView)findViewById(R.id.question);
 
-        alarm_manager = (AlarmManager) getSystemService(ALARM_SERVICE); // 알람매니저 설정
+        alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE); // 알람매니저 설정
 
         sleep_timePicker = findViewById(R.id.sleepTime); // 잠들시간 타임피커 설정
         alarm_timePicker = findViewById(R.id.breakTime); // 일어날시간 타임피커 설정
         final Calendar calendar = Calendar.getInstance(); // Calendar 객체 생성
 
-        final Intent alarm_intent = new Intent(this.context, UI_2_2_AlarmReceiver.class); // 알람리시버 intent 생성
+        Intent alarm_intent = new Intent(this.context, UI_2_2_AlarmReceiver.class); // 알람리시버 intent 생성
         //잠금화면 관련
         locklayout = (LinearLayout)findViewById(R.id.locklayout);
         waketxt = (TextView)findViewById(R.id.waketxt);
@@ -113,14 +125,13 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                    timelayout.setVisibility(View.VISIBLE);
-                    locklayout.setVisibility(View.INVISIBLE);
-                    setbtn2.setVisibility(View.VISIBLE);
-                    belllayout.setVisibility(View.INVISIBLE);
-                    th.interrupt();
-
-
+                Intent alarm_off=new Intent(getApplicationContext(),UI_2_2_AlarmRing.class); //알람인텐트 전역변수
+                checkTh=true;
+                stopService(alarm_off);
+                timelayout.setVisibility(View.VISIBLE);
+                locklayout.setVisibility(View.INVISIBLE);
+                setbtn2.setVisibility(View.VISIBLE);
+                belllayout.setVisibility(View.INVISIBLE);
             }
         });
         //설정완료 버튼 누르면 실행되는 스레드 - 화면전환도 관련되어있음
@@ -227,7 +238,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         hour = cal.get(cal.HOUR_OF_DAY);
         minute = cal.get(cal.MINUTE);
         second = cal.get(cal.SECOND);
-        while (true) {
+        while (!checkTh) {
             second++;
             if (second > 59) {
                 second = 0;
@@ -250,12 +261,26 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
             }
         }
     }
-/////하단 부분은 다른 앱 실행 감지시 종료 혹은 이 앱으로 덮어씌우기 위한 메소드 입니다/////
+    //특정조건 하에서 메뉴키 막기 위한 코드
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(locklayout.getVisibility()==View.VISIBLE){
+            ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                    .getSystemService(Context.ACTIVITY_SERVICE);
+            activityManager.moveTaskToFront(getTaskId(), 0);
+        }else{
+
+        }
+    }
+
+    /////하단 부분은 다른 앱 실행 감지시 종료 혹은 이 앱으로 덮어씌우기 위한 메소드 입니다/////
     @Override
     protected void onStop() {
         super.onStop();
         //생명주기 onStop()에서 백그라운드 상태면 true를 Logcat에 출력
         Log.d("tmdguq",String.valueOf(isAppIsInBackground(this)));
+        Intent backIntent=new Intent(this,UI_2_1_backgroundService.class);
     }
 
     @Override
@@ -266,8 +291,13 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     @Override
     protected void onRestart() {
         super.onRestart();
-        String runapp=getTopPackageName(this);
-        Log.d("runapp",runapp);
+        //생명주기 onStop()에서 백그라운드 상태면 true를 Logcat에 출력 - reStart시에는 백그라운드가 아니므로 로그캣에 false를 반환할 것
+        Log.d("tmdguq",String.valueOf(isAppIsInBackground(this)));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     //이벤트가 백그라운드인지 확인하는 메소드 - 백그라운드면 true 반환
@@ -294,40 +324,54 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         }
         return isInBackground;
     }
-    //안드로이드 기기에서 실행중인 앱 가져오는 메소드
-    public static String getTopPackageName(@NonNull Context context) {
+    //설치되있는 어플목록 리스트로 반환하는 메소드 - 현재 액티비티에서 사용하는 메소드는 아니지만 나중에 설정탭에서 사용가능
+    private ArrayList<String> installedApp(){
+        final PackageManager pm = getPackageManager();//설치된 모든 앱리스트 가져오기 위해 선언
+        List<ApplicationInfo> list=pm.getInstalledApplications(0); //설치된 정보를 받아와 리스트형식으로 저장
+        ArrayList<String> installed = new ArrayList<>();
+        for(ApplicationInfo applicationInfo : list){
+            String pName=applicationInfo.packageName;
+            installed.add(pName);
+        }
+        return installed;
+    }
+    //현재 안드로이드 화면에 실행중인 어플 패키지명 반환하는 메소드
+    private static String getrunningapp(@NonNull Context context) {
         UsageStatsManager usageStatsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
 
-        long lastRunAppTimeStamp = 0L;
+        //long lastRunAppTimeStamp = 0L;
 
         final long INTERVAL = 1000 * 60 * 5;
         final long end = System.currentTimeMillis();
         // 1 minute ago
         final long begin = end - INTERVAL;
 
-        LongSparseArray packageNameMap = new LongSparseArray<>();
+        String running="";
+        //LongSparseArray packageNameMap = new LongSparseArray<>();
         final UsageEvents usageEvents = usageStatsManager.queryEvents(begin, end);
         while (usageEvents.hasNextEvent()) {
             UsageEvents.Event event = new UsageEvents.Event();
             usageEvents.getNextEvent(event);
-
+            //이벤트가 포그라운드 인지 확인하는 메소드
             if(isForeGroundEvent(event)) {
-                packageNameMap.put(event.getTimeStamp(), event.getPackageName());
-                if(event.getTimeStamp() > lastRunAppTimeStamp) {
+                running=event.getPackageName();
+/*                if(event.getTimeStamp() > lastRunAppTimeStamp) {
                     lastRunAppTimeStamp = event.getTimeStamp();
-                }
+                }*/
             }
         }
-
-        return String.valueOf(packageNameMap.get(lastRunAppTimeStamp, ""));
+        return running;
     }
+    //이벤트가 포그라운드 이벤트인지 확인하는 메소드
     private static boolean isForeGroundEvent(UsageEvents.Event event) {
         if(event == null) {
             return false;
         }
+
         if(BuildConfig.VERSION_CODE >= 29) {
             return event.getEventType() == UsageEvents.Event.ACTIVITY_RESUMED;
         }
+
         return event.getEventType() == UsageEvents.Event.MOVE_TO_FOREGROUND;
     }
 }
