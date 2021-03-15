@@ -199,6 +199,8 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 startActivity(intent);
             }
         });
+        //////임시코드
+        Log.d("tmdguq",getrunningapp(this));
     }
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -291,7 +293,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         super.onStop();
         //생명주기 onStop()에서 백그라운드 상태면 true를 Logcat에 출력
         Log.d("tmdguq",String.valueOf(isAppIsInBackground(this)));
-        Intent backIntent=new Intent(this,UI_2_1_backgroundService.class);
+        //Intent backIntent=new Intent(this,UI_2_1_backgroundService.class);
     }
 
     @Override
@@ -346,6 +348,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         }
         return installed;
     }
+
     //현재 안드로이드 화면에 실행중인 어플 패키지명 반환하는 메소드
     private static String getrunningapp(@NonNull Context context) {
         UsageStatsManager usageStatsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
@@ -366,7 +369,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
             //이벤트가 포그라운드 인지 확인하는 메소드
             if(isForeGroundEvent(event)) {
                 running=event.getPackageName();
-/*                if(event.getTimeStamp() > lastRunAppTimeStamp) {
+                /*if(event.getTimeStamp() > lastRunAppTimeStamp) {
                     lastRunAppTimeStamp = event.getTimeStamp();
                 }*/
             }
