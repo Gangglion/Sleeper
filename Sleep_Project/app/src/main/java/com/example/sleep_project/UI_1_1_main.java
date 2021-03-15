@@ -94,10 +94,9 @@ public class UI_1_1_main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO : 버튼 클릭되면 다음 화면으로 넘어감(다음화면 : 권한설정 화면)
-                //TODO : 권한설정 뒤로 미루고 이 액티비티에서 로그인으로 바로 넘어가도록 우선 만들자
-                //버튼 클릭시 로그인화면으로 넘어가는 기능
-                Intent loginintent=new Intent(v.getContext(), UI_1_3_login_activity.class);
-                startActivity(loginintent);
+                //버튼 클릭시 권한설정화면으로 넘어가는 기능
+                Intent permis=new Intent(v.getContext(), UI_1_2_permission_activity.class);
+                startActivity(permis);
                 finish();//다음 액티비티로 넘어가면 이 페이지는 종료함 - 따라서 뒤로가기 버튼 눌러도 이 화면으로 돌아오지 않음
             }
         });

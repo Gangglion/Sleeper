@@ -2,6 +2,7 @@ package com.example.sleep_project;
 
 import android.app.ActivityManager;
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
@@ -12,10 +13,12 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.util.Log;
 import android.util.LongSparseArray;
 import android.view.View;
@@ -57,7 +60,8 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     private WindowManager.LayoutParams params;
     private float brightness; // 밝기값은 float형으로 저장되어 있습니다.
     private float changeable; //변동되는 밝기값
-    boolean checkTh=false;
+    boolean checkTh=false; //스레드 무한루프 빠져나가기 위한 bool변수
+    AudioManager mediaVol;
     //특정조건에 맞춰 취소키 안먹게 하기
     @Override
     public void onBackPressed() {
@@ -93,6 +97,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         });
         main.setBackgroundColor(Color.GREEN);
         //알람소리 관련 선언부
+        mediaVol = (AudioManager)getSystemService(Context.AUDIO_SERVICE); //기능 시작과 동시에 볼륨 줄이기 위한 선언
         this.context = this;
         answer = (EditText)findViewById(R.id.answer);
         question = (TextView)findViewById(R.id.question);
@@ -198,6 +203,9 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (hour == sleep_timePicker.getHour() &&minute == sleep_timePicker.getMinute()) {
+                //최저 음량으로 설정
+                //mediaVol.setStreamVolume(AudioManager.STREAM_RING,(int)(mediaVol.getStreamMaxVolume(AudioManager.STREAM_RING)*0),0); //java.lang.SecurityException: Not allowed to change Do Not Disturb state
+                mediaVol.setRingerMode(AudioManager.RINGER_MODE_SILENT); //음소거 하는 코드
                 // 최저 밝기로 설정
                 params.screenBrightness = 0.1f;
                 // 밝기 설정 적용
@@ -216,6 +224,9 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 }
                 Log.i("성공", "성공");
             } else if (hour == sleep_timePicker.getHour() && minute == alarm_timePicker.getMinute()) {
+                //기존 음량으로 설정
+                //mediaVol.setStreamVolume(AudioManager.STREAM_RING,(int)(mediaVol.getStreamMaxVolume(AudioManager.STREAM_RING)*1),0);
+                mediaVol.setRingerMode(AudioManager.RINGER_MODE_NORMAL); //음소거 푸는 코드
                 // 기존 밝기로 설정
                 params.screenBrightness = brightness;
                 // 밝기 설정 적용
