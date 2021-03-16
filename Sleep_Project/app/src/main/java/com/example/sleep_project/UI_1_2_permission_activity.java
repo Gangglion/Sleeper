@@ -1,8 +1,10 @@
 package com.example.sleep_project;
 
+import android.app.AppOpsManager;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -31,6 +33,11 @@ public class UI_1_2_permission_activity extends AppCompatActivity {
             startActivity(intent);
         }else{
         }
+        //앱 실행기록을 위한 권한이 부여되어있는지 확인 후 되어있지 않다면 권한 설정 화면으로 이동
+        if(!checkPermission()) {
+            startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+        }
+        //권한 설정이 끝났다면 다음버튼을 눌러 로그인 화면으로 이동
         Button okbtn = (Button)findViewById(R.id.okbtn);
         okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,5 +47,21 @@ public class UI_1_2_permission_activity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    //앱 실행기록을 위한 권한 체크
+    private boolean checkPermission(){
+        boolean granted = false;
+        AppOpsManager appOps = (AppOpsManager) getApplicationContext()
+                .getSystemService(Context.APP_OPS_SERVICE);
+        int mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
+                android.os.Process.myUid(), getApplicationContext().getPackageName());
+        if (mode == AppOpsManager.MODE_DEFAULT) {
+            granted = (getApplicationContext().checkCallingOrSelfPermission(
+                    android.Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED);
+        }
+        else {
+            granted = (mode == AppOpsManager.MODE_ALLOWED);
+        }
+        return granted;
     }
 }
