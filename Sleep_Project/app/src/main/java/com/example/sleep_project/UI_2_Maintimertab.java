@@ -39,7 +39,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,11 +55,11 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     TimePicker sleep_timePicker, alarm_timePicker;
     Context context;
     PendingIntent pendingIntent;
-    LinearLayout locklayout, timelayout, belllayout;
+    LinearLayout locklayout, timelayout, belllayout,sleepTime_breakTime_View;
     Calendar cal = Calendar.getInstance();
     Calendar calendar;
     int hour, minute, second;
-    TextView question,waketxt;
+    TextView question,waketxt,sleepTimeView,breakTimeView;
     int firstNum;
     int secondNum;
     Intent alarm_intent;
@@ -95,6 +98,15 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         setBtn = (Button) findViewById(R.id.setBtn); //설정완료 버튼
         setbtn2 = (Button) findViewById(R.id.settingbtn); // 설정 버튼
         plusBtn = (Button)findViewById(R.id.plusBtn); //리스트 추가 버튼
+
+
+
+        //기상 예약시간, 취침 예약시간
+        sleepTimeView = (TextView)findViewById(R.id.sleepTimeView);
+        breakTimeView = (TextView)findViewById(R.id.breakTimeView);
+        sleepTime_breakTime_View = (LinearLayout)findViewById(R.id.sleepTime_breakTime_View);
+
+
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +156,8 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 locklayout.setVisibility(View.INVISIBLE);
                 setbtn2.setVisibility(View.VISIBLE);
                 belllayout.setVisibility(View.INVISIBLE);
+                sleepTime_breakTime_View.setVisibility(View.INVISIBLE);
+                th.stop();
             }
         });
         //설정완료 버튼 누르면 실행되는 스레드 - 화면전환도 관련되어있음
@@ -165,6 +179,27 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 int L_minute = sleep_timePicker.getMinute();
                 //Toast.makeText(getApplicationContext(), "설정", Toast.LENGTH_LONG).show();
                 Toast.makeText(UI_2_Maintimertab.this, L_hour + "시 " + L_minute + "분" + "에 화면이 잠깁니다 ", Toast.LENGTH_SHORT).show();
+
+                sleepTime_breakTime_View.setVisibility(View.VISIBLE);
+                timelayout.setVisibility(View.INVISIBLE);
+                setBtn.setVisibility(View.INVISIBLE);
+                String str = "오전";
+                int sleep_hour = sleep_timePicker.getHour();
+                int alarm_hour = alarm_timePicker.getHour();
+                if(sleep_hour > 11) {
+                    str = "오후";
+                    sleep_hour -= 12;
+                    sleepTimeView.setText("취침 예약 시간 :" + str + " " + sleep_hour + "시 " + sleep_timePicker.getMinute()+"분");
+                }else {
+                    sleepTimeView.setText("취침 예약 시간 :" + str + " " + sleep_hour + "시 " + sleep_timePicker.getMinute()+"분");
+                }
+                if(alarm_hour > 11) {
+                    str = "오후";
+                    alarm_hour -= 12;
+                    breakTimeView.setText("취침 예약 시간 :" + str + " " + alarm_hour + "시 " + alarm_timePicker.getMinute()+"분");
+                }else {
+                    breakTimeView.setText("취침 예약 시간 :" + str + " " + alarm_hour + "시 " + alarm_timePicker.getMinute()+"분");
+                }
             }
         });
         //////////////////////////////////////////////////////////화면이동 관련///////////////////////////////////////////////////////
@@ -221,6 +256,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 locklayout.setVisibility(View.VISIBLE);
                 setbtn2.setVisibility(View.INVISIBLE);
                 belllayout.setVisibility(View.INVISIBLE);
+                sleepTime_breakTime_View.setVisibility(View.INVISIBLE);
                 if (sleep_timePicker.getHour() <= alarm_timePicker.getHour() && sleep_timePicker.getMinute() < alarm_timePicker.getMinute()) {
                     waketxt.setText((alarm_timePicker.getHour() - hour) + "시간 "
                             + (alarm_timePicker.getMinute() - minute) + "분 남았습니다");
