@@ -16,6 +16,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,7 +50,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
-    Button main, music, statistics, accountbtn, setBtn, setbtn2, confirm,plusBtn;
+    Button lockmsg,main, music, statistics, accountbtn, setBtn, setbtn2, confirm,plusBtn,lockcall;
     private FirebaseAuth mAuth;
     AlarmManager alarm_manager;
     TimePicker sleep_timePicker, alarm_timePicker;
@@ -99,7 +100,11 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         setbtn2 = (Button) findViewById(R.id.settingbtn); // 설정 버튼
         plusBtn = (Button)findViewById(R.id.plusBtn); //리스트 추가 버튼
 
+        //전화버튼
+        lockcall = (Button)findViewById(R.id.lockcall);
 
+        //메시지 버튼
+        lockmsg = (Button)findViewById(R.id.lockmsg);
 
         //기상 예약시간, 취침 예약시간
         sleepTimeView = (TextView)findViewById(R.id.sleepTimeView);
@@ -211,6 +216,26 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 finish();
             }
         });
+        lockcall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locklayout.setVisibility(View.INVISIBLE);
+                Uri uri = Uri.parse("tel:");
+                Intent intent = new Intent(Intent.ACTION_DIAL,uri);
+                startActivity(intent);
+
+            }
+        });
+        lockmsg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locklayout.setVisibility(View.INVISIBLE);
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.putExtra("sms_body","");
+                intent.setData(Uri.parse("smsto:" + Uri.encode((""))));
+                startActivity(intent);
+            }
+        });
         statistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -230,6 +255,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         setbtn2.setOnClickListener(new View.OnClickListener() { // UI변경 후 좌측 상단 설정버튼 - 태현
             @Override  // 6번 UI 액티비티 불러오기
             public void onClick(View view) {
+
                 Intent intent = new Intent(getApplicationContext(), UI_6_Settings_activity.class);
                 startActivity(intent);
             }
