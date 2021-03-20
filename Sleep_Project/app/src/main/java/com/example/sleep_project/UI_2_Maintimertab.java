@@ -45,9 +45,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     Button lockmsg,main, music, statistics, accountbtn, setBtn, setbtn2, confirm,plusBtn,lockcall;
@@ -59,10 +62,11 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     LinearLayout locklayout, timelayout, belllayout,sleepTime_breakTime_View;
     Calendar cal = Calendar.getInstance();
     Calendar calendar;
-    int hour, minute, second;
+    int hour, minute, second,result, sum;
     TextView question,waketxt,sleepTimeView,breakTimeView;
-    int firstNum;
-    int secondNum;
+    int firstNum,secondNum,thirdNum;
+    Date weekday;
+
     Intent alarm_intent;
     EditText answer;
     //화면밝기 관련 선언부
@@ -123,9 +127,34 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         //알람소리 관련 선언부
         mediaVol = (AudioManager)getSystemService(Context.AUDIO_SERVICE); //기능 시작과 동시에 볼륨 줄이기 위한 선언
         this.context = this;
+        //요일 나타내기
+        weekday = Calendar.getInstance().getTime();
+        SimpleDateFormat weekdayFormat = new SimpleDateFormat("EE", Locale.getDefault());
+        String weekDay = weekdayFormat.format(weekday);
+
         answer = (EditText)findViewById(R.id.answer);
         question = (TextView)findViewById(R.id.question);
+        firstNum = (int)(Math.random() * 100)+1;
+        secondNum = (int)(Math.random() * 100)+1;
+        thirdNum = (int)(Math.random() * 10) + 1;
 
+
+
+        if(weekDay.equals("월")){
+            question.setText(firstNum +" + " + secondNum + " x " + thirdNum);
+        }else if(weekDay.equals("화")) {
+            question.setText(firstNum +" + " + secondNum + " - " + thirdNum);
+        }else if(weekDay.equals("수")) {
+            question.setText(thirdNum +" x " + secondNum + " - " + firstNum);
+        }else if(weekDay.equals("목")){
+            question.setText(firstNum +" + " + secondNum + " + " + thirdNum);
+        }else if(weekDay.equals("금")){
+            question.setText( secondNum + " x " + thirdNum);
+        }else if(weekDay.equals("토")){
+            question.setText(firstNum +" - " + secondNum );
+        }else if(weekDay.equals("일")){
+            question.setText(firstNum +" + " + secondNum);
+        }
         alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE); // 알람매니저 설정
 
         sleep_timePicker = findViewById(R.id.sleepTime); // 잠들시간 타임피커 설정
@@ -146,23 +175,47 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         final ImageView imgoff=(ImageView)findViewById(R.id.lockImg);
         params = getWindow().getAttributes();//화면 정보 불러오기
         brightness = params.screenBrightness; //기존밝기 미리 저장
-        firstNum = (int)(Math.random() * 100)+1;
-        secondNum = (int)(Math.random() * 100)+1;
-        final String result = answer.getText().toString();
-        question.setText(firstNum +" + " + secondNum);
-        String sum = Integer.toString(firstNum + secondNum);
+        //알람울릴 시간에 뜰 문제
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent alarm_off=new Intent(getApplicationContext(),UI_2_2_AlarmRing.class); //알람인텐트 전역변수
-                checkTh=true;
-                stopService(alarm_off);
-                timelayout.setVisibility(View.VISIBLE);
-                locklayout.setVisibility(View.INVISIBLE);
-                setbtn2.setVisibility(View.VISIBLE);
-                belllayout.setVisibility(View.INVISIBLE);
-                sleepTime_breakTime_View.setVisibility(View.INVISIBLE);
-                th.stop();
+                result = Integer.parseInt(answer.getText().toString());
+                if(weekDay.equals("월")){
+                    sum = firstNum + secondNum * thirdNum;
+                }else if(weekDay.equals("화")) {
+                    sum = firstNum + secondNum - thirdNum;
+                }else if(weekDay.equals("수")) {
+                    sum = thirdNum * secondNum - firstNum;
+                }else if(weekDay.equals("목")){
+                    sum = firstNum + secondNum + thirdNum;
+                }else if(weekDay.equals("금")){
+                    sum =  secondNum * thirdNum;
+
+                }else if(weekDay.equals("토")){
+                    sum = firstNum - secondNum;
+
+                }else if(weekDay.equals("일")){
+                    sum = firstNum + secondNum;
+                    }
+
+                
+                //문제랑 입력값이랑 같을 시 알람 종료
+                if(result == sum) {
+                    checkTh=true;
+                    stopService(alarm_off);
+                    timelayout.setVisibility(View.VISIBLE);
+                    locklayout.setVisibility(View.INVISIBLE);
+                    setbtn2.setVisibility(View.VISIBLE);
+                    belllayout.setVisibility(View.INVISIBLE);
+                    sleepTime_breakTime_View.setVisibility(View.INVISIBLE);
+                    //알람 취소 하는 부분
+                    alarm_manager.cancel(pendingIntent);
+                    alarm_intent.putExtra("state","alarm off");
+                    sendBroadcast(alarm_intent);
+                }
+
             }
         });
         //설정완료 버튼 누르면 실행되는 스레드 - 화면전환도 관련되어있음
