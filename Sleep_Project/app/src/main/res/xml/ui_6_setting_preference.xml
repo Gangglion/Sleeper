@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="설정">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="morningQ"
+            android:summary="켜져있을 경우 모닝콜 울릴 떄 문제가 나타납니다."
+            android:title="문제 나타내기"/>
+        <ListPreference
+            android:entries="@array/alert_array"
+            android:entryValues="@array/alert_array"
+            android:key="alert_list"
+            android:summary="어플 알림설정"
+            android:title="알림 설정"/>
+    </PreferenceCategory>
+</PreferenceScreen>

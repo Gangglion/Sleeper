@@ -11,6 +11,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -43,8 +44,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,12 +63,6 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     Calendar calendar;
     int hour, minute, second,result, answer;
     TextView question,waketxt,sleepTimeView,breakTimeView;
-
-    ////
-    String weekdayYo;
-    Date weekday;
-    SimpleDateFormat weekdayFormat = new SimpleDateFormat("EE", Locale.getDefault());
-    ////
 
     Intent alarm_intent;
     EditText putanswer;
@@ -94,9 +87,6 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ///////
-        //요일 나타내기
-        weekday = Calendar.getInstance().getTime();
-        weekdayYo = weekdayFormat.format(weekday);
         AlarmQuestion alarmQ = new AlarmQuestion(); //알람화면 랜덤문제생성과 그에 따른 답 생성이 들어있는 클래스
         //상단 액션바 숨기는 코드
         ActionBar actionBar = getSupportActionBar();
@@ -137,11 +127,14 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         mediaVol = (AudioManager)getSystemService(Context.AUDIO_SERVICE); //기능 시작과 동시에 볼륨 줄이기 위한 선언
         this.context = this;
 
+
         //알람화면 랜덤문제 코드
-        putanswer = (EditText)findViewById(R.id.answer);
         question = (TextView)findViewById(R.id.question);
-        System.out.println(alarmQ.setQuestion(weekdayYo));
-        question.setText(alarmQ.setQuestion(weekdayYo)); //문제설정
+        putanswer = (EditText)findViewById(R.id.answer);
+        String temp=alarmQ.getQuestion();
+        //Log.d("alarmQ",alarmQ.getQuestion());
+        question.setText(temp); //문제 TextView에 설정
+        //Log.d("alarmQ 텍스트뷰",question.getText().toString());
         answer = alarmQ.getAnswer(); //정답 설정
         alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE); // 알람매니저 설정
 
@@ -244,7 +237,6 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 Uri uri = Uri.parse("tel:");
                 Intent intent = new Intent(Intent.ACTION_DIAL,uri);
                 startActivity(intent);
-
             }
         });
         lockmsg.setOnClickListener(new View.OnClickListener() {
@@ -277,7 +269,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
             @Override  // 6번 UI 액티비티 불러오기
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), UI_6_Settings_activity.class);
+                Intent intent = new Intent(getApplicationContext(), UI_6_SettingActivity.class);
                 startActivity(intent);
             }
         });
@@ -393,8 +385,8 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     @Override
     protected void onRestart() {
         super.onRestart();
-        //생명주기 onStop()에서 백그라운드 상태면 true를 Logcat에 출력 - reStart시에는 백그라운드가 아니므로 로그캣에 false를 반환할 것
-        Log.d("tmdguq",String.valueOf(isAppIsInBackground(this)));
+/*        //생명주기 onStop()에서 백그라운드 상태면 true를 Logcat에 출력 - reStart시에는 백그라운드가 아니므로 로그캣에 false를 반환할 것
+        Log.d("tmdguq",String.valueOf(isAppIsInBackground(this)));*/
     }
 
     @Override

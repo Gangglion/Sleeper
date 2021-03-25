@@ -21,28 +21,27 @@ public class AlarmQuestion {
         weekday = Calendar.getInstance().getTime();
         weekdayYo = weekdayFormat.format(weekday);
     }
-    public String setQuestion(String weekdayYo){
-        this.weekdayYo = weekdayYo;
+    public String getQuestion(){
         switch(weekdayYo){
-            case"Mon":
+            case"월":
                 ques=(firstNum +" + " + secondNum + " x " + thirdNum);
                 break;
-            case"Tue":
+            case"화":
                 ques=(firstNum +" + " + secondNum + " - " + thirdNum);
                 break;
-            case"Wed":
+            case"수":
                 ques=(thirdNum +" x " + secondNum + " - " + firstNum);
                 break;
-            case"Thu":
+            case"목":
                 ques=(firstNum +" + " + secondNum + " + " + thirdNum);
                 break;
-            case"Fri":
+            case"금":
                 ques=( secondNum + " x " + thirdNum);
                 break;
-            case"Sat":
+            case"토":
                 ques=(firstNum +" - " + secondNum );
                 break;
-            case"Sun":
+            case"일":
                 ques=(firstNum +" + " + thirdNum);
                 break;
         }
@@ -50,25 +49,25 @@ public class AlarmQuestion {
     }
     public int getAnswer(){
         switch(weekdayYo){
-            case"Mon":
+            case"월":
                 answer = firstNum + secondNum * thirdNum;
                 break;
-            case"Tue":
+            case"화":
                 answer=firstNum + secondNum - thirdNum;
                 break;
-            case"Wed":
+            case"수":
                 answer=firstNum * secondNum - thirdNum;
                 break;
-            case"Thu":
+            case"목":
                 answer=firstNum + secondNum + thirdNum;
                 break;
-            case"Fri":
+            case"금":
                 answer= secondNum * thirdNum;
                 break;
-            case"Sat":
+            case"토":
                 answer=firstNum - secondNum;
                 break;
-            case"Sun":
+            case"일":
                 answer=firstNum + thirdNum;
                 break;
         }

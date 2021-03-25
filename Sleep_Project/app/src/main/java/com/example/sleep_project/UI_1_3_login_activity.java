@@ -26,10 +26,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 
 public class UI_1_3_login_activity extends AppCompatActivity {
-
-    private FirebaseAuth mAuth = null;
-    private GoogleSignInClient mGoogleSignInClient;
-    private static final int RC_SIGN_IN = 9001;
+    AboutLogin aboutLogin = new AboutLogin(); //로그인관련 변수와 로그인유무 파악하는 메소드 들어있는 함수 초기화
     private SignInButton signInButton;
     Button nologin;
 
@@ -47,12 +44,12 @@ public class UI_1_3_login_activity extends AppCompatActivity {
                 .build();
 
         signInButton = findViewById(R.id.sign_in_button);
-        mAuth = FirebaseAuth.getInstance();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        aboutLogin.setmAuth(FirebaseAuth.getInstance());
+        aboutLogin.setGoogleSignInClient(GoogleSignIn.getClient(this, gso));
         nologin=(Button)findViewById(R.id.nologinbtn);
 
         //이미 로그인이 되어있다면 바로 UI_2_Maintimertab으로 넘어가게 하는코드
-        if (mAuth.getCurrentUser() != null) {
+        if (aboutLogin.checklogin()) {
             Intent intent = new Intent(getApplication(), UI_2_Maintimertab.class);
             startActivity(intent);
             finish();
@@ -75,15 +72,15 @@ public class UI_1_3_login_activity extends AppCompatActivity {
         });
     }
     private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        Intent signInIntent = aboutLogin.getGoogleSignInClient().getSignInIntent();
+        startActivityForResult(signInIntent, aboutLogin.getRcSignIn());
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == aboutLogin.getRcSignIn()) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
@@ -94,16 +91,15 @@ public class UI_1_3_login_activity extends AppCompatActivity {
         }
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
+        aboutLogin.getmAuth().signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             //Snackbar.make(findViewById(R.id.layout_main), "Authentication Successed.", Snackbar.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseUser user = aboutLogin.getmAuth().getCurrentUser();
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

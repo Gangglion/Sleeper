@@ -10,9 +10,9 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
-    <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
 
     <application
         android:allowBackup="true"
@@ -21,10 +21,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sleep_Project">
+        <activity android:name=".UI_6_SettingActivity"></activity>
+        <activity
+            android:name=".SettingsActivity_test"
+            android:label="@string/title_activity_settings_test" />
+
         <service
             android:name=".UI_2_1_backgroundService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
         <service
             android:name=".UI_2_2_AlarmRing"
             android:enabled="true"
