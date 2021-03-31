@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".UI_2_Maintimertab"
     android:orientation="vertical"
+    style="@style/backgroundimg"
     android:gravity="center_horizontal">
 
     <com.google.android.material.tabs.TabLayout
@@ -43,12 +44,10 @@
             android:orientation="vertical"
             android:visibility="visible">
             <ListView
+                android:textColor="#FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/birdList"/>
-
-
-
         </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,13 +74,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/windList"/>
             </LinearLayout>
-
-
     </FrameLayout>
-
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -95,7 +88,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:textAlignment="center"
                 android:id="@+id/musicName" />
         </LinearLayout>
@@ -110,12 +102,14 @@
                 android:layout_height="40dp"
                 android:layout_gravity="right"
                 android:id="@+id/musicStart"
+                android:textColor="#FFFFFF"
                 android:text=">" />
 
             <Button
                 android:layout_width="45dp"
                 android:layout_height="40dp"
                 android:id="@+id/musicStop"
+                android:textColor="#FFFFFF"
                 android:text="||" />
         </LinearLayout>
 
@@ -124,10 +118,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-
-        >
-
+        android:gravity="bottom">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -150,11 +141,11 @@
             android:text="통계기능" />
 
         <Button
-            android:id="@+id/set"
+            android:id="@+id/accounttab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="설정" />
+            android:text="계정관리" />
     </LinearLayout>
 
 

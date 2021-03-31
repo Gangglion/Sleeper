@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -31,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -44,6 +46,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -122,7 +125,6 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 startActivity(intent);
             }
         });
-        main.setBackgroundColor(Color.GREEN);
         //알람소리 관련 선언부
         mediaVol = (AudioManager)getSystemService(Context.AUDIO_SERVICE); //기능 시작과 동시에 볼륨 줄이기 위한 선언
         this.context = this;
@@ -140,6 +142,30 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
 
         sleep_timePicker = findViewById(R.id.sleepTime); // 잠들시간 타임피커 설정
         alarm_timePicker = findViewById(R.id.breakTime); // 일어날시간 타임피커 설정
+        /////////////////////////////////타임피커 색 변경을 위한 코드//////////////////////////////////////
+        int hour_NumberPicker_id = Resources.getSystem().getIdentifier("hour", "id", "android");
+        int minute_NumberPicker_id = Resources.getSystem().getIdentifier("minute", "id", "android");
+        int daynight_id=Resources.getSystem().getIdentifier("amPm","id","android");
+        NumberPicker hourNumberPicker1 = (NumberPicker)sleep_timePicker.findViewById(hour_NumberPicker_id);
+        NumberPicker minuteNumberPicker1 = (NumberPicker)sleep_timePicker.findViewById(minute_NumberPicker_id);
+        NumberPicker daynight1=(NumberPicker) sleep_timePicker.findViewById(daynight_id);
+        NumberPicker hourNumberPicker2 = (NumberPicker)alarm_timePicker.findViewById(hour_NumberPicker_id);
+        NumberPicker minuteNumberPicker2 = (NumberPicker)alarm_timePicker.findViewById(minute_NumberPicker_id);
+        NumberPicker daynight2=(NumberPicker) alarm_timePicker.findViewById(daynight_id);
+        TimepickerColorChange colorChange = new TimepickerColorChange();
+        colorChange.setNumberPickerTextColor(hourNumberPicker1, Color.WHITE);
+        colorChange.setNumberPickerTextColor(hourNumberPicker2, Color.WHITE);
+        colorChange.setNumberPickerTextColor(minuteNumberPicker1, Color.WHITE);
+        colorChange.setNumberPickerTextColor(minuteNumberPicker2, Color.WHITE);
+        colorChange.setNumberPickerTextColor(daynight1,Color.WHITE);
+        colorChange.setNumberPickerTextColor(daynight2,Color.WHITE);
+        colorChange.setNumberPickerDividerColour(hourNumberPicker1,this);
+        colorChange.setNumberPickerDividerColour(hourNumberPicker2,this);
+        colorChange.setNumberPickerDividerColour(minuteNumberPicker1,this);
+        colorChange.setNumberPickerDividerColour(minuteNumberPicker2,this);
+        colorChange.setNumberPickerDividerColour(daynight1,this);
+        colorChange.setNumberPickerDividerColour(daynight2,this);
+        //////////////////////////////////////////////////////////////////////////////////////////////////
         calendar = Calendar.getInstance(); // Calendar 객체 생성
 
         alarm_intent = new Intent(this.context, UI_2_2_AlarmReceiver.class); // 알람리시버 intent 생성
@@ -222,6 +248,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
             }
         });
         //////////////////////////////////////////////////////////화면이동 관련///////////////////////////////////////////////////////
+        main.setBackgroundColor(Color.GRAY);
         music.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -268,7 +295,6 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         setbtn2.setOnClickListener(new View.OnClickListener() { // UI변경 후 좌측 상단 설정버튼 - 태현
             @Override  // 6번 UI 액티비티 불러오기
             public void onClick(View view) {
-
                 Intent intent = new Intent(getApplicationContext(), UI_6_SettingActivity.class);
                 startActivity(intent);
             }

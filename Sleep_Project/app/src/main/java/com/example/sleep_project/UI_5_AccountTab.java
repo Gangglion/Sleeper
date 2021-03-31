@@ -42,7 +42,6 @@ public class UI_5_AccountTab extends AppCompatActivity {
         music = (Button) findViewById(R.id.music); //음악기능 버튼
         statistics = (Button) findViewById(R.id.statistics); //통계기능 버튼
         account = (Button) findViewById(R.id.set); //설정기능 버튼*/
-        account.setBackgroundColor(Color.GRAY);
         sign_out=(Button)findViewById(R.id.sign_out); //로그아웃 버튼
         //상단 액션바 숨기는 코드
         ActionBar actionBar = getSupportActionBar();
@@ -82,6 +81,8 @@ public class UI_5_AccountTab extends AppCompatActivity {
                 }
             }
         });
+        /////////////////////////////// 탭 이동 버튼 관련////////////////////////////////////////
+        account.setBackgroundColor(Color.GRAY);
         //메인기능 탭 눌렀을때 이동하는 기능
         main.setOnClickListener(new View.OnClickListener() {
             @Override

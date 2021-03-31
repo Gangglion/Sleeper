@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".UI_2_Maintimertab"
     android:orientation="vertical"
+    style="@style/backgroundimg"
     android:gravity="center_horizontal"
     >
     <LinearLayout
@@ -25,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:textColor="#FFFFFF"
             android:text="유저이메일 나오는 칸"/>
     </LinearLayout>
     <LinearLayout
@@ -36,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:textColor="#FFFFFF"
             android:text="유저닉네임 나오는 칸"/>
     </LinearLayout>
     <LinearLayout

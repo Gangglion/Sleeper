@@ -23,10 +23,10 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         main = (Button) findViewById(R.id.main); //메인기능버튼
         music = (Button) findViewById(R.id.music); //음악기능 버튼
         statistics = (Button) findViewById(R.id.statistics); //통계기능 버튼
-        account = (Button) findViewById(R.id.set); //계정관리기능 버튼
+        account = (Button) findViewById(R.id.accounttab); //계정관리기능 버튼
 
 
-        statistics.setBackgroundColor(Color.YELLOW);
+        statistics.setBackgroundColor(Color.GRAY);
         //메인 탭으로 이동
         main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +45,7 @@ public class UI_4_Statisticstab extends AppCompatActivity {
                 finish();
             }
         });
-        //설정 탭으로 이동
+        //계정관리 탭으로 이동
         account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
