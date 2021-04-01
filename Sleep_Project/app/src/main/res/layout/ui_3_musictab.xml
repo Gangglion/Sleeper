@@ -18,18 +18,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bird"
-
-            android:text="새"/>
+            android:text="새" />
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sea"
-            android:text="바다"/>
+            android:text="바다" />
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/wind"
-            android:text="바람"/>
+            android:text="바람" />
 
     </com.google.android.material.tabs.TabLayout>
     <FrameLayout
@@ -124,28 +123,36 @@
             android:layout_height="wrap_content"
             android:id="@+id/main"
             android:layout_weight="1"
-            android:text="메인기능" />
+            android:text="메인기능"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/music"
             android:layout_weight="1"
-            android:text="음악기능" />
+            android:text="음악기능"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/statistics"
             android:layout_weight="1"
-            android:text="통계기능" />
+            android:text="통계기능"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000" />
 
         <Button
             android:id="@+id/accounttab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="계정관리" />
+            android:text="계정관리"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000" />
     </LinearLayout>
 
 

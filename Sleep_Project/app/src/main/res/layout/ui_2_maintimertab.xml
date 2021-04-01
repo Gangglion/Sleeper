@@ -241,28 +241,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="메인기능" />
+            android:text="메인기능"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000"/>
 
         <Button
             android:id="@+id/music"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="음악기능" />
+            android:text="음악기능"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000" />
 
         <Button
             android:id="@+id/statistics"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="통계기능" />
+            android:text="통계기능"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000" />
 
         <Button
             android:id="@+id/accountTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="계정관리" />
+            android:text="계정관리"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000" />
     </LinearLayout>
 </LinearLayout>
 
