@@ -7,21 +7,26 @@
     android:orientation="vertical"
     android:background="@drawable/background_img_login"
     tools:context=".UI_1_3_login_activity">
+    <TextView
+        android:id="@+id/margin"
+        android:layout_width="100dp"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="450dp" />
+        android:layout_below="@+id/margin"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/nologinbtn"
         android:layout_width="200dp"
         android:layout_height="60dp"
+        android:layout_below="@+id/sign_in_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="530dp"
         android:backgroundTint="#FFFFFF"
         android:text="로그인 하지 않고 시작" />
 

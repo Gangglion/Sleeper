@@ -1,12 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".UI_6_SettingActivity">
-    <fragment
+    android:layout_height="match_parent">
+    <FrameLayout
         android:id="@+id/settings"
-        android:name="com.example.sleep_project.UI_6_SettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>

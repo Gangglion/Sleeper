@@ -21,10 +21,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sleep_Project">
-        <activity android:name=".UI_6_SettingActivity"></activity>
-        <activity
-            android:name=".SettingsActivity_test"
-            android:label="@string/title_activity_settings_test" />
 
         <service
             android:name=".UI_2_1_backgroundService"
@@ -57,10 +53,10 @@
         <activity android:name=".UI_2_1_Lock_activity" />
         <activity android:name=".UI_2_2_AlarmImg_Activity" />
         <activity
-            android:name=".UI_6_Alarm_Settings_activity"
+            android:name=".UI_6_Alert_Settings_activity"
             android:label="@string/title_activity_u_i_6__arlam__settings_activity" />
         <activity
-            android:name=".UI_6_Settings_activity"
+            android:name=".UI_6_SettingActivity"
             android:label="@string/title_activity_u_i_6__settings_activity"
             android:parentActivityName=".UI_2_Maintimertab" />
     </application>
