@@ -3,6 +3,9 @@ package com.example.sleep_project;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,11 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class UI_4_Statisticstab extends AppCompatActivity {
     Button main, music, statistics, account;
-
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ui_4_statistictab);
+        setContentView(R.layout.statistics1);
+
         //상단 액션바 숨기는 코드
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -55,4 +59,27 @@ public class UI_4_Statisticstab extends AppCompatActivity {
             }
         });
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.appUseTime:
+                intent = new Intent(UI_4_Statisticstab.this,AppTimeStatistics.class);
+                startActivity(intent);
+                finish();
+                break;
+
+            case R.id.sleepTimecomparison:
+                intent = new Intent(UI_4_Statisticstab.this,SleepComparisonStatistics.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
+
+        return true;
+    }
+
 }
