@@ -21,7 +21,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sleep_Project">
-        <activity android:name=".UI_1_4_UserInfo_Activity"></activity>
+        <activity android:name=".UI_1_4_UserInfo_Activity">
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
@@ -39,21 +45,12 @@
             android:name=".UI_2_2_AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
-        <!--
         <activity android:name=".UI_1_1_main">
-            <intent-filter>
+<!--            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        -->
-        <activity android:name=".UI_1_1_main">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".UI_1_2_permission_activity" />
         <activity android:name=".UI_1_3_login_activity" />

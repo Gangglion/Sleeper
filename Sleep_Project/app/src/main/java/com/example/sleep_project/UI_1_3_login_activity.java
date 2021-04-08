@@ -111,7 +111,7 @@ public class UI_1_3_login_activity extends AppCompatActivity {
     }
     private void updateUI(FirebaseUser user) { //update ui code here
         if (user != null) {
-            Intent intent = new Intent(this, UI_2_Maintimertab.class);
+            Intent intent = new Intent(this, UI_1_4_UserInfo_Activity.class);
             startActivity(intent);
             finish();
         }
