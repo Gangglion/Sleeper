@@ -27,7 +27,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.squareup.picasso.Picasso;
 
 public class UI_5_AccountTab extends AppCompatActivity {
-    Button main, music, statistics, account, sign_out;
+    Button  sign_out;
     TextView user_email,user_name;
     ImageView user_profile;
     AboutLogin aboutLogin = new AboutLogin();
@@ -38,10 +38,6 @@ public class UI_5_AccountTab extends AppCompatActivity {
         user_email=findViewById(R.id.profile_email);//계정정보 확인탭 이메일
         user_name=findViewById(R.id.profile_text);//계정정보 확인탭 유저이름
         user_profile=findViewById(R.id.profile_image);//계정정보 확인탭 이미지
-        main = (Button) findViewById(R.id.main); //메인기능버튼
-        music = (Button) findViewById(R.id.music); //음악기능 버튼
-        statistics = (Button) findViewById(R.id.statistics); //통계기능 버튼
-        account = (Button) findViewById(R.id.set); //설정기능 버튼*/
         sign_out=(Button)findViewById(R.id.sign_out); //로그아웃 버튼
         //상단 액션바 숨기는 코드
         ActionBar actionBar = getSupportActionBar();
@@ -82,34 +78,6 @@ public class UI_5_AccountTab extends AppCompatActivity {
             }
         });
         /////////////////////////////// 탭 이동 버튼 관련////////////////////////////////////////
-        account.setBackgroundColor(Color.GRAY);
-        //메인기능 탭 눌렀을때 이동하는 기능
-        main.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_2_Maintimertab.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        //음악기능 탭 눌렀을때 이동하는 기능
-        music.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_3_Musictab.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        //통계기능 탭 눌렀을때 이동하는 기능
-        statistics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_4_Statisticstab.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
     //로그아웃 메소드
     private void signOut() {

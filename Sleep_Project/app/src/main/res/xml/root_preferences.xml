@@ -1,0 +1,31 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--시크바로 밝기 조절하는 화면은 이런식으로 나타내면 될듯-->
+    <Preference app:title="@string/login_info_title">
+        <intent android:targetPackage="com.example.sleep_project"
+            android:targetClass="com.example.sleep_project.UI_5_AccountTab"/>
+    </Preference>
+    <PreferenceCategory app:title="@string/alert_header">
+        <!-- 다른 레이아웃으로 넘길예정-->
+        <ListPreference
+            app:defaultValue="소리"
+            app:entries="@array/alert_kindentry"
+            app:entryValues="@array/alert_kindvalue"
+            app:key="alert"
+            app:title="@string/alert_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/ques_header">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="ques"
+            app:summaryOff="@string/ques_summary_off"
+            app:summaryOn="@string/ques_summary_on"
+            app:title="@string/ques_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

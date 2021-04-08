@@ -3,17 +3,13 @@ package com.example.sleep_project;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.AppOpsManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -23,7 +19,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.util.Log;
 import android.util.LongSparseArray;
 import android.view.View;
@@ -40,22 +35,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
-    Button lockmsg,main, music, statistics, accountbtn, setBtn, setbtn2, confirm,plusBtn,lockcall;
+    Button lockmsg,main, music, statistics, Settings, setBtn, confirm,plusBtn,lockcall;
     private FirebaseAuth mAuth;
     AlarmManager alarm_manager;
     TimePicker sleep_timePicker, alarm_timePicker;
@@ -101,9 +91,8 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         main = (Button) findViewById(R.id.main); //메인기능버튼
         music = (Button) findViewById(R.id.music); //음악기능 버튼
         statistics = (Button) findViewById(R.id.statistics); //통계기능 버튼
-        accountbtn = (Button) findViewById(R.id.accountTab); //계정관리기능 버튼
+        Settings = (Button) findViewById(R.id.Settings); //설정기능 버튼
         setBtn = (Button) findViewById(R.id.setBtn); //설정완료 버튼
-        setbtn2 = (Button) findViewById(R.id.settingbtn); // 설정 버튼
         plusBtn = (Button)findViewById(R.id.plusBtn); //리스트 추가 버튼
 
         //전화버튼
@@ -195,7 +184,6 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                     stopService(alarm_off);
                     timelayout.setVisibility(View.VISIBLE);
                     locklayout.setVisibility(View.INVISIBLE);
-                    setbtn2.setVisibility(View.VISIBLE);
                     belllayout.setVisibility(View.INVISIBLE);
                     sleepTime_breakTime_View.setVisibility(View.INVISIBLE);
                     //알람 취소 하는 부분
@@ -284,18 +272,10 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 finish();
             }
         });
-        accountbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_5_AccountTab.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        setbtn2.setOnClickListener(new View.OnClickListener() { // UI변경 후 좌측 상단 설정버튼 - 태현
+        Settings.setOnClickListener(new View.OnClickListener() { // UI변경 후 좌측 상단 설정버튼 - 태현
             @Override  // 6번 UI 액티비티 불러오기
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_6_SettingActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
             }
         });
@@ -319,7 +299,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 //화면 변환 관련
                 timelayout.setVisibility(View.INVISIBLE);
                 locklayout.setVisibility(View.VISIBLE);
-                setbtn2.setVisibility(View.INVISIBLE);
+                Settings.setVisibility(View.INVISIBLE);
                 belllayout.setVisibility(View.INVISIBLE);
                 sleepTime_breakTime_View.setVisibility(View.INVISIBLE);
                 if (sleep_timePicker.getHour() <= alarm_timePicker.getHour() && sleep_timePicker.getMinute() < alarm_timePicker.getMinute()) {
@@ -347,7 +327,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 //화면 변환 관련
                 timelayout.setVisibility(View.INVISIBLE);
                 locklayout.setVisibility(View.INVISIBLE);
-                setbtn2.setVisibility(View.INVISIBLE);
+                Settings.setVisibility(View.INVISIBLE);
                 belllayout.setVisibility(View.VISIBLE);
             } else {
                 Log.i("실패", "실패");

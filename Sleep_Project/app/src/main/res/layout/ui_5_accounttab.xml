@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI_2_Maintimertab"
+    tools:context=".UI_5_AccountTab"
     android:orientation="vertical"
     style="@style/backgroundimg"
     android:gravity="center_horizontal"
@@ -13,9 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
+            android:layout_marginTop="30dp"
             android:id="@+id/profile_image"
-            android:layout_width="150dp"
-            android:layout_height="150dp"/>
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -25,7 +26,7 @@
             android:id="@+id/profile_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textColor="#FFFFFF"
             android:text="유저이메일 나오는 칸"/>
     </LinearLayout>
@@ -37,7 +38,7 @@
             android:id="@+id/profile_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textColor="#FFFFFF"
             android:text="유저닉네임 나오는 칸"/>
     </LinearLayout>
@@ -57,41 +58,5 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="bottom">
-
-        <Button
-            android:id="@+id/main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="메인기능"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#00000000" />
-
-        <Button
-            android:id="@+id/music"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="음악기능"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#00000000" />
-
-        <Button
-            android:id="@+id/statistics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="통계기능"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#00000000" />
-
-        <Button
-            android:id="@+id/set"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="설정"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#00000000" />
     </LinearLayout>
 </LinearLayout>

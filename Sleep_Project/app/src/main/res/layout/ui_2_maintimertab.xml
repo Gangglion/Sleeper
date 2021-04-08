@@ -174,12 +174,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <Button
-                android:id="@+id/settingbtn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="bottom"
-                android:text="설정" />
         </LinearLayout>
 
         <LinearLayout
@@ -264,11 +258,11 @@
             android:backgroundTint="#00000000" />
 
         <Button
-            android:id="@+id/accountTab"
+            android:id="@+id/Settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="계정관리"
+            android:text="설정"
             android:textColor="#FFFFFF"
             android:backgroundTint="#00000000" />
     </LinearLayout>

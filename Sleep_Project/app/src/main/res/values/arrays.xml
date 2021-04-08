@@ -1,5 +1,12 @@
 <resources>
-    <string-array name="alert_array">
+    <!-- Reply Preference -->
+    <string-array name="alert_kindentry">
+        <item>소리</item>
+        <item>진동</item>
+        <item>무음</item>
+    </string-array>
+
+    <string-array name="alert_kindvalue">
         <item>소리</item>
         <item>진동</item>
         <item>무음</item>
