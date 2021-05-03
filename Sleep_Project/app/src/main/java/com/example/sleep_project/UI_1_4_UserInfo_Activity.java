@@ -2,12 +2,15 @@ package com.example.sleep_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -15,6 +18,11 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
 
     private int age;
     private String job,sex;//입력한 값을 가져와 파이어베이스에 올리는 메소드의 인자로 들어갈것임
+    Button nextbtn;
+    RadioGroup sexselect;
+    Spinner selectage,selectjob;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +61,20 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+        sexselect = (RadioGroup)findViewById(R.id.sexradiobtn);
+        selectage = (Spinner)findViewById(R.id.selectage);
+        selectjob = (Spinner)findViewById(R.id.selectjob);
+        
+
+        nextbtn = (Button)findViewById(R.id.userinfo_nextbtn);
+        nextbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nextintent = new Intent(getApplicationContext(), UI_2_Maintimertab.class);
+                startActivity(nextintent);
+                finish();
             }
         });
     }
