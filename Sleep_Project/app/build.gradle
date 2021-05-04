@@ -49,6 +49,7 @@ dependencies {
     //아래 의존성 2줄 로그인 프로파일을 위해 추가
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.squareup.picasso:picasso:2.71828'
+
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
