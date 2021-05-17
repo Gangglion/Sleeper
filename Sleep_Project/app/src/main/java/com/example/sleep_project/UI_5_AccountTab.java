@@ -3,6 +3,7 @@ package com.example.sleep_project;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,13 +25,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class UI_5_AccountTab extends AppCompatActivity {
     Button  sign_out;
-    TextView user_email,user_name;
+    TextView user_email,user_name,inputPerInfo;
     ImageView user_profile;
     AboutLogin aboutLogin = new AboutLogin();
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +60,10 @@ public class UI_5_AccountTab extends AppCompatActivity {
         if(aboutLogin.checklogin()) {
             String email = aboutLogin.getUser().getEmail();
             String name = aboutLogin.getUser().getDisplayName();
+            //getFirebaseDatabase();
+            String dbgender;
+            String dbage;
+            String dbjob;
             user_email.setText(email);
             user_name.setText(name);
             sign_out.setText("로그아웃");
@@ -131,5 +143,36 @@ public class UI_5_AccountTab extends AppCompatActivity {
             finish();
         }
     }
-
+    //파이어베이스 데이터 가져오는 메소드 - 미완성
+    //참고자료 : https://m.blog.naver.com/PostView.naver?blogId=nife0719&logNo=221049879862&proxyReferer=https:%2F%2Fwww.google.com%2F
+/*    public void getFirebaseDatabase(){
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e("getFirebaseDatabase", "key: " + dataSnapshot.getChildrenCount());
+*//*                arrayData.clear();
+                arrayIndex.clear();*//*
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    String key = postSnapshot.getKey();
+                    firebasepost get = postSnapshot.getValue(firebasepost.class);
+                    username=get.getUsername();
+                    String[] info = {get.getGender(), get.getAge(), get.getJob()};
+                    //String Result = setTextLength(info[0],10) + setTextLength(info[1],10) + setTextLength(info[2],10) + setTextLength(info[3],10);
+*//*                    arrayData.add(Result);
+                    arrayIndex.add(key);*//*
+                    Log.d("getFirebaseDatabase", "key: " + key);
+                    Log.d("getFirebaseDatabase", "info: " + info[0] + info[1] + info[2] + info[3]);
+                }
+*//*                arrayAdapter.clear();
+                arrayAdapter.addAll(arrayData);
+                arrayAdapter.notifyDataSetChanged();*//*
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("getFirebaseDatabase","loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        Query sortbyAge = FirebaseDatabase.getInstance().getReference().child("글리온");
+        sortbyAge.addListenerForSingleValueEvent(postListener);
+    }*/
 }

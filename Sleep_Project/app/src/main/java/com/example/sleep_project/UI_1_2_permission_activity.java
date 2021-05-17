@@ -42,7 +42,7 @@ public class UI_1_2_permission_activity extends AppCompatActivity {
         okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginIntent=new Intent(getApplicationContext(),UI_1_4_UserInfo_Activity.class);
+                Intent loginIntent=new Intent(getApplicationContext(),UI_1_3_login_activity.class);
                 startActivity(loginIntent);
                 finish();
             }

@@ -2,6 +2,8 @@ package com.example.sleep_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,15 +12,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
 
-    private int age;
-    private String job,sex;//입력한 값을 가져와 파이어베이스에 올리는 메소드의 인자로 들어갈것임
-    Button nextbtn;
+    private String username,sex,age,job;//입력한 값을 가져와 파이어베이스에 올리는 메소드의 인자로 들어갈것임
+    Button nextbtn,seeservicebtn,seepersonalbtn;
     RadioGroup sexselect;
     Spinner selectage,selectjob;
 
@@ -66,15 +69,59 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
         sexselect = (RadioGroup)findViewById(R.id.sexradiobtn);
         selectage = (Spinner)findViewById(R.id.selectage);
         selectjob = (Spinner)findViewById(R.id.selectjob);
-        
 
+        //다음 버튼 눌렀을때 실행되는 내용 - 파이어베이스에 값 저장, 성공시 다음화면으로 이동
         nextbtn = (Button)findViewById(R.id.userinfo_nextbtn);
         nextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent nextintent = new Intent(getApplicationContext(), UI_2_Maintimertab.class);
-                startActivity(nextintent);
-                finish();
+                try{
+                    //라디오버튼에 눌린 값 저장
+                    int id = sexselect.getCheckedRadioButtonId();
+                    RadioButton selecttxtsex = (RadioButton)findViewById(id);
+                    sex = selecttxtsex.getText().toString();
+                    //나이 저장
+                    Spinner agespinner = (Spinner)findViewById(R.id.selectage);
+                    age = agespinner.getSelectedItem().toString();
+                    //직업 저장
+                    Spinner jobspinner = (Spinner)findViewById(R.id.selectjob);
+                    job = jobspinner.getSelectedItem().toString();
+/*                    Log.d("checkdata",sex);
+                    Log.d("checkdata",age);
+                    Log.d("checkdata",job);*/
+
+                    //데이터베이스에 올라갈 유저이름 가져옴
+                    AboutLogin aboutLogin = new AboutLogin();
+                    username = aboutLogin.getUser().getDisplayName();
+
+                    firebasepost firebasepost = new firebasepost(username,sex,age,job);
+                    firebasepost.postFirebaseDatabase(true);
+
+                    Intent nextintent = new Intent(getApplicationContext(), UI_2_Maintimertab.class);
+                    startActivity(nextintent);
+                    finish();
+                }catch(Exception e){
+                    Log.d("firebaseError",e.toString());
+                    Toast.makeText(getApplicationContext(),"정보 입력 에러. 다시 확인해주십시오",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //서비스 이용약관 보기
+        seeservicebtn = (Button)findViewById(R.id.seeservice);
+        seeservicebtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent seeserviceintent = new Intent(getApplicationContext(), seeservicetab.class);
+                startActivity(seeserviceintent);
+            }
+        });
+        //개인정보 방침 보기
+        seepersonalbtn = (Button)findViewById(R.id.seepersonal);
+        seepersonalbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent seepersonalintent = new Intent(getApplicationContext(), personaltab.class);
+                startActivity(seepersonalintent);
             }
         });
     }

@@ -50,6 +50,8 @@ public class UI_1_3_login_activity extends AppCompatActivity {
 
         //이미 로그인이 되어있다면 바로 UI_2_Maintimertab으로 넘어가게 하는코드
         if (aboutLogin.checklogin()) {
+            //Intent intent = new Intent(getApplication(), UI_1_4_UserInfo_Activity.class);
+            //테스트용으로 만든 intent
             Intent intent = new Intent(getApplication(), UI_2_Maintimertab.class);
             startActivity(intent);
             finish();

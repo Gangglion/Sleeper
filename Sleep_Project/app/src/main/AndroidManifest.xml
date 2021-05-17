@@ -21,9 +21,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sleep_Project">
-        <activity android:name=".UI_1_4_UserInfo_Activity">
-
-        </activity>
+        <activity android:name=".personaltab"></activity>
+        <activity android:name=".seeservicetab" />
+        <activity android:name=".UI_1_4_UserInfo_Activity" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
@@ -41,6 +41,7 @@
             android:name=".UI_2_2_AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
+
         <activity android:name=".UI_1_1_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,8 +58,8 @@
         <activity android:name=".UI_List" />
         <activity android:name=".UI_2_1_Lock_activity" />
         <activity android:name=".UI_2_2_AlarmImg_Activity" />
-        <activity android:name=".SleepComparisonStatistics"/>
-        <activity android:name=".AppTimeStatistics"/>
+        <activity android:name=".SleepComparisonStatistics" />
+        <activity android:name=".AppTimeStatistics" />
     </application>
 
 </manifest>
