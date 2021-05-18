@@ -28,6 +28,9 @@ public class UI_3_Musictab extends AppCompatActivity {
     Context context;
     ListView birdList,seaList,windList;
 
+    boolean bird_isPlaying,sea_isPlaying,wind_isPlaying;
+
+
     //버튼이 여러개 있으나 노래가 3개라 9개만 해놈.
     int currentMediaPlayPosition; // 현재 실행되고 있는 음악 위치
     @Override
@@ -37,6 +40,9 @@ public class UI_3_Musictab extends AppCompatActivity {
         //상단 액션바 숨기는 코드
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
+
+
         /////////////////////////////////////////////
         setTitle("음악");
         main = (Button)findViewById(R.id.main); //메인기능버튼
@@ -52,6 +58,8 @@ public class UI_3_Musictab extends AppCompatActivity {
         seaList = (ListView)findViewById(R.id.seaList);
         windList = (ListView)findViewById(R.id.windList);
 
+
+
         //새 노래와 관련된 부분
         int[] birdSong = {R.raw.song1, R.raw.song2, R.raw.song3, R.raw.song1, R.raw.song2, R.raw.song3,
                 R.raw.song1, R.raw.song2, R.raw.song3, R.raw.song1, R.raw.song2, R.raw.song3,
@@ -60,6 +68,8 @@ public class UI_3_Musictab extends AppCompatActivity {
                 "새노래7","새노래8","새노래9","새노래10","새노래11"
                 ,"새노래12","새노래13","새노래14","새노래15","새노래16","새노래17","새노래18"};
         ArrayAdapter<String> birdAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,birdTitle);
+        birdList.setAdapter(birdAdapter);
+        birdAdapter = new ArrayAdapter<String>(this,R.layout.ui_3_musictab_color,birdTitle);
         birdList.setAdapter(birdAdapter);
         MediaPlayer[] birdMd = new MediaPlayer[birdSong.length];
         //바다 노래
@@ -71,11 +81,22 @@ public class UI_3_Musictab extends AppCompatActivity {
                 ,"바다노래12","바다노래13","바다노래14","바다노래15","바다노래16","바다노래17","바다노래18"};
         ArrayAdapter<String> seaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,seaTitle);
         seaList.setAdapter(seaAdapter);
+        seaAdapter = new ArrayAdapter<String>(this,R.layout.ui_3_musictab_color,seaTitle);
+        seaList.setAdapter(seaAdapter);
+
         MediaPlayer[] seaMd = new MediaPlayer[seaSong.length];
         //새 노래 클릭했을때
         birdList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(sea_isPlaying) {
+                    sea_isPlaying = false;
+                    for(int i = 0; i < seaMd.length; i++) {
+                        currentMediaPlayPosition = seaMd[i].getCurrentPosition();
+                        seaMd[i].stop();
+                        seaMd[i].release();
+                    }
+                }
                 for(int i = 0; i < birdSong.length; i++) {
                     birdMd[i] = MediaPlayer.create(UI_3_Musictab.this, birdSong[i]);
                 }
@@ -86,6 +107,8 @@ public class UI_3_Musictab extends AppCompatActivity {
 
                 }
                 musicName.setText(birdTitle[position]);
+                bird_isPlaying = true;
+
             }
         });
         //바다 노래 클릭했을때
@@ -93,6 +116,15 @@ public class UI_3_Musictab extends AppCompatActivity {
         seaList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(bird_isPlaying) {
+                    bird_isPlaying = false;
+                    for(int i =0; i < birdMd.length; i++) {
+                        currentMediaPlayPosition = birdMd[i].getCurrentPosition();
+                        birdMd[i].stop();
+                        birdMd[i].release();
+                    }
+                }
+
                 for(int i = 0; i < seaSong.length; i++) {
                     seaMd[i] = MediaPlayer.create(UI_3_Musictab.this, seaSong[i]);
 
@@ -102,7 +134,11 @@ public class UI_3_Musictab extends AppCompatActivity {
                     seaMd[i].setNextMediaPlayer(seaMd[i+1]);
 
                 }
+
                 musicName.setText(seaTitle[position]);
+
+                sea_isPlaying = true;
+
             }
         });
 
@@ -113,17 +149,21 @@ public class UI_3_Musictab extends AppCompatActivity {
         musicPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    for(int i =0; i < birdMd.length;i++) {
-                        if (birdMd[i] != null) {
-                            
-                            currentMediaPlayPosition = birdMd[i].getCurrentPosition();
-                            birdMd[i].pause();
-                        }
-                         if(seaMd[i] != null) {
-                            currentMediaPlayPosition = seaMd[i].getCurrentPosition();
-                            seaMd[i].pause();
-                        }
+                if(bird_isPlaying) {
+                    for (int i = 0; i < birdMd.length; i++) {
+
+
+                        currentMediaPlayPosition = birdMd[i].getCurrentPosition();
+                        birdMd[i].pause();
                     }
+
+                }else if(sea_isPlaying) {
+                    for(int i =0; i < seaMd.length; i++) {
+                        currentMediaPlayPosition = seaMd[i].getCurrentPosition();
+                        seaMd[i].pause();
+                    }
+                }
+
 
             }
         });
@@ -131,20 +171,24 @@ public class UI_3_Musictab extends AppCompatActivity {
         musicRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < birdMd.length; i++) {
-                    if (birdMd[i] != null && !birdMd[i].isPlaying()) {
+                if (bird_isPlaying) {
+                    for (int i = 0; i < birdMd.length; i++) {
+                        if (birdMd[i] != null && !birdMd[i].isPlaying()) {
 
-                        birdMd[i].start();
-                        birdMd[i].seekTo(currentMediaPlayPosition);
+                            birdMd[i].start();
+                            birdMd[i].seekTo(currentMediaPlayPosition);
+                        }
                     }
+                } else if (sea_isPlaying) {
+                    for (int i = 0; i < seaMd.length; i++) {
+                        if (seaMd[i] != null && !seaMd[i].isPlaying()) {
 
-
-                    if (seaMd[i] != null && !seaMd[i].isPlaying()) {
-
-                        seaMd[i].start();
-                        seaMd[i].seekTo(currentMediaPlayPosition);
+                            seaMd[i].start();
+                            seaMd[i].seekTo(currentMediaPlayPosition);
+                        }
                     }
                 }
+
             }
         });
         //새 , 바람 , 바다 탭
