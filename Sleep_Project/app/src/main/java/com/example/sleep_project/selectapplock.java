@@ -1,4 +1,3 @@
-/*
 package com.example.sleep_project;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,9 +37,6 @@ public class selectapplock extends AppCompatActivity {
     private ListView mListView = null;
     private IAAdapter mAdapter = null;
 
-    */
-/** Called when the activity is first created. *//*
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +51,7 @@ public class selectapplock extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
+            //아이템 클릭했을때의 행동이 들어가있는 코드
             public void onItemClick(AdapterView<?> av, View view, int position,
                                     long id) {
                 // TODO Auto-generated method stub
@@ -73,22 +70,11 @@ public class selectapplock extends AppCompatActivity {
         startTask();
     }
 
-    */
-/**
-     * �۾� ����
-     *//*
+
 
     private void startTask() {
         new AppTask().execute();
     }
-
-    */
-/**
-     * �ε��� ǥ�� ����
-     *
-     * @param isView
-     *            ǥ�� ����
-     *//*
 
     private void setLoadingView(boolean isView) {
         if (isView) {
@@ -102,13 +88,6 @@ public class selectapplock extends AppCompatActivity {
         }
     }
 
-    */
-/**
-     * List Fast Holder
-     *
-     * @author nohhs
-     *//*
-
     private class ViewHolder {
         // App Icon
         public ImageView mIcon;
@@ -118,12 +97,6 @@ public class selectapplock extends AppCompatActivity {
         public TextView mPacakge;
     }
 
-    */
-/**
-     * List Adapter
-     *
-     * @author nohhs
-     *//*
 
     private class IAAdapter extends BaseAdapter {
         private Context mContext = null;
@@ -182,10 +155,7 @@ public class selectapplock extends AppCompatActivity {
             return convertView;
         }
 
-        */
-/**
-         * ���ø����̼� ����Ʈ �ۼ�
-         *//*
+
 
         public void rebuild() {
             if (mAppList == null) {
@@ -195,9 +165,7 @@ public class selectapplock extends AppCompatActivity {
                 pm = selectapplock.this.getPackageManager();
 
                 // ��ġ�� ���ø����̼� ���
-                mAppList = pm
-                        .getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES
-                                | PackageManager.GET_DISABLED_COMPONENTS);
+                mAppList = pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.MATCH_DISABLED_COMPONENTS);
             }
 
             AppInfo.AppFilter filter;
@@ -241,11 +209,6 @@ public class selectapplock extends AppCompatActivity {
         }
     }
 
-    */
-/**
-     * �۾� �½�ũ
-     * @author nohhs
-     *//*
 
     private class AppTask extends AsyncTask<Void, Void, Void> {
 
@@ -309,4 +272,4 @@ public class selectapplock extends AppCompatActivity {
 
         return true;
     }
-}*/
+}
