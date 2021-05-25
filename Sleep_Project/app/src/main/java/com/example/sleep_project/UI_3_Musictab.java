@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,7 +23,8 @@ public class UI_3_Musictab extends AppCompatActivity {
     Button main,music,statistics,account;
     Button musicRestart,musicPause;
     TextView musicName;
-
+    int temp = 0;
+    int prePosition = 0;
     TabLayout tabLayout;
     LinearLayout bird_layout,sea_layout,wind_layout;
     Context context;
@@ -104,18 +106,24 @@ public class UI_3_Musictab extends AppCompatActivity {
 
                 for(int i = position; i < birdSong.length-1; i++) {
                     birdMd[i].setNextMediaPlayer(birdMd[i+1]);
-
+                    musicName.setText(birdTitle[i]);
                 }
-                musicName.setText(birdTitle[position]);
+
                 bird_isPlaying = true;
 
             }
         });
         //바다 노래 클릭했을때
-        
+
         seaList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+
+
+
                 if(bird_isPlaying) {
                     bird_isPlaying = false;
                     for(int i =0; i < birdMd.length; i++) {
@@ -137,8 +145,8 @@ public class UI_3_Musictab extends AppCompatActivity {
 
                 musicName.setText(seaTitle[position]);
 
-                sea_isPlaying = true;
 
+                sea_isPlaying = true;
             }
         });
 
