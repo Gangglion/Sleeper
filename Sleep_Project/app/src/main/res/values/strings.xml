@@ -4,11 +4,12 @@
     <string name="title_activity_u_i_6__settings_activity">UI_6_Settings_activity</string>
 
     <!-- Preference Titles -->
-    <string name="alert_header">알림 설정</string>
+    <string name="app_header">어플 설정</string>
     <string name="ques_header">모닝콜 문제</string>
 
     <!-- alert Preferences -->
     <string name="alert_title">알림 설정</string>
+    <string name="ring_kind">알림음 종류</string>
 
     <!-- ques Preferences -->
     <string name="ques_title">모닝콜 문제를 설정합니다.</string>
@@ -17,6 +18,12 @@
     <string name="ques_summary_off">모닝콜 울릴때 랜덤 문제가 나타나지 않습니다.</string>
     <!-- login Preference -->
     <string name="login_info_title">로그인 정보</string>
+    <string name="bright_setting">밝기 조절</string>
+    <string name="select_appLock">선택적 어플 잠금</string>
+
+    <string name="push_alert">어플 푸쉬알림을 설정합니다.</string>
+    <string name="push_summary_on">푸쉬알림 On</string>
+    <string name="push_summary_off">푸쉬알림 Off</string>
 
     <string name="title_activity_u_i_6__alarm__settings_activity">UI_6_Alarm_Settings_activity
     </string>

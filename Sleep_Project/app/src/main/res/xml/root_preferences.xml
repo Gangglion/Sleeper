@@ -7,17 +7,42 @@
         <intent android:targetPackage="com.example.sleep_project"
             android:targetClass="com.example.sleep_project.UI_5_AccountTab"/>
     </Preference>
-    <PreferenceCategory app:title="@string/alert_header">
-        <!-- 다른 레이아웃으로 넘길예정-->
+    <PreferenceCategory app:title="@string/app_header">
+        <!--밝기 조절-->
+        <Preference app:title="@string/bright_setting"
+            android:icon="@drawable/setting_bright">
+            <intent android:targetPackage="com.example.sleep_project"
+                android:targetClass="com.example.sleep_project.BrightControl"/>
+        </Preference>
+        <!--알림 설정-->
         <ListPreference
             android:icon="@drawable/setting_ring"
-            app:defaultValue="소리"
             app:entries="@array/alert_kindentry"
             app:entryValues="@array/alert_kindvalue"
+            app:defaultValue="소리"
             app:key="alert"
             app:title="@string/alert_title"
             app:useSimpleSummaryProvider="true" />
-
+        <!--푸쉬알림 설정-->
+        <SwitchPreferenceCompat
+            android:icon="@drawable/setting_ring"
+            app:defaultValue="true"
+            app:key="push"
+            app:summaryOff="@string/push_summary_off"
+            app:summaryOn="@string/push_summary_on"
+            app:title="@string/push_alert" />
+        <!--알림음 종류 설정-->
+        <Preference app:title="@string/ring_kind"
+            android:icon="@drawable/setting_ring">
+            <intent android:targetPackage="com.example.sleep_project"
+                android:targetClass="com.example.sleep_project.ringkind"/>
+        </Preference>
+        <!--선택적 어플 잠금-->
+        <Preference app:title="@string/select_appLock"
+            android:icon="@drawable/setting_selectapplock"><!--이미지 변경 예정-->
+            <intent android:targetPackage="com.example.sleep_project"
+                android:targetClass="com.example.sleep_project.selectapplock"/>
+        </Preference>
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/ques_header">
