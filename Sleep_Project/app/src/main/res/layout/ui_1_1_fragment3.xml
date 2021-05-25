@@ -5,9 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/pageMarginAndOffset"
-        android:layout_marginRight="@dimen/pageMarginAndOffset"
-        android:layout_height="@dimen/frameSize"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <ImageView

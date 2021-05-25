@@ -12,13 +12,14 @@
         android:id="@+id/frame"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/frameSize">
+        android:layout_height="match_parent">
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
-            android:clipToPadding="false"
-            android:clipChildren="false"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/frameSize" />
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
 
         <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator"

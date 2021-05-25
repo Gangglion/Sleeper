@@ -97,7 +97,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:id="@+id/musicName" />
+                android:id="@+id/musicName"
+                android:textColor="@color/white"
+                android:text=""
+                />
         </LinearLayout>
 
         <LinearLayout
