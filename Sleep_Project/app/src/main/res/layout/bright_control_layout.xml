@@ -9,7 +9,7 @@
         android:id="@+id/bright_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="35sp"
         android:layout_marginTop="30dp"
         android:text="밝기 조절"/>
     <TextView
