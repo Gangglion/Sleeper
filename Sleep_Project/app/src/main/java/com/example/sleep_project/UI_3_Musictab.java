@@ -239,9 +239,8 @@ public class UI_3_Musictab extends AppCompatActivity {
         account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_5_AccountTab.class);
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                     startActivity(intent);
-                    finish();
             }
         });
 

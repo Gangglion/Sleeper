@@ -66,7 +66,8 @@ public class UI_1_3_login_activity extends AppCompatActivity {
         nologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), UI_2_Maintimertab.class);
+//                Intent intent=new Intent(getApplicationContext(), UI_2_Maintimertab.class);
+                Intent intent=new Intent(getApplicationContext(), UI_3_Musictab.class);
                 startActivity(intent);
                 Toast.makeText(UI_1_3_login_activity.this, "로그인하지 않고 실행합니다", Toast.LENGTH_SHORT).show();
                 finish();

@@ -3,12 +3,15 @@ package com.example.sleep_project;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.AppOpsManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -36,6 +39,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,16 +61,22 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     int hour, minute, second,result, answer;
     TextView question,waketxt,sleepTimeView,breakTimeView;
 
+    String setsleepT; //상단바알림에 띄울 문자열 저장변수
+    NotificationCompat.Builder builder; //상단바 관련 builder
+    NotificationManager manager; //상단바 관련 manager
+
     Intent alarm_intent;
     EditText putanswer;
     //화면밝기 관련 선언부
     private WindowManager.LayoutParams params;
-    private float brightness; // 밝기값은 float형으로 저장되어 있습니다.
-    private float changeable; //변동되는 밝기값
+    private float brightness; // 기존밝기 저장
+    prefvalue prefOb; //설정해둔 값 가져오기 위한 SharedPreference 접근객체
+
     boolean checkTh=false; //스레드 무한루프 빠져나가기 위한 bool변수
     AudioManager mediaVol;
-    CheckPackageNameThread checkPackageNameThread;//가장 최근에 실행한 어플 가져오기 위한 스레드 선언문
+    //CheckPackageNameThread checkPackageNameThread;//가장 최근에 실행한 어플 가져오기 위한 스레드 선언문
     String running=""; //실행중인 어플 저장하는 String
+
     //특정조건에 맞춰 취소키 안먹게 하기
     @Override
     public void onBackPressed() {
@@ -79,6 +89,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefOb = new prefvalue();
         ///////
         AlarmQuestion alarmQ = new AlarmQuestion(); //알람화면 랜덤문제생성과 그에 따른 답 생성이 들어있는 클래스
         //상단 액션바 숨기는 코드
@@ -131,6 +142,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
 
         sleep_timePicker = findViewById(R.id.sleepTime); // 잠들시간 타임피커 설정
         alarm_timePicker = findViewById(R.id.breakTime); // 일어날시간 타임피커 설정
+
         /////////////////////////////////타임피커 색 변경을 위한 코드//////////////////////////////////////
         int hour_NumberPicker_id = Resources.getSystem().getIdentifier("hour", "id", "android");
         int minute_NumberPicker_id = Resources.getSystem().getIdentifier("minute", "id", "android");
@@ -223,16 +235,19 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                     str = "오후";
                     sleep_hour -= 12;
                     sleepTimeView.setText("취침 예약 시간 :" + str + " " + sleep_hour + "시 " + sleep_timePicker.getMinute()+"분");
+                    setsleepT = "취침 예약 시간 : " + str + " " + sleep_hour + "시 " + sleep_timePicker.getMinute()+"분";
                 }else {
                     sleepTimeView.setText("취침 예약 시간 :" + str + " " + sleep_hour + "시 " + sleep_timePicker.getMinute()+"분");
+                    setsleepT = "취침 예약 시간 :" + str + " " + sleep_hour + "시 " + sleep_timePicker.getMinute()+"분";
                 }
                 if(alarm_hour > 11) {
                     str = "오후";
                     alarm_hour -= 12;
-                    breakTimeView.setText("취침 예약 시간 :" + str + " " + alarm_hour + "시 " + alarm_timePicker.getMinute()+"분");
+                    breakTimeView.setText("기상 예약 시간 :" + str + " " + alarm_hour + "시 " + alarm_timePicker.getMinute()+"분");
                 }else {
-                    breakTimeView.setText("취침 예약 시간 :" + str + " " + alarm_hour + "시 " + alarm_timePicker.getMinute()+"분");
+                    breakTimeView.setText("기상 예약 시간 :" + str + " " + alarm_hour + "시 " + alarm_timePicker.getMinute()+"분");
                 }
+                showNoti(setsleepT);
             }
         });
         //////////////////////////////////////////////////////////화면이동 관련///////////////////////////////////////////////////////
@@ -280,8 +295,8 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
             }
         });
         //테스트용 임시 코드
-        checkPackageNameThread = new CheckPackageNameThread();
-        checkPackageNameThread.start();
+//        checkPackageNameThread = new CheckPackageNameThread();
+//        checkPackageNameThread.start();
     }
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -290,12 +305,10 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 //mediaVol.setStreamVolume(AudioManager.STREAM_RING,(int)(mediaVol.getStreamMaxVolume(AudioManager.STREAM_RING)*0),0); //java.lang.SecurityException: Not allowed to change Do Not Disturb state
                 mediaVol.setRingerMode(AudioManager.RINGER_MODE_SILENT); //음소거 하는 코드
                 // 최저 밝기로 설정
-                params.screenBrightness = 0.1f;
+                params.screenBrightness = (float)(prefOb.getbrightvalue()/100); //설정해둔 밝기로 화면 어둡게 함
+//                params.screenBrightness = 0.1f; //설정해둔 밝기로 화면 어둡게 함
                 // 밝기 설정 적용
                 getWindow().setAttributes(params);
-                changeable = params.screenBrightness; //변경된 밝기 저장
-                String nowbright = Float.toString(changeable);//바뀐 이후의 밝기 String 타입으로 저장
-                //Toast.makeText(UI_2_Maintimertab.this, nowbright, Toast.LENGTH_SHORT).show();
                 //화면 변환 관련
                 timelayout.setVisibility(View.INVISIBLE);
                 locklayout.setVisibility(View.VISIBLE);
@@ -380,7 +393,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     protected void onStop() {
         super.onStop();
         //생명주기 onStop()에서 백그라운드 상태면 true를 Logcat에 출력
-        Log.d("tmdguq",String.valueOf(isAppIsInBackground(this)));
+        //Log.d("tmdguq",String.valueOf(isAppIsInBackground(this)));
     }
 
     @Override
@@ -400,128 +413,152 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         super.onDestroy();
     }
 
+    //상단 알림띄우기 위함
+    public void showNoti(String sleepT){
+        builder = null;
+        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        builder = new NotificationCompat.Builder(this);
+        Intent intent = new Intent(this, UI_2_Maintimertab.class);
+        intent.putExtra("setSleepT",sleepT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //알림창 제목
+        builder.setContentTitle("Sleeper가 당신이 자기로 시간을 알려줍니다!");
+        //알림창 메시지
+        builder.setContentText(sleepT);
+        //알림창 아이콘
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        //알림창 터치시 상단 알림상태창에서 알림이 자동으로 삭제되게 합니다.
+        builder.setAutoCancel(false);
+        //pendingIntent를 builder에 설정 해줍니다.
+        // 알림창 터치시 인텐트가 전달할 수 있도록 해줍니다.
+        builder.setContentIntent(pendingIntent); Notification notification = builder.build();
+        //알림창 실행
+        manager.notify(1,notification);
+    }
+
     //이벤트가 백그라운드인지 확인하는 메소드 - 백그라운드면 true 반환
-    private boolean isAppIsInBackground(Context context) {
-        boolean isInBackground = true;
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
-            List<ActivityManager.RunningAppProcessInfo> runningProcesses = am.getRunningAppProcesses();
-            for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses) {
-                if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                    for (String activeProcess : processInfo.pkgList) {
-                        if (activeProcess.equals(context.getPackageName())) {
-                            isInBackground = false;
-                        }
-                    }
-                }
-            }
-        } else {
-            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-            ComponentName componentInfo = taskInfo.get(0).topActivity;
-            if (componentInfo.getPackageName().equals(context.getPackageName())) {
-                isInBackground = false;
-            }
-        }
-        return isInBackground;
-    }
+//    private boolean isAppIsInBackground(Context context) {
+//        boolean isInBackground = true;
+//        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+//        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+//            List<ActivityManager.RunningAppProcessInfo> runningProcesses = am.getRunningAppProcesses();
+//            for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses) {
+//                if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+//                    for (String activeProcess : processInfo.pkgList) {
+//                        if (activeProcess.equals(context.getPackageName())) {
+//                            isInBackground = false;
+//                        }
+//                    }
+//                }
+//            }
+//        } else {
+//            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+//            ComponentName componentInfo = taskInfo.get(0).topActivity;
+//            if (componentInfo.getPackageName().equals(context.getPackageName())) {
+//                isInBackground = false;
+//            }
+//        }
+//        return isInBackground;
+//    }
     //설치되있는 어플목록 리스트로 반환하는 메소드 - 현재 액티비티에서 사용하는 메소드는 아니지만 나중에 설정탭에서 사용가능
-    private ArrayList<String> installedApp(){
-        final PackageManager pm = getPackageManager();//설치된 모든 앱리스트 가져오기 위해 선언
-        List<ApplicationInfo> list=pm.getInstalledApplications(0); //설치된 정보를 받아와 리스트형식으로 저장
-        ArrayList<String> installed = new ArrayList<>();
-        for(ApplicationInfo applicationInfo : list){
-            String pName=applicationInfo.packageName;
-            installed.add(pName);
-        }
-        return installed;
-    }
+//    private ArrayList<String> installedApp(){
+//        final PackageManager pm = getPackageManager();//설치된 모든 앱리스트 가져오기 위해 선언
+//        List<ApplicationInfo> list=pm.getInstalledApplications(0); //설치된 정보를 받아와 리스트형식으로 저장
+//        ArrayList<String> installed = new ArrayList<>();
+//        for(ApplicationInfo applicationInfo : list){
+//            String pName=applicationInfo.packageName;
+//            installed.add(pName);
+//        }
+//        return installed;
+//    }
     //앱이 포그라운드 상태인지 확인하는 메소드
-    private static boolean isForeGroundEvent(UsageEvents.Event event) {
-        if(event == null) return false;
-        if(BuildConfig.VERSION_CODE >= 29)
-            return event.getEventType() == UsageEvents.Event.ACTIVITY_RESUMED;
-        return event.getEventType() == UsageEvents.Event.MOVE_TO_FOREGROUND;
-    }
+//    private static boolean isForeGroundEvent(UsageEvents.Event event) {
+//        if(event == null) return false;
+//        if(BuildConfig.VERSION_CODE >= 29)
+//            return event.getEventType() == UsageEvents.Event.ACTIVITY_RESUMED;
+//        return event.getEventType() == UsageEvents.Event.MOVE_TO_FOREGROUND;
+//    }
     //가장 마지막에 실행된 어플의 패키지를 리턴해주는 메소드
-    public static String getPackageName(@NonNull Context context) {
-
-        // UsageStatsManager 선언
-        UsageStatsManager usageStatsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
-
-        long lastRunAppTimeStamp = 0L;
-
-        // 얼마만큼의 시간동안 수집한 앱의 이름을 가져오는지 정하기 (begin ~ end 까지의 앱 이름을 수집한다)
-        final long INTERVAL = 10000;
-        final long end = System.currentTimeMillis();
-        // 1 minute ago
-        final long begin = end - INTERVAL;
-
-        //
-        LongSparseArray packageNameMap = new LongSparseArray<>();
-
-        // 수집한 이벤트들을 담기 위한 UsageEvents
-        final UsageEvents usageEvents = usageStatsManager.queryEvents(begin, end);
-
-        // 이벤트가 여러개 있을 경우 (최소 존재는 해야 hasNextEvent가 null이 아니니까)
-        while (usageEvents.hasNextEvent()) {
-
-            // 현재 이벤트를 가져오기
-            UsageEvents.Event event = new UsageEvents.Event();
-            usageEvents.getNextEvent(event);
-
-            // 현재 이벤트가 포그라운드 상태라면 = 현재 화면에 보이는 앱이라면
-            if(isForeGroundEvent(event)) {
-                // 해당 앱 이름을 packageNameMap에 넣는다.
-                packageNameMap.put(event.getTimeStamp(), event.getPackageName());
-                // 가장 최근에 실행 된 이벤트에 대한 타임스탬프를 업데이트 해준다.
-                if(event.getTimeStamp() > lastRunAppTimeStamp) {
-                    lastRunAppTimeStamp = event.getTimeStamp();
-                }
-            }
-        }
-        // 가장 마지막까지 있는 앱의 이름을 리턴해준다.
-        return packageNameMap.get(lastRunAppTimeStamp, "").toString();
-    }
+//    public static String getPackageName(@NonNull Context context) {
+//
+//        // UsageStatsManager 선언
+//        UsageStatsManager usageStatsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
+//
+//        long lastRunAppTimeStamp = 0L;
+//
+//        // 얼마만큼의 시간동안 수집한 앱의 이름을 가져오는지 정하기 (begin ~ end 까지의 앱 이름을 수집한다)
+//        final long INTERVAL = 10000;
+//        final long end = System.currentTimeMillis();
+//        // 1 minute ago
+//        final long begin = end - INTERVAL;
+//
+//        //
+//        LongSparseArray packageNameMap = new LongSparseArray<>();
+//
+//        // 수집한 이벤트들을 담기 위한 UsageEvents
+//        final UsageEvents usageEvents = usageStatsManager.queryEvents(begin, end);
+//
+//        // 이벤트가 여러개 있을 경우 (최소 존재는 해야 hasNextEvent가 null이 아니니까)
+//        while (usageEvents.hasNextEvent()) {
+//
+//            // 현재 이벤트를 가져오기
+//            UsageEvents.Event event = new UsageEvents.Event();
+//            usageEvents.getNextEvent(event);
+//
+//            // 현재 이벤트가 포그라운드 상태라면 = 현재 화면에 보이는 앱이라면
+//            if(isForeGroundEvent(event)) {
+//                // 해당 앱 이름을 packageNameMap에 넣는다.
+//                packageNameMap.put(event.getTimeStamp(), event.getPackageName());
+//                // 가장 최근에 실행 된 이벤트에 대한 타임스탬프를 업데이트 해준다.
+//                if(event.getTimeStamp() > lastRunAppTimeStamp) {
+//                    lastRunAppTimeStamp = event.getTimeStamp();
+//                }
+//            }
+//        }
+//        // 가장 마지막까지 있는 앱의 이름을 리턴해준다.
+//        return packageNameMap.get(lastRunAppTimeStamp, "").toString();
+//    }
     //앱 실행기록을 위한 권한 체크
-    private boolean checkPermission(){
-        boolean granted = false;
-        AppOpsManager appOps = (AppOpsManager) getApplicationContext()
-                .getSystemService(Context.APP_OPS_SERVICE);
-        int mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
-                android.os.Process.myUid(), getApplicationContext().getPackageName());
-        if (mode == AppOpsManager.MODE_DEFAULT) {
-            granted = (getApplicationContext().checkCallingOrSelfPermission(
-                    android.Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED);
-        }
-        else {
-            granted = (mode == AppOpsManager.MODE_ALLOWED);
-        }
-        return granted;
-    }
+//    private boolean checkPermission(){
+//        boolean granted = false;
+//        AppOpsManager appOps = (AppOpsManager) getApplicationContext()
+//                .getSystemService(Context.APP_OPS_SERVICE);
+//        int mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
+//                android.os.Process.myUid(), getApplicationContext().getPackageName());
+//        if (mode == AppOpsManager.MODE_DEFAULT) {
+//            granted = (getApplicationContext().checkCallingOrSelfPermission(
+//                    android.Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED);
+//        }
+//        else {
+//            granted = (mode == AppOpsManager.MODE_ALLOWED);
+//        }
+//        return granted;
+//    }
     //가장 최근에 실행한 어플의 패키지를 주기적으로 리턴해주기 위한 스레드
-    private class CheckPackageNameThread extends Thread{
-        public void run(){
-            while(true){
-                if(!checkPermission()) continue;
-                running = getPackageName(getApplicationContext());
-                Log.d("tmdguq running",running);
-                //해당 어플이 아닌 다른 어플이 실행되었을 경우 종료 - 현재 if문이 작동하지 않는다...
-                if(!running.equals("")){
-                    Log.d("tmdguq alert",getPackageName(getApplicationContext())+"실행되고있습니다");
-                    //am.killBackgroundProcesses(running);
-                    ActivityManager am = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
-
-                    am.restartPackage( getPackageName() );
-                }else
-                {
-
-                }
-                try {
-                    sleep(1500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+//    private class CheckPackageNameThread extends Thread{
+//        public void run(){
+//            while(true){
+//                if(!checkPermission()) continue;
+//                running = getPackageName(getApplicationContext());
+//                Log.d("tmdguq running",running);
+//                //해당 어플이 아닌 다른 어플이 실행되었을 경우 종료 - 현재 if문이 작동하지 않는다...
+//                if(!running.equals("")){
+//                    Log.d("tmdguq alert",getPackageName(getApplicationContext())+"실행되고있습니다");
+//                    //am.killBackgroundProcesses(running);
+//                    ActivityManager am = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
+//
+//                    am.restartPackage( getPackageName() );
+//                }else
+//                {
+//
+//                }
+//                try {
+//                    sleep(1500);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 }

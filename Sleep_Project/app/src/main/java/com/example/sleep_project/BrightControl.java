@@ -3,7 +3,9 @@ package com.example.sleep_project;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 
 public class BrightControl extends AppCompatActivity {
     Button settingokbtn;
+    int brightValue;
+    prefvalue prefOb = new prefvalue();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,12 +26,15 @@ public class BrightControl extends AppCompatActivity {
         actionBar.hide();
 
         SeekBar brightbar = findViewById(R.id.seekbar_control);
+        brightbar.setProgress(prefOb.getbrightvalue());
+
         settingokbtn = findViewById(R.id.brightset_okbtn);
 
         brightbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                setBrightness(progress);
+                brightValue = progress;
+                //Log.d("progress",String.valueOf(brightValue));
             }
 
             @Override
@@ -44,20 +51,12 @@ public class BrightControl extends AppCompatActivity {
         settingokbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "밝기값이 sharedPreference에 저장됩니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "밝기값이 저장됩니다.", Toast.LENGTH_SHORT).show();
+                SharedPreferences.Editor editor = prefOb.pref.edit();
+                editor.putInt("bright",brightValue);
+                editor.commit();
                 finish();
             }
         });
-    }
-    private void setBrightness(int value){
-        //시크바에 저장한 밝기 값이 sharedPreference에 저장되는 메소드로 수정할 예정
-        if(value <0){
-            value = 0;
-        }else if(value>100){
-            value=100;
-        }
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.screenBrightness = (float)value / 100;
-        getWindow().setAttributes(params);
     }
 }

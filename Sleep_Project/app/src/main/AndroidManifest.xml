@@ -29,6 +29,7 @@
         <activity android:name=".UI_1_4_UserInfo_Activity" />
         <activity
             android:name=".SettingsActivity"
+            android:parentActivityName=".UI_2_Maintimertab"
             android:label="@string/title_activity_settings" />
 
         <service

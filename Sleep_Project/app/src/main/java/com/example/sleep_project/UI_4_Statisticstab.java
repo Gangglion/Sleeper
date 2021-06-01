@@ -1,8 +1,10 @@
 package com.example.sleep_project;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,11 +20,17 @@ public class UI_4_Statisticstab extends AppCompatActivity {
     Button main, music, statistics, account,menuOpen;
     Intent intent;
     MenuItem menuItem;
+    prefvalue prefOb;
     //어떤 통계인지 텍스트뷰를 통해서 알려줌
     TextView statisticsTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        prefOb = new prefvalue();
+//        int tempBright = prefOb.getbrightvalue();
+//        Log.d("prefbright",String.valueOf(tempBright));
+
+
         setContentView(R.layout.statistics1);
         statisticsTitle = (TextView)findViewById(R.id.statisticsName);
         statisticsTitle.setText("수면시간 통계");
