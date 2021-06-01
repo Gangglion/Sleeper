@@ -91,8 +91,16 @@ public class UI_3_Musictab extends AppCompatActivity {
         birdList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
+                    //새노래가 실행중일때 다른 새노래 클릭시 실행중인 새노래 정지하고 새로 클릭한 새노래 실행
+                   if(bird_isPlaying) {
+                       bird_isPlaying = false;
+                       for(int i =0; i < birdMd.length; i++) {
+                           currentMediaPlayPosition = birdMd[i].getCurrentPosition();
+                           birdMd[i].stop();
+                           birdMd[i].release();
+                       }
+                   }
+                //바다노래 실행하고있으면 바다노래 정지
                 if(sea_isPlaying) {
                     sea_isPlaying = false;
                     for(int i = 0; i < seaMd.length; i++) {
@@ -105,10 +113,10 @@ public class UI_3_Musictab extends AppCompatActivity {
                     birdMd[i] = MediaPlayer.create(UI_3_Musictab.this, birdSong[i]);
                 }
 
-
+                birdMd[position].start();
                 for(int i = position; i < birdSong.length-1; i++) {
                     birdMd[i].setNextMediaPlayer(birdMd[i+1]);
-                    musicName.setText(birdTitle[i]);
+
                 }
 
                 bird_isPlaying = true;
@@ -121,11 +129,14 @@ public class UI_3_Musictab extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-
-
-
-
+                if(sea_isPlaying) {
+                    sea_isPlaying = false;
+                    for(int i = 0; i < seaMd.length; i++) {
+                        currentMediaPlayPosition = seaMd[i].getCurrentPosition();
+                        seaMd[i].stop();
+                        seaMd[i].release();
+                    }
+                }
                 if(bird_isPlaying) {
                     bird_isPlaying = false;
                     for(int i =0; i < birdMd.length; i++) {
