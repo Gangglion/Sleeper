@@ -91,6 +91,8 @@ public class UI_3_Musictab extends AppCompatActivity {
         birdList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
                 if(sea_isPlaying) {
                     sea_isPlaying = false;
                     for(int i = 0; i < seaMd.length; i++) {
@@ -102,7 +104,7 @@ public class UI_3_Musictab extends AppCompatActivity {
                 for(int i = 0; i < birdSong.length; i++) {
                     birdMd[i] = MediaPlayer.create(UI_3_Musictab.this, birdSong[i]);
                 }
-                birdMd[position].start();
+
 
                 for(int i = position; i < birdSong.length-1; i++) {
                     birdMd[i].setNextMediaPlayer(birdMd[i+1]);

@@ -24,12 +24,14 @@
                 android:layout_height="wrap_content"
                 android:textSize="45dp"
                 android:gravity="center"
-                android:id="@+id/sleepTimeView"/>
+                android:id="@+id/sleepTimeView"
+                android:textColor="@color/white"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="45dp"
                 android:gravity="center"
+                android:textColor="@color/white"
                 android:id="@+id/breakTimeView"/>
         </LinearLayout>
         <!--잠금화면 invisible-->

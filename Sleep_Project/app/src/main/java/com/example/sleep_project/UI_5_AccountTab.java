@@ -66,6 +66,7 @@ public class UI_5_AccountTab extends AppCompatActivity {
             String dbjob;
             user_email.setText(email);
             user_name.setText(name);
+            Toast.makeText(UI_5_AccountTab.this, "로그인 되었습니다!", Toast.LENGTH_SHORT).show();
             sign_out.setText("로그아웃");
             Picasso.get().load(aboutLogin.getUser().getPhotoUrl()).centerInside().fit().into(user_profile);
         }else{
@@ -85,7 +86,7 @@ public class UI_5_AccountTab extends AppCompatActivity {
                     finish();
                 }else{
                     signIn();
-                    Toast.makeText(UI_5_AccountTab.this, "로그인 되었습니다!", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
