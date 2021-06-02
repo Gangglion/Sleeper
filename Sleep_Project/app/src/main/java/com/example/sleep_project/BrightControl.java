@@ -17,6 +17,8 @@ public class BrightControl extends AppCompatActivity {
     Button settingokbtn;
     int brightValue;
     prefvalue prefOb = new prefvalue();
+    TextView brighttext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,23 +30,27 @@ public class BrightControl extends AppCompatActivity {
         SeekBar brightbar = findViewById(R.id.seekbar_control);
         brightbar.setProgress(prefOb.getbrightvalue());
 
+        TextView brighttext = findViewById(R.id.bright_text3);
+
         settingokbtn = findViewById(R.id.brightset_okbtn);
+
 
         brightbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 brightValue = progress;
                 //Log.d("progress",String.valueOf(brightValue));
+                brighttext.setText("a");
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                brighttext.setText("b");
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                brighttext.setText("c");
             }
         });
 

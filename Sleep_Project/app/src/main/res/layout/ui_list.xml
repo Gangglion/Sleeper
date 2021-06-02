@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/backgroundimg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UI_2_Maintimertab"
@@ -16,12 +17,15 @@
         >
 
     <LinearLayout
+        android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
         >
         <TextView
+            android:text="gg"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sleepCnt"

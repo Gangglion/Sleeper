@@ -20,6 +20,14 @@
         android:layout_marginTop="10dp"
         android:text="※수면모드 실행시 화면이 어두워지는 정도를 설정합니다."
         android:textSize="15sp"/>
+    <TextView
+        android:id="@+id/bright_text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bright_text"
+        android:layout_marginTop="40dp"
+        android:text="현재 밝기 : "
+        android:textSize="15sp"/>
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,6 +35,7 @@
         android:layout_marginTop="30dp"
         android:id="@+id/seekbar_control"
         android:max="100"/>
+
     <Button
         android:id="@+id/brightset_okbtn"
         android:layout_width="wrap_content"
@@ -34,6 +43,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:text="설정 완료"/>
+
+
 
 
 </RelativeLayout>
