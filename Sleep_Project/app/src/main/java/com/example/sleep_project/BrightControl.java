@@ -30,7 +30,7 @@ public class BrightControl extends AppCompatActivity {
         SeekBar brightbar = findViewById(R.id.seekbar_control);
         brightbar.setProgress(prefOb.getbrightvalue());
 
-        TextView brighttext = findViewById(R.id.bright_text3);
+        TextView brighttext = findViewById(R.id.bright_text4);
 
         settingokbtn = findViewById(R.id.brightset_okbtn);
 
@@ -40,17 +40,17 @@ public class BrightControl extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 brightValue = progress;
                 //Log.d("progress",String.valueOf(brightValue));
-                brighttext.setText("a");
+                brighttext.setText(String.valueOf(seekBar.getProgress()));
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                brighttext.setText("b");
+                brighttext.setText(String.valueOf(seekBar.getProgress()));
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                brighttext.setText("c");
+                brighttext.setText(String.valueOf(seekBar.getProgress()));
             }
         });
 

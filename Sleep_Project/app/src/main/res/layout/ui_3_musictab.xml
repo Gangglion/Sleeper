@@ -37,18 +37,20 @@
 
     </com.google.android.material.tabs.TabLayout>
     <FrameLayout
+        android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
         <LinearLayout
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bird_layout"
             android:orientation="vertical"
             android:visibility="visible">
             <ListView
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/birdList"
@@ -56,12 +58,14 @@
 
         </LinearLayout>
             <LinearLayout
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/sea_layout"
                 android:orientation="vertical"
                 android:visibility="invisible">
                 <ListView
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/seaList">
@@ -70,16 +74,18 @@
             </LinearLayout>
 
             <LinearLayout
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/wind_layout"
                 android:orientation="vertical"
                 android:visibility="invisible">
+
                 <ListView
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/windList"
-
                     />
             </LinearLayout>
     </FrameLayout>
@@ -88,6 +94,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"

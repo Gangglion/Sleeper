@@ -5,35 +5,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BrightControl">
+
     <TextView
         android:id="@+id/bright_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="35sp"
         android:layout_marginTop="30dp"
-        android:text="밝기 조절"/>
+        android:layout_marginLeft="20dp"
+        android:text="밝기 조절"
+        android:textColor="@color/black"/>
     <TextView
         android:id="@+id/bright_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/bright_text"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
         android:text="※수면모드 실행시 화면이 어두워지는 정도를 설정합니다."
+        android:textColor="@color/black"
         android:textSize="15sp"/>
+    <TextView
+        android:id="@+id/bright_text4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bright_text"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="95dp"
+        android:text="0"
+        android:textSize="15sp"
+        android:textColor="@color/black"/>
     <TextView
         android:id="@+id/bright_text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/bright_text"
-        android:layout_marginTop="40dp"
-        android:text="현재 밝기 : "
-        android:textSize="15sp"/>
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="25dp"
+        android:text="화면 밝기 :"
+        android:textSize="15sp"
+        android:textColor="@color/black"/>
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/bright_text2"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:id="@+id/seekbar_control"
+        android:layout_marginLeft="20dp"
         android:max="100"/>
 
     <Button
@@ -44,7 +62,13 @@
         android:layout_alignParentBottom="true"
         android:text="설정 완료"/>
 
-
+    <ImageView
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bulb"
+        android:scaleX="0.5"
+        android:scaleY="0.4"/>
 
 
 </RelativeLayout>
