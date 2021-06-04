@@ -23,6 +23,8 @@ public class UI_List extends AppCompatActivity {
         String[] sList = {"10:30","11:00","11:30"};
         ArrayAdapter<String>  sleepAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, sList);
         sleepList.setAdapter(sleepAdapter);
+        sleepAdapter = new ArrayAdapter<String>(this,R.layout.ui_3_maintimerlist_color,sList);
+        sleepList.setAdapter(sleepAdapter);
         sleepList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -33,6 +35,8 @@ public class UI_List extends AppCompatActivity {
         breakList = (ListView)findViewById(R.id.breakList);
         String[] bList = {"10:00","14:00"};
         ArrayAdapter<String> breakAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, bList);
+        breakList.setAdapter(breakAdapter);
+        breakAdapter = new ArrayAdapter<String>(this,R.layout.ui_3_maintimerlist_color,bList);
         breakList.setAdapter(breakAdapter);
 
         breakList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
