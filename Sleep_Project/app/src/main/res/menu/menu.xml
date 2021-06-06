@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="수면시간 통계"
+        android:id="@+id/sleepTime"
+        />
+    <item
+        android:title="앱 사용 통계"
+        android:id="@+id/appUseTime"
+        />
+    <item
+        android:title="수면시간 비교"
+        android:id="@+id/sleepTimecomparison"
+        />
+</menu>

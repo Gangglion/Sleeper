@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI_2_Maintimertab"
+    android:orientation="vertical"
+    style="@style/backgroundimg"
+    android:gravity="center_horizontal">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabTextColor="@color/white"
+
+        >
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bird"
+            android:text="새"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sea"
+            android:text="바다" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wind"
+            android:text="바람"
+
+            />
+
+    </com.google.android.material.tabs.TabLayout>
+    <FrameLayout
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bird_layout"
+            android:orientation="vertical"
+            android:visibility="visible">
+            <ListView
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/birdList"
+                />
+
+        </LinearLayout>
+            <LinearLayout
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sea_layout"
+                android:orientation="vertical"
+                android:visibility="invisible">
+                <ListView
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/seaList">
+
+                </ListView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/wind_layout"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <ListView
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/windList"
+                    />
+            </LinearLayout>
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:id="@+id/musicName"
+                android:textColor="@color/white"
+                android:text=""
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right">
+
+            <Button
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:id="@+id/musicStart"
+                android:textColor="#FFFFFF"
+                android:text=">" />
+
+            <Button
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:id="@+id/musicStop"
+                android:textColor="#FFFFFF"
+                android:text="||" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/main"
+            android:layout_weight="1"
+            android:text="메인기능"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/music"
+            android:layout_weight="1"
+            android:text="음악기능"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/statistics"
+            android:layout_weight="1"
+            android:text="통계기능"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000" />
+
+        <Button
+            android:id="@+id/accounttab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="계정관리"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00000000" />
+    </LinearLayout>
+
+
+</LinearLayout>
