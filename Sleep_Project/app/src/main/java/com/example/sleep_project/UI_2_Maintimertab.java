@@ -45,6 +45,7 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -299,7 +300,14 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         checkPackageNameThread = new CheckPackageNameThread();
         checkPackageNameThread.start();
     }
-    Handler handler = new Handler() {
+
+    private final Handler handler = new Handler();
+    private class Myhandler extends Handler{
+        private final WeakReference<UI_2_Maintimertab> weakReference;
+
+        public Myhandler(UI_2_Maintimertab activity){
+            this.weakReference = new WeakReference<>(activity);
+        }
         public void handleMessage(Message msg) {
             if (hour == sleep_timePicker.getHour() &&minute == sleep_timePicker.getMinute()) {
                 //최저 음량으로 설정
@@ -307,7 +315,6 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 mediaVol.setRingerMode(AudioManager.RINGER_MODE_SILENT); //음소거 하는 코드
                 // 최저 밝기로 설정
                 params.screenBrightness = (float)(prefOb.getbrightvalue()/100); //설정해둔 밝기로 화면 어둡게 함
-//                params.screenBrightness = 0.1f; //설정해둔 밝기로 화면 어둡게 함
                 // 밝기 설정 적용
                 getWindow().setAttributes(params);
                 //화면 변환 관련
@@ -346,9 +353,8 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
             } else {
                 Log.i("실패", "실패");
             }
-
         }
-    };
+    }
     @Override
     public void run() {
         hour = cal.get(cal.HOUR_OF_DAY);
@@ -542,20 +548,21 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
             while(true){
                 if(!checkPermission()) continue;
                 running = getPackageName(getApplicationContext());
-                Log.d("tmdguq running",running);
+                Log.d("tmdguq_running",running);
                 //해당 어플이 아닌 다른 어플이 실행되었을 경우 종료 - 현재 if문이 작동하지 않는다...
                 if(!running.equals("")){
-                    Log.d("tmdguq alert",getPackageName(getApplicationContext())+"실행되고있습니다");
+                    Log.d("tmdguq_alert",running +"실행되고있습니다");
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                        if(android.provider.Settings.canDrawOverlays(context) && !getPackageName(getApplicationContext()).equals("Sleep_Project")){
-                            Intent sIntent = new Intent(context,UI_2_Maintimertab.class);
-                            sIntent.putExtra("action","tts");
-
-                            sIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(sIntent);
+                        if(android.provider.Settings.canDrawOverlays(context)){
+                            if(!running.equals("com.example.sleep_project")){
+                                Log.d("check","슬립프로젝트가 실행되고있지 않을때 내부 동작중");
+                                Intent sIntent = new Intent(context,UI_2_Maintimertab.class);
+                                sIntent.putExtra("action","tts");
+                                sIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(sIntent);
+                            }
                         }
-                        //Toast.makeText((getApplicationContext()),"잠금상태에서는 다른 어플을 사용할 수 없습니다!!!",Toast.LENGTH_SHORT).show();
                     }
                 }
                 else
@@ -563,7 +570,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
 
                 }
                 try {
-                    sleep(1000);
+                    sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

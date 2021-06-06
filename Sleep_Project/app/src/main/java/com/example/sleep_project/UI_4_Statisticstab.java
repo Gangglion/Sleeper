@@ -26,11 +26,6 @@ public class UI_4_Statisticstab extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        prefOb = new prefvalue();
-//        int tempBright = prefOb.getbrightvalue();
-//        Log.d("prefbright",String.valueOf(tempBright));
-
-
         setContentView(R.layout.statistics1);
         statisticsTitle = (TextView)findViewById(R.id.statisticsName);
         statisticsTitle.setText("수면시간 통계");
@@ -102,7 +97,7 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_5_AccountTab.class);
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
                 finish();
             }
