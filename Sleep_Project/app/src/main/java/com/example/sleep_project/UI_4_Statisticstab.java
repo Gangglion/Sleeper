@@ -1,12 +1,8 @@
 package com.example.sleep_project;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +12,19 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+
+import java.util.ArrayList;
+
 public class UI_4_Statisticstab extends AppCompatActivity {
+
+    BarChart barChart;
+    TextView minuteTextview;
+
     Button main, music, statistics, account,menuOpen;
     Intent intent;
     MenuItem menuItem;
@@ -29,9 +37,12 @@ public class UI_4_Statisticstab extends AppCompatActivity {
 //        prefOb = new prefvalue();
 //        int tempBright = prefOb.getbrightvalue();
 //        Log.d("prefbright",String.valueOf(tempBright));
-
-
         setContentView(R.layout.statistics1);
+
+        barChart = (BarChart) findViewById(R.id.bar_chart);
+        BarInit();
+
+
         statisticsTitle = (TextView)findViewById(R.id.statisticsName);
         statisticsTitle.setText("수면시간 통계");
         //상단 액션바 숨기는 코드
@@ -76,9 +87,6 @@ public class UI_4_Statisticstab extends AppCompatActivity {
 
 
 
-
-
-
         statistics.setBackgroundColor(Color.GRAY);
         //메인 탭으로 이동
         main.setOnClickListener(new View.OnClickListener() {
@@ -108,4 +116,30 @@ public class UI_4_Statisticstab extends AppCompatActivity {
             }
         });
     }
+    private void BarInit() {
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        barEntries.add(new BarEntry(0f, 44f));
+        barEntries.add(new BarEntry(1f, 88f));
+        barEntries.add(new BarEntry(2f, 41f));
+        barEntries.add(new BarEntry(3f, 85f));
+        barEntries.add(new BarEntry(4f, 96f));
+        barEntries.add(new BarEntry(5f, 25f));
+        barEntries.add(new BarEntry(6f, 10f));
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Dates");
+        ArrayList<String> theDates = new ArrayList<>();
+        theDates.add("Mars");
+        theDates.add("Avril");
+        theDates.add("Dec");
+        theDates.add("May");
+        theDates.add("OCt");
+        theDates.add("Nov");
+        theDates.add("Fir");
+        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(theDates));
+        BarData theData = new BarData(barDataSet);//----Line of error
+        barChart.setData(theData);
+        barChart.setTouchEnabled(true);
+        barChart.setDragEnabled(true);
+        barChart.setScaleEnabled(true);
+    }
+
 }

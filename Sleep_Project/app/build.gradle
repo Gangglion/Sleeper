@@ -50,6 +50,9 @@ dependencies {
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    // 위의 의존성 그래프 사용 위한 추가
+
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
