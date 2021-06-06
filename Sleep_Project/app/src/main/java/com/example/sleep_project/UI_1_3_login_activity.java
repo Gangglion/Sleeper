@@ -54,6 +54,7 @@ public class UI_1_3_login_activity extends AppCompatActivity {
             //테스트용으로 만든 intent
 //            Intent intent = new Intent(getApplication(), UI_2_Maintimertab.class);
             Intent intent = new Intent(getApplication(), UI_4_Statisticstab.class);
+            //Intent intent = new Intent(getApplication(), UI_2_Maintimertab.class);
             startActivity(intent);
             finish();
         }

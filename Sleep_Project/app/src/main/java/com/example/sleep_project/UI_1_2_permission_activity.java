@@ -33,6 +33,7 @@ public class UI_1_2_permission_activity extends AppCompatActivity {
                 && !mNotificationManager.isNotificationPolicyAccessGranted()) {
             Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
             startActivity(intent);
+        }else{
         }
         //앱 실행기록을 위한 권한이 부여되어있는지 확인 후 되어있지 않다면 권한 설정 화면으로 이동
         if(!checkPermission()) {
