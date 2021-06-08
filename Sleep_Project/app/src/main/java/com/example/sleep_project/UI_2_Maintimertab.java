@@ -359,7 +359,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
             }
         }
     }
-//        checkPackageNameThread = new CheckPackageNameThread();
+    //        checkPackageNameThread = new CheckPackageNameThread();
 //        checkPackageNameThread.start();
     @Override
     public void run() {

@@ -26,11 +26,11 @@ public class UI_3_Musictab extends AppCompatActivity {
     int temp = 0;
     int prePosition = 0;
     TabLayout tabLayout;
-    LinearLayout bird_layout,sea_layout,wind_layout;
+    LinearLayout rain_layout,sea_layout,wind_layout;
     Context context;
-    ListView birdList,seaList,windList;
+    ListView rainList,seaList,windList;
 
-    boolean bird_isPlaying,sea_isPlaying,wind_isPlaying;
+    boolean rain_isPlaying,sea_isPlaying,wind_isPlaying;
 
 
     //버튼이 여러개 있으나 노래가 3개라 9개만 해놈.
@@ -56,31 +56,27 @@ public class UI_3_Musictab extends AppCompatActivity {
         musicName = (TextView)findViewById(R.id.musicName);
 
         //노래에 대한 리스트 목록
-        birdList = (ListView)findViewById(R.id.birdList);
+        rainList = (ListView)findViewById(R.id.rainList);
         seaList = (ListView)findViewById(R.id.seaList);
         windList = (ListView)findViewById(R.id.windList);
 
 
 
         //새 노래와 관련된 부분
-        int[] birdSong = {R.raw.song1, R.raw.song2, R.raw.song3, R.raw.song1, R.raw.song2, R.raw.song3,
-                R.raw.song1, R.raw.song2, R.raw.song3, R.raw.song1, R.raw.song2, R.raw.song3,
-                R.raw.song1, R.raw.song2, R.raw.song3, R.raw.song1, R.raw.song2, R.raw.song3};
-        String[] birdTitle = {"새노래1","새노래2","새노래3","새노래4","새노래5","새노래6",
-                "새노래7","새노래8","새노래9","새노래10","새노래11"
-                ,"새노래12","새노래13","새노래14","새노래15","새노래16","새노래17","새노래18"};
-        ArrayAdapter<String> birdAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,birdTitle);
-        birdList.setAdapter(birdAdapter);
-        birdAdapter = new ArrayAdapter<String>(this,R.layout.ui_3_musictab_color,birdTitle);
-        birdList.setAdapter(birdAdapter);
-        MediaPlayer[] birdMd = new MediaPlayer[birdSong.length];
+        int[] rainSong = {R.raw.asphalt_rain,R.raw.eaves_under_rain,R.raw.large_rain_lightning,
+                R.raw.mountain_path_rain,R.raw.small_field_rain,
+                R.raw.boardblock_rain,R.raw.valley_rain
+                ,R.raw.ruralarea_rain};
+        String[] rainTitle = {"아스팔트 위에 내리는 비","처마밑 비","굵은비와 번개","산 오솔길","자잘밭","보드블록 위에 내리는 비","계곡에 내리는 비","시골에서 내리는 비"};
+        ArrayAdapter<String> rainAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,rainTitle);
+        rainList.setAdapter(rainAdapter);
+        rainAdapter = new ArrayAdapter<String>(this,R.layout.ui_3_musictab_color,rainTitle);
+        rainList.setAdapter(rainAdapter);
+        MediaPlayer[] rainMd = new MediaPlayer[rainSong.length];
         //바다 노래
-        int[] seaSong = {R.raw.song3, R.raw.song2, R.raw.song1, R.raw.song3, R.raw.song2, R.raw.song1,
-                R.raw.song3, R.raw.song2, R.raw.song1, R.raw.song3, R.raw.song2, R.raw.song1,
-                R.raw.song3, R.raw.song2, R.raw.song1, R.raw.song3, R.raw.song2, R.raw.song1};
-        String[] seaTitle = {"바다노래1","바다노래2","바다노래3","바다노래4","바다노래5","바다노래6",
-                "바다노래7","바다노래8","바다노래9","바다노래10","바다노래11"
-                ,"바다노래12","바다노래13","바다노래14","바다노래15","바다노래16","바다노래17","바다노래18"};
+        int[] seaSong = {R.raw.sand_beach_waves,R.raw.mongdol_beach_waves1,R.raw.mongdol_beach_waves2,R.raw.rock_beach_waves,R.raw.gravel_beach_waves,
+                        R.raw.getrock_beach_waves,R.raw.big_wave};
+        String[] seaTitle = {"모래 해변가 파도","몽돌 해변가 파도(1)","몽돌 해변가 파도(2)","바위 해변가 파도","자갈 해변가 파도","겟바위의 파도", "큰 파도"};
         ArrayAdapter<String> seaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,seaTitle);
         seaList.setAdapter(seaAdapter);
         seaAdapter = new ArrayAdapter<String>(this,R.layout.ui_3_musictab_color,seaTitle);
@@ -88,16 +84,16 @@ public class UI_3_Musictab extends AppCompatActivity {
 
         MediaPlayer[] seaMd = new MediaPlayer[seaSong.length];
         //새 노래 클릭했을때
-        birdList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        rainList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //새노래가 실행중일때 다른 새노래 클릭시 실행중인 새노래 정지하고 새로 클릭한 새노래 실행
-                   if(bird_isPlaying) {
-                       bird_isPlaying = false;
-                       for(int i =0; i < birdMd.length; i++) {
-                           currentMediaPlayPosition = birdMd[i].getCurrentPosition();
-                           birdMd[i].stop();
-                           birdMd[i].release();
+                   if(rain_isPlaying) {
+                       rain_isPlaying = false;
+                       for(int i =0; i < rainMd.length; i++) {
+                           currentMediaPlayPosition = rainMd[i].getCurrentPosition();
+                           rainMd[i].stop();
+                           rainMd[i].release();
                        }
                    }
                 //바다노래 실행하고있으면 바다노래 정지
@@ -109,17 +105,17 @@ public class UI_3_Musictab extends AppCompatActivity {
                         seaMd[i].release();
                     }
                 }
-                for(int i = 0; i < birdSong.length; i++) {
-                    birdMd[i] = MediaPlayer.create(UI_3_Musictab.this, birdSong[i]);
+                for(int i = 0; i < rainSong.length; i++) {
+                    rainMd[i] = MediaPlayer.create(UI_3_Musictab.this, rainSong[i]);
                 }
 
-                birdMd[position].start();
-                for(int i = position; i < birdSong.length-1; i++) {
-                    birdMd[i].setNextMediaPlayer(birdMd[i+1]);
+                rainMd[position].start();
+                for(int i = position; i < rainSong.length-1; i++) {
+                    rainMd[i].setNextMediaPlayer(rainMd[i+1]);
 
                 }
 
-                bird_isPlaying = true;
+                rain_isPlaying = true;
 
             }
         });
@@ -137,12 +133,12 @@ public class UI_3_Musictab extends AppCompatActivity {
                         seaMd[i].release();
                     }
                 }
-                if(bird_isPlaying) {
-                    bird_isPlaying = false;
-                    for(int i =0; i < birdMd.length; i++) {
-                        currentMediaPlayPosition = birdMd[i].getCurrentPosition();
-                        birdMd[i].stop();
-                        birdMd[i].release();
+                if(rain_isPlaying) {
+                    rain_isPlaying = false;
+                    for(int i =0; i < rainMd.length; i++) {
+                        currentMediaPlayPosition = rainMd[i].getCurrentPosition();
+                        rainMd[i].stop();
+                        rainMd[i].release();
                     }
                 }
 
@@ -170,12 +166,12 @@ public class UI_3_Musictab extends AppCompatActivity {
         musicPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bird_isPlaying) {
-                    for (int i = 0; i < birdMd.length; i++) {
+                if(rain_isPlaying) {
+                    for (int i = 0; i < rainMd.length; i++) {
 
 
-                        currentMediaPlayPosition = birdMd[i].getCurrentPosition();
-                        birdMd[i].pause();
+                        currentMediaPlayPosition = rainMd[i].getCurrentPosition();
+                        rainMd[i].pause();
                     }
 
                 }else if(sea_isPlaying) {
@@ -192,12 +188,12 @@ public class UI_3_Musictab extends AppCompatActivity {
         musicRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bird_isPlaying) {
-                    for (int i = 0; i < birdMd.length; i++) {
-                        if (birdMd[i] != null && !birdMd[i].isPlaying()) {
+                if (rain_isPlaying) {
+                    for (int i = 0; i < rainMd.length; i++) {
+                        if (rainMd[i] != null && !rainMd[i].isPlaying()) {
 
-                            birdMd[i].start();
-                            birdMd[i].seekTo(currentMediaPlayPosition);
+                            rainMd[i].start();
+                            rainMd[i].seekTo(currentMediaPlayPosition);
                         }
                     }
                 } else if (sea_isPlaying) {
@@ -216,7 +212,7 @@ public class UI_3_Musictab extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.addOnTabSelectedListener(onTabSelectedListener);
         //새,바다,바람에 대한 노래들 출력되는곳
-        bird_layout = findViewById(R.id.bird_layout);
+        rain_layout = findViewById(R.id.rain_layout);
         sea_layout = findViewById(R.id.sea_layout);
         wind_layout = findViewById(R.id.wind_layout);
 
@@ -283,16 +279,16 @@ public class UI_3_Musictab extends AppCompatActivity {
             case 0 :
                 sea_layout.setVisibility(View.INVISIBLE);
                 wind_layout.setVisibility(View.INVISIBLE);
-                bird_layout.setVisibility(View.VISIBLE);
-                birdList.setVisibility(View.VISIBLE);
+                rain_layout.setVisibility(View.VISIBLE);
+                rainList.setVisibility(View.VISIBLE);
                 seaList.setVisibility(View.INVISIBLE);
                 windList.setVisibility(View.INVISIBLE);
                 break;
             case 1:
                 sea_layout.setVisibility(View.VISIBLE);
                 wind_layout.setVisibility(View.INVISIBLE);
-                bird_layout.setVisibility(View.INVISIBLE);
-                birdList.setVisibility(View.INVISIBLE);
+                rain_layout.setVisibility(View.INVISIBLE);
+                rainList.setVisibility(View.INVISIBLE);
                 seaList.setVisibility(View.VISIBLE);
                 windList.setVisibility(View.INVISIBLE);
 
@@ -300,8 +296,8 @@ public class UI_3_Musictab extends AppCompatActivity {
             case 2:
                 sea_layout.setVisibility(View.INVISIBLE);
                 wind_layout.setVisibility(View.VISIBLE);
-                bird_layout.setVisibility(View.INVISIBLE);
-                birdList.setVisibility(View.INVISIBLE);
+                rain_layout.setVisibility(View.INVISIBLE);
+                rainList.setVisibility(View.INVISIBLE);
                 seaList.setVisibility(View.INVISIBLE);
                 windList.setVisibility(View.VISIBLE);
                 break;

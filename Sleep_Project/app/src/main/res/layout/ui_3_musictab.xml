@@ -19,8 +19,8 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/bird"
-            android:text="새"
+            android:id="@+id/rain"
+            android:text="비"
             />
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -46,14 +46,14 @@
             android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bird_layout"
+            android:id="@+id/rain_layout"
             android:orientation="vertical"
             android:visibility="visible">
             <ListView
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/birdList"
+                android:id="@+id/rainList"
                 />
 
         </LinearLayout>
