@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
+public class UI_2_Maintimertab extends AppCompatActivity{
     Button lockmsg,main, music, statistics, Settings, setBtn, confirm,plusBtn,lockcall;
     private FirebaseAuth mAuth;
     AlarmManager alarm_manager;
@@ -76,10 +76,12 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
     prefvalue prefOb; //설정해둔 값 가져오기 위한 SharedPreference 접근객체
 
     boolean checkTh=false; //스레드 무한루프 빠져나가기 위한 bool변수
-    AudioManager mediaVol;
-    CheckPackageNameThread checkPackageNameThread;//가장 최근에 실행한 어플 가져오기 위한 스레드 선언문
+    public AudioManager mediaVol;
     //CheckPackageNameThread checkPackageNameThread;//가장 최근에 실행한 어플 가져오기 위한 스레드 선언문
     String running=""; //실행중인 어플 저장하는 String
+
+    //기능 실행시 화면 변경 기능을 수행할 핸들러 선언 및 초기화문
+    valueHandler handler = new valueHandler();
 
     //특정조건에 맞춰 취소키 안먹게 하기
     @Override
@@ -181,8 +183,7 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         //알람화면 관련
         belllayout = (LinearLayout)findViewById(R.id.belllayout);
         confirm = (Button) findViewById(R.id.confirm); //문제 답 입력하는 확인버튼
-        //화면전환에 이용될 스레드 선언
-        Thread th = new Thread(UI_2_Maintimertab.this);
+
         //잠금화면 나타났을때 화면 어둡게 하기위한 부분
         final ImageView imgoff=(ImageView)findViewById(R.id.lockImg);
         params = getWindow().getAttributes();//화면 정보 불러오기
@@ -196,7 +197,6 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 result = Integer.parseInt(putanswer.getText().toString());
                 //문제랑 입력값이랑 같을 시 알람 종료
                 if(result == answer) {
-                    checkTh=true;
                     stopService(alarm_off);
                     timelayout.setVisibility(View.VISIBLE);
                     locklayout.setVisibility(View.INVISIBLE);
@@ -214,7 +214,8 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
-                th.start();
+                LockRunThread thread = new LockRunThread();
+                thread.start();
                 // calendar에 시간 세팅
                 calendar.set(Calendar.HOUR_OF_DAY, alarm_timePicker.getHour());
                 calendar.set(Calendar.MINUTE, alarm_timePicker.getMinute());
@@ -298,96 +299,6 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
                 startActivity(intent);
             }
         });
-        //테스트용 임시 코드
-        checkPackageNameThread = new CheckPackageNameThread();
-        checkPackageNameThread.start();
-    }
-
-    private final Handler handler = new Handler();
-    private class Myhandler extends Handler{
-        private final WeakReference<UI_2_Maintimertab> weakReference;
-
-        public Myhandler(UI_2_Maintimertab activity){
-            this.weakReference = new WeakReference<>(activity);
-        }
-        public void handleMessage(Message msg) {
-            if (hour == sleep_timePicker.getHour() &&minute == sleep_timePicker.getMinute()) {
-                //최저 음량으로 설정
-                //mediaVol.setStreamVolume(AudioManager.STREAM_RING,(int)(mediaVol.getStreamMaxVolume(AudioManager.STREAM_RING)*0),0); //java.lang.SecurityException: Not allowed to change Do Not Disturb state
-                mediaVol.setRingerMode(AudioManager.RINGER_MODE_SILENT); //음소거 하는 코드
-                // 최저 밝기로 설정
-                params.screenBrightness = (float)(prefOb.getbrightvalue()/100); //설정해둔 밝기로 화면 어둡게 함
-//                params.screenBrightness = 0.1f; //설정해둔 밝기로 화면 어둡게 함
-                // 밝기 설정 적용
-                getWindow().setAttributes(params);
-                //화면 변환 관련
-                timelayout.setVisibility(View.INVISIBLE);
-                locklayout.setVisibility(View.VISIBLE);
-                Settings.setVisibility(View.INVISIBLE);
-                belllayout.setVisibility(View.INVISIBLE);
-                sleepTime_breakTime_View.setVisibility(View.INVISIBLE);
-                if (sleep_timePicker.getHour() <= alarm_timePicker.getHour() && sleep_timePicker.getMinute() < alarm_timePicker.getMinute()) {
-                    waketxt.setText((alarm_timePicker.getHour() - hour) + "시간 "
-                            + (alarm_timePicker.getMinute() - minute) + "분 남았습니다");
-                }
-                Log.i("현재상태", "잠금상태");
-                Log.i("성공", "성공");
-            } else if (hour == alarm_timePicker.getHour() && minute == alarm_timePicker.getMinute()) {
-                //기존 음량으로 설정
-                //mediaVol.setStreamVolume(AudioManager.STREAM_RING,(int)(mediaVol.getStreamMaxVolume(AudioManager.STREAM_RING)*1),0);
-                mediaVol.setRingerMode(AudioManager.RINGER_MODE_NORMAL); //음소거 푸는 코드
-                // 기존 밝기로 설정
-                params.screenBrightness = brightness;
-                // 밝기 설정 적용
-                getWindow().setAttributes(params);
-                String nowbright = Float.toString(brightness);//바뀐 이후의 밝기 String 타입으로 저장
-                //Toast.makeText(UI_2_Maintimertab.this, nowbright, Toast.LENGTH_SHORT).show();
-                alarm_intent.putExtra("state", "alarm on");  // receiver에 string 값 넘겨주기
-
-                pendingIntent = PendingIntent.getBroadcast(UI_2_Maintimertab.this, 0, alarm_intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-
-                alarm_manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                        pendingIntent); // 알람셋팅
-                //화면 변환 관련
-                timelayout.setVisibility(View.INVISIBLE);
-                locklayout.setVisibility(View.INVISIBLE);
-                Settings.setVisibility(View.INVISIBLE);
-                belllayout.setVisibility(View.VISIBLE);
-            } else {
-                Log.i("실패", "실패");
-            }
-        }
-    }
-    //        checkPackageNameThread = new CheckPackageNameThread();
-//        checkPackageNameThread.start();
-    @Override
-    public void run() {
-        hour = cal.get(cal.HOUR_OF_DAY);
-        minute = cal.get(cal.MINUTE);
-        second = cal.get(cal.SECOND);
-        while (!checkTh) {
-            second++;
-            if (second > 59) {
-                second = 0;
-                minute++;
-            }
-            if (minute > 59) {
-                hour++;
-                minute = 0;
-            }
-            if (hour > 23) {
-                hour = 0;
-            }
-            Message msg = handler.obtainMessage();
-            handler.sendMessage(msg);
-            try {
-                Log.i("Time", "hour" + hour + ", minute" + minute + ", second" + second);
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
     //특정조건 하에서 메뉴키 막기 위한 코드
     @Override
@@ -474,17 +385,6 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
 //        }
 //        return isInBackground;
 //    }
-    //설치되있는 어플목록 리스트로 반환하는 메소드 - 현재 액티비티에서 사용하는 메소드는 아니지만 나중에 설정탭에서 사용가능
-//    private ArrayList<String> installedApp(){
-//        final PackageManager pm = getPackageManager();//설치된 모든 앱리스트 가져오기 위해 선언
-//        List<ApplicationInfo> list=pm.getInstalledApplications(0); //설치된 정보를 받아와 리스트형식으로 저장
-//        ArrayList<String> installed = new ArrayList<>();
-//        for(ApplicationInfo applicationInfo : list){
-//            String pName=applicationInfo.packageName;
-//            installed.add(pName);
-//        }
-//        return installed;
-//    }
     //앱이 포그라운드 상태인지 확인하는 메소드
     private static boolean isForeGroundEvent(UsageEvents.Event event) {
         if(event == null) return false;
@@ -506,7 +406,6 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         // 1 minute ago
         final long begin = end - INTERVAL;
 
-        //
         LongSparseArray packageNameMap = new LongSparseArray<>();
 
         // 수집한 이벤트들을 담기 위한 UsageEvents
@@ -549,126 +448,137 @@ public class UI_2_Maintimertab extends AppCompatActivity implements Runnable{
         return granted;
     }
     //가장 최근에 실행한 어플의 패키지를 주기적으로 리턴해주기 위한 스레드
-    private class CheckPackageNameThread extends Thread{
-        public void run(){
-            while(true){
-                if(!checkPermission()) continue;
-                running = getPackageName(getApplicationContext());
-                Log.d("tmdguq_running",running);
-                //해당 어플이 아닌 다른 어플이 실행되었을 경우 종료 - 현재 if문이 작동하지 않는다...
-                if(!running.equals("")){
-                    Log.d("tmdguq_alert",running +"실행되고있습니다");
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                        if(android.provider.Settings.canDrawOverlays(context)){
-                            if(!running.equals("com.example.sleep_project")){
-                                Log.d("check","슬립프로젝트가 실행되고있지 않을때 내부 동작중");
-                                Intent sIntent = new Intent(context,UI_2_Maintimertab.class);
-                                sIntent.putExtra("action","tts");
-                                sIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                context.startActivity(sIntent);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-
-                }
-                try {
-                    sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-//    private static boolean isForeGroundEvent(UsageEvents.Event event) {
-//        if(event == null) return false;
-//        if(BuildConfig.VERSION_CODE >= 29)
-//            return event.getEventType() == UsageEvents.Event.ACTIVITY_RESUMED;
-//        return event.getEventType() == UsageEvents.Event.MOVE_TO_FOREGROUND;
-//    }
-    //가장 마지막에 실행된 어플의 패키지를 리턴해주는 메소드
-//    public static String getPackageName(@NonNull Context context) {
-//
-//        // UsageStatsManager 선언
-//        UsageStatsManager usageStatsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
-//
-//        long lastRunAppTimeStamp = 0L;
-//
-//        // 얼마만큼의 시간동안 수집한 앱의 이름을 가져오는지 정하기 (begin ~ end 까지의 앱 이름을 수집한다)
-//        final long INTERVAL = 10000;
-//        final long end = System.currentTimeMillis();
-//        // 1 minute ago
-//        final long begin = end - INTERVAL;
-//
-//        //
-//        LongSparseArray packageNameMap = new LongSparseArray<>();
-//
-//        // 수집한 이벤트들을 담기 위한 UsageEvents
-//        final UsageEvents usageEvents = usageStatsManager.queryEvents(begin, end);
-//
-//        // 이벤트가 여러개 있을 경우 (최소 존재는 해야 hasNextEvent가 null이 아니니까)
-//        while (usageEvents.hasNextEvent()) {
-//
-//            // 현재 이벤트를 가져오기
-//            UsageEvents.Event event = new UsageEvents.Event();
-//            usageEvents.getNextEvent(event);
-//
-//            // 현재 이벤트가 포그라운드 상태라면 = 현재 화면에 보이는 앱이라면
-//            if(isForeGroundEvent(event)) {
-//                // 해당 앱 이름을 packageNameMap에 넣는다.
-//                packageNameMap.put(event.getTimeStamp(), event.getPackageName());
-//                // 가장 최근에 실행 된 이벤트에 대한 타임스탬프를 업데이트 해준다.
-//                if(event.getTimeStamp() > lastRunAppTimeStamp) {
-//                    lastRunAppTimeStamp = event.getTimeStamp();
-//                }
-//            }
-//        }
-//        // 가장 마지막까지 있는 앱의 이름을 리턴해준다.
-//        return packageNameMap.get(lastRunAppTimeStamp, "").toString();
-//    }
-    //앱 실행기록을 위한 권한 체크
-//    private boolean checkPermission(){
-//        boolean granted = false;
-//        AppOpsManager appOps = (AppOpsManager) getApplicationContext()
-//                .getSystemService(Context.APP_OPS_SERVICE);
-//        int mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
-//                android.os.Process.myUid(), getApplicationContext().getPackageName());
-//        if (mode == AppOpsManager.MODE_DEFAULT) {
-//            granted = (getApplicationContext().checkCallingOrSelfPermission(
-//                    android.Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED);
-//        }
-//        else {
-//            granted = (mode == AppOpsManager.MODE_ALLOWED);
-//        }
-//        return granted;
-//    }
-    //가장 최근에 실행한 어플의 패키지를 주기적으로 리턴해주기 위한 스레드
-//    private class CheckPackageNameThread extends Thread{
-//        public void run(){
-//            while(true){
-//                if(!checkPermission()) continue;
+//    private class CheckPackageNameThread extends Thread {
+//        public void run() {
+//            while (true) {
+//                if (!checkPermission()) continue;
 //                running = getPackageName(getApplicationContext());
-//                Log.d("tmdguq running",running);
+//                Log.d("tmdguq_running", running);
 //                //해당 어플이 아닌 다른 어플이 실행되었을 경우 종료 - 현재 if문이 작동하지 않는다...
-//                if(!running.equals("")){
-//                    Log.d("tmdguq alert",getPackageName(getApplicationContext())+"실행되고있습니다");
-//                    //am.killBackgroundProcesses(running);
-//                    ActivityManager am = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
-//
-//                    am.restartPackage( getPackageName() );
-//                }else
-//                {
+//                if (!running.equals("")) {
+//                    Log.d("tmdguq_alert", running + "실행되고있습니다");
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        if (android.provider.Settings.canDrawOverlays(context)) {
+//                            if (!running.equals("com.example.sleep_project")) {
+//                                Log.d("check", "슬립프로젝트가 실행되고있지 않을때 내부 동작중");
+//                                Intent sIntent = new Intent(context, UI_2_Maintimertab.class);
+//                                sIntent.putExtra("action", "tts");
+//                                sIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                context.startActivity(sIntent);
+//                            }
+//                        }
+//                    }
+//                } else {
 //
 //                }
 //                try {
-//                    sleep(1500);
+//                    sleep(100);
 //                } catch (InterruptedException e) {
 //                    e.printStackTrace();
 //                }
 //            }
 //        }
 //    }
+    //잠금상태에서 실행할 스레드 클래스 생성
+    class LockRunThread extends Thread{
+        public void run() {
+            hour = cal.get(cal.HOUR_OF_DAY);
+            minute = cal.get(cal.MINUTE);
+            second = cal.get(cal.SECOND);
+            while (!checkTh) {
+                second++;
+                if (second > 59) {
+                    second = 0;
+                    minute++;
+                }
+                if (minute > 59) {
+                    hour++;
+                    minute = 0;
+                }
+                if (hour > 23) {
+                    hour = 0;
+                }
+                Message msg = handler.obtainMessage();
+                handler.sendMessage(msg);
+                if (!checkPermission()) continue;
+                running = getPackageName(getApplicationContext());
+                //해당 어플이 아닌 다른 어플이 실행되었을 경우 종료 - 현재 if문이 작동하지 않는다...
+                if (!running.equals("")) {
+                    Log.d("tmdguq_alert", running + "실행되고있습니다");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (android.provider.Settings.canDrawOverlays(context)) {
+                            if (!running.equals("com.example.sleep_project")) {
+                                Intent sIntent = new Intent(context, UI_2_Maintimertab.class);
+                                sIntent.putExtra("action", "tts");
+                                sIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(sIntent);
+                            }
+                        }
+                    }
+                } else {
+
+                }
+                try {
+                    //Log.i("Time", "hour" + hour + ", minute" + minute + ", second" + second);
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    //스레드에 메시지 보내줄 핸들러 생성 - 스레드 상태에서 UI 바꾸기 위함
+    class valueHandler extends Handler{
+        public void handleMessage(@NonNull Message msg){
+            super.handleMessage(msg);
+            if (hour == sleep_timePicker.getHour() &&minute == sleep_timePicker.getMinute()) {
+                //최저 음량으로 설정
+                mediaVol.setRingerMode(AudioManager.RINGER_MODE_SILENT); //음소거 하는 코드
+                // 최저 밝기로 설정
+                params.screenBrightness = (float)(prefOb.getbrightvalue()/100); //설정해둔 밝기로 화면 어둡게 함
+//                params.screenBrightness = 0.1f; //설정해둔 밝기로 화면 어둡게 함
+                // 밝기 설정 적용
+                getWindow().setAttributes(params);
+                //화면 변환 관련
+                timelayout.setVisibility(View.INVISIBLE);
+                locklayout.setVisibility(View.VISIBLE);
+                Settings.setVisibility(View.INVISIBLE);
+                belllayout.setVisibility(View.INVISIBLE);
+                sleepTime_breakTime_View.setVisibility(View.INVISIBLE);
+                if (sleep_timePicker.getHour() <= alarm_timePicker.getHour() && sleep_timePicker.getMinute() < alarm_timePicker.getMinute()) {
+                    waketxt.setText((alarm_timePicker.getHour() - hour) + "시간 "
+                            + (alarm_timePicker.getMinute() - minute) + "분 남았습니다");
+                }
+                Log.i("현재상태", "잠금상태");
+                //Log.i("성공", "성공");
+            } else if (hour == alarm_timePicker.getHour() && minute == alarm_timePicker.getMinute()) {
+                //기존 음량으로 설정
+                mediaVol.setRingerMode(AudioManager.RINGER_MODE_NORMAL); //음소거 푸는 코드
+                // 기존 밝기로 설정
+                params.screenBrightness = brightness;
+                // 밝기 설정 적용
+                getWindow().setAttributes(params);
+                String nowbright = Float.toString(brightness);//바뀐 이후의 밝기 String 타입으로 저장
+                Toast.makeText(UI_2_Maintimertab.this, "변경되는 밝기값은 "+nowbright+" 입니다.", Toast.LENGTH_SHORT).show();
+                alarm_intent.putExtra("state", "alarm on");  // receiver에 string 값 넘겨주기
+
+                pendingIntent = PendingIntent.getBroadcast(UI_2_Maintimertab.this, 0, alarm_intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+                alarm_manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                        pendingIntent); // 알람셋팅
+                //화면 변환 관련
+                timelayout.setVisibility(View.INVISIBLE);
+                locklayout.setVisibility(View.INVISIBLE);
+                Settings.setVisibility(View.INVISIBLE);
+                belllayout.setVisibility(View.VISIBLE);
+                Log.i("현재상태", "기상상태");
+                checkTh=true;
+            } else {
+                Log.i("실패", "실패");
+            }
+        }
+    }
 }
