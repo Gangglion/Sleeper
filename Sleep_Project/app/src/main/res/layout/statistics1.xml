@@ -42,15 +42,23 @@
             android:layout_width="match_parent"
             android:layout_height="40dp">
 
-            <EditText
-                android:layout_margin="20dp"
-                android:hint="         날짜 입력"
-                android:textSize="14dp"
+            <Button
+                android:id="@+id/button1"
+
+                android:layout_gravity="center"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/white"
+                android:text="달력" />
+
+            <TextView
+                android:hint="      날짜 입력"
+                android:textSize="18dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:layout_gravity="center"
                 android:layout_width="120dp"
-                android:layout_height="40dp"/>
+                android:layout_height="30dp"/>
 
             <TextView
                 android:layout_gravity="center"
@@ -58,18 +66,28 @@
                 android:text="~"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"/>
-            <EditText
-                android:hint="        날짜 입력"
-                android:textSize="14dp"
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_gravity="center"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/white"
+                android:text="달력" />
+            <TextView
+                android:hint="      날짜 입력"
+                android:textSize="18dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:layout_gravity="center"
                 android:layout_width="120dp"
-                android:layout_height="40dp"/>
+                android:layout_height="30dp"/>
+
             <Button
+                android:layout_width="60dp"
+                android:layout_height="26dp"
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:background="@color/white"
                 android:text="검색" />
 
@@ -79,11 +97,7 @@
 
 
 
-        <CalendarView
-            android:layout_margin="20dp"
-            android:background="#FFFFFF"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/bar_chart"

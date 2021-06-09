@@ -33,7 +33,7 @@
     </string>
     <string name="title_activity_settings">설정</string>
 
-    <string name="loading" >로딩중</string>
-    <string name="menu_download" >다운로드</string>
-    <string name="menu_all" >전체</string>
+    <string name="loading">로딩중</string>
+    <string name="menu_download">다운로드</string>
+    <string name="menu_all">전체</string>
 </resources>

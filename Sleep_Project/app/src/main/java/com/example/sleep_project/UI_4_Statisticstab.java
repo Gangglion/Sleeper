@@ -1,11 +1,13 @@
 package com.example.sleep_project;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -22,6 +24,8 @@ import java.util.ArrayList;
 
 
 public class UI_4_Statisticstab extends AppCompatActivity {
+
+    int y=0, m=0, d=0, h=0, mi=0;
 
     BarChart barChart;
     TextView minuteTextview;
@@ -43,6 +47,23 @@ public class UI_4_Statisticstab extends AppCompatActivity {
 
         barChart = (BarChart) findViewById(R.id.bar_chart);
         BarInit();
+
+        Button button1 = findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDate();
+            }
+        });
+
+        Button button2 = findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDate();
+            }
+        });
+
 
 
         statisticsTitle = (TextView)findViewById(R.id.statisticsName);
@@ -141,4 +162,19 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         barChart.setDragEnabled(true);
         barChart.setScaleEnabled(true);
     }
+    void showDate() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                y = year;
+                m = month+1;
+                d = dayOfMonth;
+
+            }
+        },2021, 6, 21);
+
+        datePickerDialog.setMessage("메시지");
+        datePickerDialog.show();
+    }
+
 }
