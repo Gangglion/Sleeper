@@ -21,7 +21,6 @@ public class UI_1_1_main extends AppCompatActivity {
     private FragmentStateAdapter pagerAdapter;
     private int num_page = 4;
     private CircleIndicator3 mIndicator;
-    public SharedPreferences prefs; //어플 최초실행 여부 판단하기 위한 SharedPreferences 선언부
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +29,6 @@ public class UI_1_1_main extends AppCompatActivity {
         //상단 액션바 숨기는 코드
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
-        //어플 최초실행 여부 판단하기 위한 정의부
-        prefs = getSharedPreferences("Pref", MODE_PRIVATE);
 
         //ViewPager2
         mPager = findViewById(R.id.viewpager); // UI_1_main.xml의 viewpager2의 id 값 불러옴
@@ -70,30 +66,10 @@ public class UI_1_1_main extends AppCompatActivity {
                 }
             }
         });
-
-        final float pageMargin= getResources().getDimensionPixelOffset(R.dimen.pageMargin);
-        final float pageOffset = getResources().getDimensionPixelOffset(R.dimen.offset);
-
-        mPager.setPageTransformer(new ViewPager2.PageTransformer() {
-            @Override
-            public void transformPage(@NonNull View page, float position) {
-                float myOffset = position * -(2 * pageOffset + pageMargin);
-                if (mPager.getOrientation() == ViewPager2.ORIENTATION_HORIZONTAL) {
-                    if (ViewCompat.getLayoutDirection(mPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-                        page.setTranslationX(-myOffset);
-                    } else {
-                        page.setTranslationX(myOffset);
-                    }
-                } else {
-                    page.setTranslationY(myOffset);
-                }
-            }
-        });
         //"다음"버튼 클릭시 로그인화면으로 이동시킴
         gotologinLBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO : 버튼 클릭되면 다음 화면으로 넘어감(다음화면 : 권한설정 화면)
                 //버튼 클릭시 권한설정화면으로 넘어가는 기능
                 Intent permis=new Intent(v.getContext(), UI_1_2_permission_activity.class);
                 startActivity(permis);
@@ -101,15 +77,4 @@ public class UI_1_1_main extends AppCompatActivity {
             }
         });
     }
-    //TODO : 첫 실행여부 판단하는 메소드 -> 처음 실행하면 UI_1_1_main 을 띄워주고, 첫 실행이 아니라면 UI_2_Maintimertab을 띄워줌
-/*    public void checkFirstRun(){
-        boolean isFirstRun = prefs.getBoolean("isFirstRun",true);
-        if(isFirstRun)
-        {
-            Intent newIntent = new Intent(UI_1_1_main.this, UI_2_Maintimertab.class);
-            startActivity(newIntent);
-
-            prefs.edit().putBoolean("isFirstRun",false).apply();
-        }
-    }*/
 }

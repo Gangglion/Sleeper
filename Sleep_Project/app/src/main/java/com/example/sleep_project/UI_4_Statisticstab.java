@@ -13,8 +13,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -30,7 +34,7 @@ public class UI_4_Statisticstab extends AppCompatActivity {
     BarChart barChart;
     TextView minuteTextview;
 
-    Button main, music, statistics, account,menuOpen;
+    Button main, music, statistics, settings,menuOpen;
     Intent intent;
     MenuItem menuItem;
     prefvalue prefOb;
@@ -39,10 +43,6 @@ public class UI_4_Statisticstab extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.statistics1);
-//        prefOb = new prefvalue();
-//        int tempBright = prefOb.getbrightvalue();
-//        Log.d("prefbright",String.valueOf(tempBright));
         setContentView(R.layout.statistics1);
 
         barChart = (BarChart) findViewById(R.id.bar_chart);
@@ -106,7 +106,7 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         main = (Button) findViewById(R.id.main); //메인기능버튼
         music = (Button) findViewById(R.id.music); //음악기능 버튼
         statistics = (Button) findViewById(R.id.statistics); //통계기능 버튼
-        account = (Button) findViewById(R.id.accounttab); //계정관리기능 버튼
+        settings = (Button) findViewById(R.id.settingtab); //계정관리기능 버튼
 
         statistics.setBackgroundColor(Color.GRAY);
         //메인 탭으로 이동
@@ -127,8 +127,8 @@ public class UI_4_Statisticstab extends AppCompatActivity {
                 finish();
             }
         });
-        //계정관리 탭으로 이동
-        account.setOnClickListener(new View.OnClickListener() {
+        //설정 탭으로 이동
+        settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -139,28 +139,49 @@ public class UI_4_Statisticstab extends AppCompatActivity {
     }
     private void BarInit() {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(0f, 44f));
-        barEntries.add(new BarEntry(1f, 88f));
-        barEntries.add(new BarEntry(2f, 41f));
-        barEntries.add(new BarEntry(3f, 85f));
-        barEntries.add(new BarEntry(4f, 96f));
-        barEntries.add(new BarEntry(5f, 25f));
-        barEntries.add(new BarEntry(6f, 10f));
+        barEntries.add(new BarEntry(0f, 5f));
+        barEntries.add(new BarEntry(1f, 8f));
+        barEntries.add(new BarEntry(2f, 6f));
+        barEntries.add(new BarEntry(3f, 6.5f));
+        barEntries.add(new BarEntry(4f, 7f));
+        barEntries.add(new BarEntry(5f, 6.3f));
+        barEntries.add(new BarEntry(6f, 5.8f));
         BarDataSet barDataSet = new BarDataSet(barEntries, "Dates");
         ArrayList<String> theDates = new ArrayList<>();
-        theDates.add("Mars");
-        theDates.add("Avril");
-        theDates.add("Dec");
-        theDates.add("May");
-        theDates.add("OCt");
-        theDates.add("Nov");
-        theDates.add("Fir");
+        theDates.add("월");
+        theDates.add("화");
+        theDates.add("수");
+        theDates.add("목");
+        theDates.add("금");
+        theDates.add("토");
+        theDates.add("일");
         barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(theDates));
-        BarData theData = new BarData(barDataSet);//----Line of error
+        BarData theData = new BarData(barDataSet);
         barChart.setData(theData);
         barChart.setTouchEnabled(true);
         barChart.setDragEnabled(true);
         barChart.setScaleEnabled(true);
+        barChart.getXAxis().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white)); // X축 텍스트컬러설정
+        barChart.getXAxis().setGridColor(ContextCompat.getColor(getApplicationContext(), R.color.white)); // X축 줄의 컬러 설정
+        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        barChart.getXAxis().setDrawGridLines(false);
+
+        barChart.getAxisLeft().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white)); //Y축 왼쪽 텍스트 컬러 설정
+        barChart.getAxisLeft().setGridColor(ContextCompat.getColor(getApplicationContext(), R.color.white)); // Y축 줄의 컬러 설정
+        barChart.getAxisLeft().setAxisMinimum(0f);
+        barChart.getAxisLeft().setAxisMaximum(10f);
+
+        YAxis yAxisRight = barChart.getAxisRight(); //Y축의 오른쪽면 설정
+        yAxisRight.setDrawLabels(false);
+        yAxisRight.setDrawAxisLine(false);
+        yAxisRight.setDrawGridLines(false);
+        //y축의 활성화를 제거함
+
+        Legend legend = barChart.getLegend(); //레전드 설정 (차트 밑에 색과 라벨을 나타내는 설정)
+        legend.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);//하단 왼쪽에 설정
+        legend.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white)); // 레전드 컬러 설정
+
+        barChart.animateXY(0,800);
     }
     void showDate() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {

@@ -34,7 +34,7 @@
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="#fff"
-                android:textSize="20dp" />
+                android:textSize="30dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -44,15 +44,14 @@
 
             <Button
                 android:id="@+id/button1"
-
                 android:layout_gravity="center"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
                 android:background="@color/white"
                 android:text="달력" />
 
             <TextView
-                android:hint="      날짜 입력"
+                android:hint="     날짜 입력"
                 android:textSize="18dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
@@ -70,8 +69,8 @@
             <Button
                 android:id="@+id/button2"
                 android:layout_gravity="center"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
                 android:background="@color/white"
                 android:text="달력" />
             <TextView
@@ -92,17 +91,23 @@
                 android:text="검색" />
 
         </LinearLayout>
-
-
-
-
-
-
-
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/bar_chart"
             android:layout_width="match_parent"
-            android:layout_height="225dp" />
+            android:layout_height="225dp"/>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            android:stretchColumns="*">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TableRow>
+        </TableLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -134,11 +139,11 @@
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#00000000" />
             <Button
-                android:id="@+id/accounttab"
+                android:id="@+id/settingtab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="계정관리"
+                android:text="설정"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#00000000" />
         </LinearLayout>

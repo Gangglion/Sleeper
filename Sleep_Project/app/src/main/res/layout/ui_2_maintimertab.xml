@@ -221,6 +221,7 @@
     </FrameLayout>
     <!--하단 메뉴탭-->
     <LinearLayout
+        android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"

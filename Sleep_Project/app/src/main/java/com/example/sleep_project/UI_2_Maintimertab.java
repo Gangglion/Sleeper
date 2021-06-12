@@ -8,11 +8,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -22,7 +19,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.util.Log;
 import android.util.LongSparseArray;
 import android.view.View;
@@ -45,20 +41,16 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.lang.ref.WeakReference;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class UI_2_Maintimertab extends AppCompatActivity{
-    Button lockmsg,main, music, statistics, Settings, setBtn, confirm,plusBtn,lockcall;
+    Button lockmsg,main, music, statistics,Settings, setBtn, confirm,plusBtn,lockcall;
     private FirebaseAuth mAuth;
     AlarmManager alarm_manager;
     TimePicker sleep_timePicker, alarm_timePicker;
     Context context;
     PendingIntent pendingIntent;
-    LinearLayout locklayout, timelayout, belllayout,sleepTime_breakTime_View;
+    LinearLayout locklayout, timelayout, belllayout,sleepTime_breakTime_View, bottom_menu;
     Calendar cal = Calendar.getInstance();
     Calendar calendar;
     int hour, minute, second,result, answer;
@@ -105,6 +97,7 @@ public class UI_2_Maintimertab extends AppCompatActivity{
         setContentView(R.layout.ui_2_maintimertab);
         mAuth = FirebaseAuth.getInstance(); //연결된 계정 불러오기
         timelayout = (LinearLayout)findViewById(R.id.timelayout); //타이머있는 화면
+        bottom_menu = (LinearLayout)findViewById(R.id.bottom_menu); //하단 메뉴 레이아웃
         main = (Button) findViewById(R.id.main); //메인기능버튼
         music = (Button) findViewById(R.id.music); //음악기능 버튼
         statistics = (Button) findViewById(R.id.statistics); //통계기능 버튼
@@ -544,7 +537,7 @@ public class UI_2_Maintimertab extends AppCompatActivity{
                 //화면 변환 관련
                 timelayout.setVisibility(View.INVISIBLE);
                 locklayout.setVisibility(View.VISIBLE);
-                Settings.setVisibility(View.INVISIBLE);
+                bottom_menu.setVisibility(View.INVISIBLE);
                 belllayout.setVisibility(View.INVISIBLE);
                 sleepTime_breakTime_View.setVisibility(View.INVISIBLE);
                 if (sleep_timePicker.getHour() <= alarm_timePicker.getHour() && sleep_timePicker.getMinute() < alarm_timePicker.getMinute()) {
@@ -572,7 +565,7 @@ public class UI_2_Maintimertab extends AppCompatActivity{
                 //화면 변환 관련
                 timelayout.setVisibility(View.INVISIBLE);
                 locklayout.setVisibility(View.INVISIBLE);
-                Settings.setVisibility(View.INVISIBLE);
+                bottom_menu.setVisibility(View.INVISIBLE);
                 belllayout.setVisibility(View.VISIBLE);
                 Log.i("현재상태", "기상상태");
                 checkTh=true;
