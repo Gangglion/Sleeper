@@ -1,6 +1,7 @@
 package com.example.sleep_project;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.util.Log;
 
 public class prefvalue {
@@ -21,7 +22,10 @@ public class prefvalue {
     public boolean getPushvalue(){
         return pref.getBoolean("push",true);
     }
-    //메소드로 알람음 설정한 값 가져옴
+    //메소드로 알람음 설정한 uri값 string으로 가져옴
+    public String getRingValue(){
+        return pref.getString("alarmring","");
+    }
     //메소드로 선택적 어플잠금유무? 가져옴 - 방식고민
 
     //메소드로 모닝콜 문제설정 여부 설정된 값 가져옴

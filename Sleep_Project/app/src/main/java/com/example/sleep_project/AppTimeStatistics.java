@@ -15,7 +15,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AppTimeStatistics extends AppCompatActivity {
-    Button main, music, statistics, account,menuOpen;
+    Button main, music, statistics, settingtab,menuOpen;
     Intent intent;
     MenuItem menuItem;
     TextView statisticsTitle;
@@ -73,7 +73,7 @@ public class AppTimeStatistics extends AppCompatActivity {
         main = (Button) findViewById(R.id.main); //메인기능버튼
         music = (Button) findViewById(R.id.music); //음악기능 버튼
         statistics = (Button) findViewById(R.id.statistics); //통계기능 버튼
-        account = (Button) findViewById(R.id.accounttab); //계정관리기능 버튼
+        settingtab = (Button) findViewById(R.id.settingtab); //설정기능 버튼
 
 
 
@@ -99,11 +99,11 @@ public class AppTimeStatistics extends AppCompatActivity {
                 finish();
             }
         });
-        //계정관리 탭으로 이동
-        account.setOnClickListener(new View.OnClickListener() {
+        //설정 탭으로 이동
+        settingtab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_5_AccountTab.class);
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
                 finish();
             }

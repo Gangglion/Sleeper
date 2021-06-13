@@ -37,7 +37,8 @@
                 android:textSize="30dp" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/calendarLay"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="40dp">
@@ -46,65 +47,204 @@
                 android:id="@+id/button1"
                 android:layout_gravity="center"
                 android:layout_width="30dp"
-                android:layout_height="20dp"
+                android:layout_height="match_parent"
                 android:background="@color/white"
                 android:text="달력" />
 
             <TextView
-                android:hint="     날짜 입력"
+                android:id="@+id/inputday1"
+                android:hint="날짜 입력"
                 android:textSize="18dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:layout_gravity="center"
-                android:layout_width="120dp"
-                android:layout_height="30dp"/>
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/button1"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
 
             <TextView
+                android:id="@+id/charc"
                 android:layout_gravity="center"
                 android:textColor="@color/white"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/inputday1"
                 android:text="~"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"/>
+                android:layout_width="30dp"
+                android:layout_height="match_parent"/>
 
             <Button
                 android:id="@+id/button2"
                 android:layout_gravity="center"
                 android:layout_width="30dp"
-                android:layout_height="20dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/charc"
                 android:background="@color/white"
                 android:text="달력" />
             <TextView
-                android:hint="      날짜 입력"
+                android:id="@+id/inputday2"
+                android:hint="날짜 입력"
                 android:textSize="18dp"
+                android:layout_toRightOf="@+id/button2"
+                android:textAlignment="center"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:layout_gravity="center"
-                android:layout_width="120dp"
-                android:layout_height="30dp"/>
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
 
             <Button
+                android:layout_alignParentRight="true"
                 android:layout_width="60dp"
-                android:layout_height="26dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
                 android:background="@color/white"
                 android:text="검색" />
 
-        </LinearLayout>
+        </RelativeLayout>
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/bar_chart"
             android:layout_width="match_parent"
             android:layout_height="225dp"/>
+
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="330dp"
-            android:stretchColumns="*">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/table_line"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
             <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:background="@drawable/table_line">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:textColor="#FFFFFF"
+                    android:text="요일" />
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:textColor="#FFFFFF"
+                    android:text="수면시간" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="월" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="5시간" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="화" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="8시간" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="수" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="6시간" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="목" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="6시간" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="금" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="7시간" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="토" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="6시간" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="일" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="5시간" />
             </TableRow>
         </TableLayout>
 

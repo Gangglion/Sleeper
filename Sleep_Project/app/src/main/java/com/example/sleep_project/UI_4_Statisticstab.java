@@ -133,7 +133,6 @@ public class UI_4_Statisticstab extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -142,10 +141,10 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         barEntries.add(new BarEntry(0f, 5f));
         barEntries.add(new BarEntry(1f, 8f));
         barEntries.add(new BarEntry(2f, 6f));
-        barEntries.add(new BarEntry(3f, 6.5f));
+        barEntries.add(new BarEntry(3f, 6f));
         barEntries.add(new BarEntry(4f, 7f));
-        barEntries.add(new BarEntry(5f, 6.3f));
-        barEntries.add(new BarEntry(6f, 5.8f));
+        barEntries.add(new BarEntry(5f, 6f));
+        barEntries.add(new BarEntry(6f, 5f));
         BarDataSet barDataSet = new BarDataSet(barEntries, "Dates");
         ArrayList<String> theDates = new ArrayList<>();
         theDates.add("월");

@@ -128,15 +128,18 @@ public class UI_2_Maintimertab extends AppCompatActivity{
         mediaVol = (AudioManager)getSystemService(Context.AUDIO_SERVICE); //기능 시작과 동시에 볼륨 줄이기 위한 선언
         this.context = this;
 
-
-        //알람화면 랜덤문제 코드
         question = (TextView)findViewById(R.id.question);
         putanswer = (EditText)findViewById(R.id.answer);
         String temp=alarmQ.getQuestion();
-        //Log.d("alarmQ",alarmQ.getQuestion());
-        question.setText(temp); //문제 TextView에 설정
-        //Log.d("alarmQ 텍스트뷰",question.getText().toString());
         answer = alarmQ.getAnswer(); //정답 설정
+        //알람화면 랜덤문제 코드 - prefOb에 모닝콜 안뜨게 하면 문제가 안뜨고, 확인버튼만 누르면 알람이 꺼지게 해야함
+        if(prefOb.getQuesvalue()){
+            question.setText(temp); //문제 TextView에 설정
+        }
+
+        //Log.d("alarmQ",alarmQ.getQuestion());
+
+        //Log.d("alarmQ 텍스트뷰",question.getText().toString());
         alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE); // 알람매니저 설정
 
         sleep_timePicker = findViewById(R.id.sleepTime); // 잠들시간 타임피커 설정
@@ -344,7 +347,7 @@ public class UI_2_Maintimertab extends AppCompatActivity{
         //알림창 메시지
         builder.setContentText(sleepT);
         //알림창 아이콘
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.drawable.sleeper_icon);
         //알림창 터치시 상단 알림상태창에서 알림이 자동으로 삭제되게 합니다.
         builder.setAutoCancel(false);
         //pendingIntent를 builder에 설정 해줍니다.

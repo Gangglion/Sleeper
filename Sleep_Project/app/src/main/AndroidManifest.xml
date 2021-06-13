@@ -21,12 +21,13 @@
         android:largeHeap="true"
         android:hardwareAccelerated="false"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/sleeper_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/sleeper_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sleep_Project">
-        <activity android:name=".ringkind"/>
+        <activity android:name=".ringkind">
+        </activity>
         <activity android:name=".selectapplock" />
         <activity android:name=".BrightControl" />
         <activity android:name=".personaltab" />
@@ -35,7 +36,8 @@
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".UI_2_Maintimertab"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings" >
+        </activity>
 
         <service
             android:name=".UI_2_1_backgroundService"
@@ -52,17 +54,23 @@
             android:exported="true" />
 
         <activity android:name=".UI_1_1_main">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".UI_1_2_permission_activity" />
         <activity android:name=".UI_1_3_login_activity" />
         <activity android:name=".UI_2_Maintimertab" />
         <activity android:name=".UI_3_Musictab" />
-        <activity android:name=".UI_4_Statisticstab" />
+        <activity android:name=".UI_4_Statisticstab">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity android:name=".UI_5_AccountTab" />
         <activity android:name=".UI_List" />
         <activity android:name=".UI_2_1_Lock_activity" />

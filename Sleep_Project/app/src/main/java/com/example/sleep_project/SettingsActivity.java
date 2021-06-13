@@ -12,6 +12,7 @@ import androidx.preference.PreferenceManager;
 public class SettingsActivity extends AppCompatActivity {
     public static Context context_pref;
     public static SharedPreferences pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

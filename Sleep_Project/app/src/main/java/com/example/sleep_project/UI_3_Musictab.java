@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.tabs.TabLayout;
 
 public class UI_3_Musictab extends AppCompatActivity {
-    Button main,music,statistics,account;
+    Button main,music,statistics,settingtab;
     Button musicRestart,musicPause;
     TextView musicName;
     int temp = 0;
@@ -50,7 +50,7 @@ public class UI_3_Musictab extends AppCompatActivity {
         main = (Button)findViewById(R.id.main); //메인기능버튼
         music = (Button)findViewById(R.id.music); //음악기능 버튼
         statistics = (Button)findViewById(R.id.statistics); //통계기능 버튼
-        account = (Button)findViewById(R.id.accounttab); //계정관리기능 버튼
+        settingtab = (Button)findViewById(R.id.settingtab); //설정기능 버튼
         musicRestart = (Button)findViewById(R.id.musicStart);
         musicPause = (Button) findViewById(R.id.musicStop);
         musicName = (TextView)findViewById(R.id.musicName);
@@ -243,7 +243,7 @@ public class UI_3_Musictab extends AppCompatActivity {
         });
 
         //계정관리 탭으로 이동
-        account.setOnClickListener(new View.OnClickListener() {
+        settingtab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
