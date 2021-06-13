@@ -54,23 +54,17 @@
             android:exported="true" />
 
         <activity android:name=".UI_1_1_main">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".UI_1_2_permission_activity" />
         <activity android:name=".UI_1_3_login_activity" />
         <activity android:name=".UI_2_Maintimertab" />
         <activity android:name=".UI_3_Musictab" />
-        <activity android:name=".UI_4_Statisticstab">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
+        <activity android:name=".UI_4_Statisticstab"/>
         <activity android:name=".UI_5_AccountTab" />
         <activity android:name=".UI_List" />
         <activity android:name=".UI_2_1_Lock_activity" />

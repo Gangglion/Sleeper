@@ -23,7 +23,8 @@
                 android:id="@+id/menuOpen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/infobtn_shape"
                 android:text="메뉴" />
 
 
@@ -48,7 +49,8 @@
                 android:layout_gravity="center"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/infobtn_shape"
                 android:text="달력" />
 
             <TextView
@@ -80,7 +82,8 @@
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/charc"
-                android:background="@color/white"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/infobtn_shape"
                 android:text="달력" />
             <TextView
                 android:id="@+id/inputday2"
@@ -100,7 +103,8 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@color/white"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/infobtn_shape"
                 android:text="검색" />
 
         </RelativeLayout>
