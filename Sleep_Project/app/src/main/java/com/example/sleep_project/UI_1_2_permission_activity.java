@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -28,6 +29,8 @@ public class UI_1_2_permission_activity extends AppCompatActivity {
         setContentView(R.layout.ui_1_2_permission_layout);
         NotificationManager mNotificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         //다음버튼을 눌러 권한 설정을 하게된다. 설정이 끝났다면 다음 액티비티로 넘어간다. 권한이 다 설정되있다면 바로 다음으로 넘어간다
         Button okbtn = (Button)findViewById(R.id.okbtn);
         okbtn.setOnClickListener(new View.OnClickListener() {

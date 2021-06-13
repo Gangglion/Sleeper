@@ -17,13 +17,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+            android:background="@drawable/selector_indicator"/>
 
         <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom"
+            app:ci_drawable="@drawable/black_indicator"
+            app:ci_width="3pt"
+            app:ci_height="3pt" />
     </FrameLayout>
 
     <Button
@@ -32,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:background="@drawable/infobtn_shape"
         android:text="다음"/>
 
 </RelativeLayout>
