@@ -87,6 +87,9 @@ public class UI_2_Maintimertab extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Intent gosetting = new Intent(getApplicationContext(),SettingsActivity.class);
+//        startActivity(gosetting);
+//        settingsActivity.finish();
         prefOb = new prefvalue();
         ///////
         AlarmQuestion alarmQ = new AlarmQuestion(); //알람화면 랜덤문제생성과 그에 따른 답 생성이 들어있는 클래스
@@ -133,9 +136,11 @@ public class UI_2_Maintimertab extends AppCompatActivity{
         String temp=alarmQ.getQuestion();
         answer = alarmQ.getAnswer(); //정답 설정
         //알람화면 랜덤문제 코드 - prefOb에 모닝콜 안뜨게 하면 문제가 안뜨고, 확인버튼만 누르면 알람이 꺼지게 해야함
-        if(prefOb.getQuesvalue()){
-            question.setText(temp); //문제 TextView에 설정
-        }
+//        if(prefOb.getQuesvalue()){
+//            question.setText(temp); //문제 TextView에 설정
+//        }
+        question.setText(temp); //문제 TextView에 설정
+
 
         //Log.d("alarmQ",alarmQ.getQuestion());
 
@@ -202,6 +207,8 @@ public class UI_2_Maintimertab extends AppCompatActivity{
                     alarm_manager.cancel(pendingIntent);
                     alarm_intent.putExtra("state","alarm off");
                     sendBroadcast(alarm_intent);
+                    setBtn.setVisibility(View.VISIBLE);
+                    bottom_menu.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -533,7 +540,7 @@ public class UI_2_Maintimertab extends AppCompatActivity{
                 //최저 음량으로 설정
                 mediaVol.setRingerMode(AudioManager.RINGER_MODE_SILENT); //음소거 하는 코드
                 // 최저 밝기로 설정
-                params.screenBrightness = (float)(prefOb.getbrightvalue()/100); //설정해둔 밝기로 화면 어둡게 함
+                params.screenBrightness = (prefOb.getbrightvalue()/100.0f); //설정해둔 밝기로 화면 어둡게 함
 //                params.screenBrightness = 0.1f; //설정해둔 밝기로 화면 어둡게 함
                 // 밝기 설정 적용
                 getWindow().setAttributes(params);

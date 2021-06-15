@@ -24,7 +24,11 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class UI_4_Statisticstab extends AppCompatActivity {
@@ -32,12 +36,21 @@ public class UI_4_Statisticstab extends AppCompatActivity {
     int y=0, m=0, d=0, h=0, mi=0;
 
     BarChart barChart;
-    TextView minuteTextview;
+    TextView minuteTextview,searchEndDay,searchStartDay;
 
     Button main, music, statistics, settings,menuOpen;
     Intent intent;
     MenuItem menuItem;
     prefvalue prefOb;
+    int selYear,selMonth,selDay;
+    Date   currentTime = Calendar.getInstance().getTime();
+    SimpleDateFormat yearFormay = new SimpleDateFormat("yyyy", Locale.getDefault());
+    SimpleDateFormat monthFormay = new SimpleDateFormat("MM", Locale.getDefault());
+    SimpleDateFormat dayFormay = new SimpleDateFormat("dd", Locale.getDefault());
+
+    int curYear = Integer.parseInt(yearFormay.format(currentTime));
+    int curMonth = Integer.parseInt(monthFormay.format(currentTime))-1;
+    int curday = Integer.parseInt(dayFormay.format(currentTime));
     //어떤 통계인지 텍스트뷰를 통해서 알려줌
     TextView statisticsTitle;
     @Override
@@ -47,12 +60,13 @@ public class UI_4_Statisticstab extends AppCompatActivity {
 
         barChart = (BarChart) findViewById(R.id.bar_chart);
         BarInit();
-
+        searchStartDay = (TextView)findViewById(R.id.searchStartDay);
+        searchEndDay = (TextView)findViewById(R.id.searchEndDay);
         Button button1 = findViewById(R.id.button1);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDate();
+                showStartDate();
             }
         });
 
@@ -60,7 +74,7 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDate();
+                showEndDate();
             }
         });
 
@@ -182,19 +196,39 @@ public class UI_4_Statisticstab extends AppCompatActivity {
 
         barChart.animateXY(0,800);
     }
-    void showDate() {
+    void showStartDate() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+
+
+                y = year;
+                m = month+1;
+                d = dayOfMonth;
+                searchStartDay.setText(y+"/"+m+"/"+d);
+            }
+        },curYear,curMonth,curday);
+
+        datePickerDialog.setMessage("메시지");
+        datePickerDialog.show();
+    }
+    void showEndDate() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 y = year;
                 m = month+1;
                 d = dayOfMonth;
-
+                searchEndDay.setText(y+"/"+m+"/"+d);
             }
-        },2021, 6, 21);
+        },curYear,curMonth,curday);
+
+
 
         datePickerDialog.setMessage("메시지");
         datePickerDialog.show();
     }
+
 
 }

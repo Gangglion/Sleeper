@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,7 +30,7 @@ public class UI_3_Musictab extends AppCompatActivity {
     LinearLayout rain_layout,sea_layout,wind_layout;
     Context context;
     ListView rainList,seaList,windList;
-
+    private WindowManager.LayoutParams params;
     boolean rain_isPlaying,sea_isPlaying,wind_isPlaying;
 
 

@@ -1,6 +1,7 @@
 package com.example.sleep_project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -12,11 +13,17 @@ import androidx.preference.PreferenceManager;
 public class SettingsActivity extends AppCompatActivity {
     public static Context context_pref;
     public static SharedPreferences pref;
-
+    public boolean checksetting = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+        if(!checksetting){
+            Intent intent  = new Intent(getApplicationContext(),UI_2_Maintimertab.class);
+            startActivity(intent);
+            checksetting = true;
+            finish();
+        }
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()

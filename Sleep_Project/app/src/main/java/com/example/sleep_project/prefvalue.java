@@ -6,6 +6,7 @@ import android.util.Log;
 
 public class prefvalue {
     SharedPreferences pref;
+
     public prefvalue(){ //생성자로 pref 가져옴
         pref = ((SettingsActivity)SettingsActivity.context_pref).pref;
     }
