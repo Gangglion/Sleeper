@@ -441,12 +441,7 @@ public class UI_2_Maintimertab extends AppCompatActivity{
                 for(int i=0;i<time.length;i++){
                     Log.d("timecheck", time[i]);
                 }
-                if((time[0].substring(0,1)).equals("0")){
-                    hour=Integer.parseInt(time[0].substring(1,1));
-                }else{
-                    hour = Integer.parseInt(time[0]);
-                }
-//                hour = Integer.parseInt(time[0]);
+                hour = Integer.parseInt(time[0]);
                 minute = Integer.parseInt(time[1]);
                 second = Integer.parseInt(time[2]);
                 Log.i("Time", "hour" + hour + ", minute" + minute + ", second" + second);

@@ -18,6 +18,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
 
     private String username,sex,age,job;//입력한 값을 가져와 파이어베이스에 올리는 메소드의 인자로 들어갈것임
@@ -36,6 +47,29 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
 //            startActivity(skipintent);
 //            finish();
 //        }
+
+        FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Log.d("datacheck", "ValueEventListener : " + snapshot.getKey());
+//                    Log.d("datacheck", "ValueEventListener : " + snapshot);
+//                    Log.d("datacheck", "ValueEventListener : " + snapshot.getChildrenCount());
+//                    Log.d("datacheck", "ValueEventListener : " + snapshot.getChildren());
+//                    Log.d("datacheck", "ValueEventListener : " + snapshot.getValue());
+                    for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                        Log.d("datacheck", "ValueEventListener : " + snapshot1.getValue());
+                        HashMap <String,String> map = (HashMap<String, String>) snapshot1.getValue(); //hashmap은 JSONArray로 바꿀수없다 -> snapshot1.getvalue() 는 hashmap이다??
+                        Log.d("checkhash",map.toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         //나이 드롭박스 항목 세팅
         Spinner agespinner = (Spinner) findViewById(R.id.selectage);
         ArrayAdapter<CharSequence> ageadapter = ArrayAdapter.createFromResource(this,
