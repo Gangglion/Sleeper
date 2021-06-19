@@ -111,7 +111,8 @@
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/bar_chart"
             android:layout_width="match_parent"
-            android:layout_height="225dp"/>
+            android:layout_height="225dp"
+            android:background="@drawable/table_line"/>
 
         <TableLayout
             android:layout_width="match_parent"
@@ -121,22 +122,27 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <TableRow
+                android:layout_height="172dp"
                 android:background="@drawable/table_line">
                 <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="24sp"
+                    android:text="날짜"
                     android:textColor="#FFFFFF"
-                    android:text="요일" />
+                    android:textSize="16sp" />
                 <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="24sp"
+                    android:text="수면시간"
                     android:textColor="#FFFFFF"
-                    android:text="수면시간" />
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="설정시간"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
             </TableRow>
             <TableRow>
                 <TextView
@@ -145,7 +151,7 @@
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="월" />
+                    android:text="" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -153,6 +159,13 @@
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
                     android:text="5시간" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="" />
             </TableRow>
             <TableRow>
                 <TextView
@@ -161,7 +174,7 @@
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="화" />
+                    android:text="" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -169,15 +182,22 @@
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
                     android:text="8시간" />
-            </TableRow>
-            <TableRow>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="수" />
+                    android:text="" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -185,6 +205,13 @@
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
                     android:text="6시간" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="" />
             </TableRow>
             <TableRow>
                 <TextView
@@ -193,7 +220,7 @@
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="목" />
+                    android:text="" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -201,6 +228,13 @@
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
                     android:text="6시간" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="" />
             </TableRow>
             <TableRow>
                 <TextView
@@ -209,7 +243,7 @@
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="금" />
+                    android:text="" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -217,6 +251,13 @@
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
                     android:text="7시간" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="" />
             </TableRow>
             <TableRow>
                 <TextView
@@ -225,7 +266,7 @@
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="토" />
+                    android:text="" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -233,6 +274,13 @@
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
                     android:text="6시간" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="" />
             </TableRow>
             <TableRow>
                 <TextView
@@ -241,7 +289,7 @@
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="일" />
+                    android:text="" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -249,10 +297,15 @@
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
                     android:text="5시간" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="#FFFFFF"
+                    android:text="" />
             </TableRow>
         </TableLayout>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

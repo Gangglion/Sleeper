@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -23,13 +25,20 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
 
 public class UI_4_Statisticstab extends AppCompatActivity {
 
@@ -53,11 +62,12 @@ public class UI_4_Statisticstab extends AppCompatActivity {
     int curday = Integer.parseInt(dayFormay.format(currentTime));
     //어떤 통계인지 텍스트뷰를 통해서 알려줌
     TextView statisticsTitle;
+    private DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics1);
-
+        mDatabase = FirebaseDatabase.getInstance().getReference(); //파이어베이스 이용 위한 인스턴스 생성
         barChart = (BarChart) findViewById(R.id.bar_chart);
         BarInit();
         searchStartDay = (TextView)findViewById(R.id.searchStartDay);
@@ -149,6 +159,18 @@ public class UI_4_Statisticstab extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+//        mDatabase.child("UserInfo").child("글리온").child("2021-06-19").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if (!task.isSuccessful()) {
+//                    Log.e("firebase", "Error getting data", task.getException());
+//                }
+//                else {
+//                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+//                }
+//            }
+//        });
     }
     private void BarInit() {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -229,6 +251,4 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         datePickerDialog.setMessage("메시지");
         datePickerDialog.show();
     }
-
-
 }

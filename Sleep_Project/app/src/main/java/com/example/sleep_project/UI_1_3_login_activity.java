@@ -1,6 +1,7 @@
 package com.example.sleep_project;
 
 import android.content.Intent;
+import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,11 +51,8 @@ public class UI_1_3_login_activity extends AppCompatActivity {
 
         //이미 로그인이 되어있다면 바로 UI_2_Maintimertab으로 넘어가게 하는코드
         if (aboutLogin.checklogin()) {
-            //Intent intent = new Intent(getApplication(), UI_1_4_UserInfo_Activity.class);
+            Intent intent = new Intent(getApplication(), UI_1_4_UserInfo_Activity.class);
             //테스트용으로 만든 intent
-//            Intent intent = new Intent(getApplication(), UI_2_Maintimertab.class);
-            Intent intent = new Intent(getApplication(), UI_4_Statisticstab.class);
-            //Intent intent = new Intent(getApplication(), UI_2_Maintimertab.class);
             startActivity(intent);
             finish();
         }
@@ -68,8 +66,7 @@ public class UI_1_3_login_activity extends AppCompatActivity {
         nologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent=new Intent(getApplicationContext(), UI_2_Maintimertab.class);
-                Intent intent=new Intent(getApplicationContext(), SettingsActivity.class);
+                Intent intent=new Intent(getApplicationContext(), UI_2_Maintimertab.class);
                 startActivity(intent);
                 Toast.makeText(UI_1_3_login_activity.this, "로그인하지 않고 실행합니다", Toast.LENGTH_SHORT).show();
                 finish();

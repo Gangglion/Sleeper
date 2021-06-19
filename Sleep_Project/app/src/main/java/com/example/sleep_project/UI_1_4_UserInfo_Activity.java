@@ -30,6 +30,12 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ui_1_4_userinfo_layout);
+        //TODO : 파이어베이스 내에 계정이름에 해당하는 정보가 들어가있을경우 해당 액티비티 스킵
+//        if(/*파이어베이스 값 있는지*/){
+//            Intent skipintent = new Intent(getApplicationContext(),UI_2_Maintimertab.class);
+//            startActivity(skipintent);
+//            finish();
+//        }
         //나이 드롭박스 항목 세팅
         Spinner agespinner = (Spinner) findViewById(R.id.selectage);
         ArrayAdapter<CharSequence> ageadapter = ArrayAdapter.createFromResource(this,

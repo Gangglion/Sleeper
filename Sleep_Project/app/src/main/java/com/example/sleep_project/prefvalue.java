@@ -8,7 +8,13 @@ public class prefvalue {
     SharedPreferences pref;
 
     public prefvalue(){ //생성자로 pref 가져옴
-        pref = ((SettingsActivity)SettingsActivity.context_pref).pref;
+        if(SettingsActivity.pref == null){
+            Log.d("prefnull","널값이 넘어오는데요???"); //여기가 널이 아니면 만사  OK
+        }
+        else{
+            Log.d("prefnull","널이 아니네???");
+            pref = SettingsActivity.pref;
+        }
     }
 
     //메소드로 pref에 설정된 밝기값 가져옴
