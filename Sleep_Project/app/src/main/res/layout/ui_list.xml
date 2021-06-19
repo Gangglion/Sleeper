@@ -32,7 +32,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/sleepCnt"
             android:textSize="30dp"
-
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="5dp"
             />
         <TextView
             android:text="기상예약시간"
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/breakCnt"
             android:textSize="30dp"
+
             />
     </LinearLayout>
         <LinearLayout
