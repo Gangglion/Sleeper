@@ -125,10 +125,23 @@ public class UI_2_Maintimertab extends AppCompatActivity{
         sleepTime_breakTime_View = (LinearLayout)findViewById(R.id.sleepTime_breakTime_View);
 
 
+        Intent intent = getIntent();
+        int sleepHour = intent.getIntExtra("SleepHour",0);
+        int sleepMin = intent.getIntExtra("SleepMin",1);
+        int breakHour = intent.getIntExtra("BreakHour",2);
+        int breakMin = intent.getIntExtra("BreakMin",3);
+
+
+
+
+
+
+
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UI_List.class);
+
                 startActivity(intent);
             }
         });
@@ -154,7 +167,15 @@ public class UI_2_Maintimertab extends AppCompatActivity{
         alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE); // 알람매니저 설정
 
         sleep_timePicker = findViewById(R.id.sleepTime); // 잠들시간 타임피커 설정
+        sleep_timePicker.setHour(sleepHour);
+        sleep_timePicker.setMinute(sleepMin);
         alarm_timePicker = findViewById(R.id.breakTime); // 일어날시간 타임피커 설정
+
+
+            alarm_timePicker.setHour(breakHour);
+            alarm_timePicker.setMinute(breakMin);
+
+
 
         /////////////////////////////////타임피커 색 변경을 위한 코드//////////////////////////////////////
         int hour_NumberPicker_id = Resources.getSystem().getIdentifier("hour", "id", "android");
