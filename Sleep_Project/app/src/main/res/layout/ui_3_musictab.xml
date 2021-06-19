@@ -115,20 +115,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right">
 
-            <Button
+            <ImageButton
                 android:layout_width="45dp"
                 android:layout_height="40dp"
                 android:layout_gravity="right"
                 android:id="@+id/musicStart"
                 android:textColor="#FFFFFF"
-                android:text=">" />
+                android:src="@drawable/start" />
 
-            <Button
+            <ImageButton
                 android:layout_width="45dp"
                 android:layout_height="40dp"
                 android:id="@+id/musicStop"
                 android:textColor="#FFFFFF"
-                android:text="||" />
+                android:src="@drawable/stop" />
         </LinearLayout>
 
     </LinearLayout>

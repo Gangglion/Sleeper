@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class UI_3_Musictab extends AppCompatActivity {
     Button main,music,statistics,settingtab;
-    Button musicRestart,musicPause;
+    ImageButton musicRestart,musicPause;
     TextView musicName;
     int temp = 0;
     int prePosition = 0;
@@ -32,8 +33,10 @@ public class UI_3_Musictab extends AppCompatActivity {
     ListView rainList,seaList,windList;
     private WindowManager.LayoutParams params;
     boolean rain_isPlaying,sea_isPlaying,wind_isPlaying;
-
-
+    int seaDuration,windDuration,rainDuration;
+    MediaPlayer[] rainMd,windMd,seaMd;
+    String[] seaTitle = {"모래 해변가 파도","몽돌 해변가 파도(1)","몽돌 해변가 파도(2)","바위 해변가 파도","자갈 해변가 파도","겟바위의 파도", "큰 파도"};
+    MusicThread seaThread,rainThread;
     //버튼이 여러개 있으나 노래가 3개라 9개만 해놈.
     int currentMediaPlayPosition; // 현재 실행되고 있는 음악 위치
     @Override
@@ -52,8 +55,8 @@ public class UI_3_Musictab extends AppCompatActivity {
         music = (Button)findViewById(R.id.music); //음악기능 버튼
         statistics = (Button)findViewById(R.id.statistics); //통계기능 버튼
         settingtab = (Button)findViewById(R.id.settingtab); //설정기능 버튼
-        musicRestart = (Button)findViewById(R.id.musicStart);
-        musicPause = (Button) findViewById(R.id.musicStop);
+        musicRestart = (ImageButton)findViewById(R.id.musicStart);
+        musicPause = (ImageButton) findViewById(R.id.musicStop);
         musicName = (TextView)findViewById(R.id.musicName);
 
         //노래에 대한 리스트 목록
@@ -73,17 +76,17 @@ public class UI_3_Musictab extends AppCompatActivity {
         rainList.setAdapter(rainAdapter);
         rainAdapter = new ArrayAdapter<String>(this,R.layout.ui_3_musictab_color,rainTitle);
         rainList.setAdapter(rainAdapter);
-        MediaPlayer[] rainMd = new MediaPlayer[rainSong.length];
+         rainMd = new MediaPlayer[rainSong.length];
         //바다 노래
         int[] seaSong = {R.raw.sand_beach_waves,R.raw.mongdol_beach_waves1,R.raw.mongdol_beach_waves2,R.raw.rock_beach_waves,R.raw.gravel_beach_waves,
                         R.raw.getrock_beach_waves,R.raw.big_wave};
-        String[] seaTitle = {"모래 해변가 파도","몽돌 해변가 파도(1)","몽돌 해변가 파도(2)","바위 해변가 파도","자갈 해변가 파도","겟바위의 파도", "큰 파도"};
+
         ArrayAdapter<String> seaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,seaTitle);
         seaList.setAdapter(seaAdapter);
         seaAdapter = new ArrayAdapter<String>(this,R.layout.ui_3_musictab_color,seaTitle);
         seaList.setAdapter(seaAdapter);
 
-        MediaPlayer[] seaMd = new MediaPlayer[seaSong.length];
+         seaMd = new MediaPlayer[seaSong.length];
         //새 노래 클릭했을때
         rainList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -150,13 +153,17 @@ public class UI_3_Musictab extends AppCompatActivity {
                 seaMd[position].start();
                 for(int i = position; i < seaSong.length-1; i++) {
                     seaMd[i].setNextMediaPlayer(seaMd[i+1]);
-
+                    
                 }
 
-                musicName.setText(seaTitle[position]);
+               // musicName.setText(seaTitle[position]);
 
-
+              /*  Log.d("현재음악위치 : ", Integer.toString(seaMd[position].getCurrentPosition()));
+                Log.d("재생시간 : ", Integer.toString(seaMd[position].getDuration()));*/
                 sea_isPlaying = true;
+                seaThread = new MusicThread(sea_isPlaying,seaTitle,position);
+                seaThread.start();
+
             }
         });
 
@@ -274,6 +281,7 @@ public class UI_3_Musictab extends AppCompatActivity {
         };
 
 
+
         //위에있는 이벤트에서 매개변수로 넘어온 위치값으 받아 그 해당하는 위치값 화면을 출력
     private void changeView(int index) {
         switch (index) {
@@ -302,6 +310,39 @@ public class UI_3_Musictab extends AppCompatActivity {
                 seaList.setVisibility(View.INVISIBLE);
                 windList.setVisibility(View.VISIBLE);
                 break;
+        }
+    }
+   class MusicThread extends Thread{
+        boolean musicIsPlaying;
+        int position;
+        String title[];
+
+        MusicThread(boolean musicIsPlaying,String title[] ,int position){
+            this.musicIsPlaying = musicIsPlaying;
+            this.position = position;
+            this.title = title;
+        }
+        public void run() {
+
+            while(musicIsPlaying) {
+                try {
+                if(sea_isPlaying == true) {
+                    Log.d("현재재생위치 : ", Integer.toString(seaMd[position].getCurrentPosition()));
+                    Log.d("재생 시간 : " , Integer.toString(seaMd[position].getDuration()));
+                    Log.d("현재 실행중인 음악제목 ", seaTitle[position]);
+                    Log.d("포지션 값 ","다음곡을 재생할거다");
+
+
+                }
+                //Log.d("인덱스 값 : " , Integer.toString(position));
+                    musicName.setText(title[position]);
+                    Thread.sleep(seaMd[position].getDuration());
+                    position++;
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
         }
     }
 }
