@@ -80,6 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <SlidingDrawer
             android:textColor="@color/white"
             android:layout_width="match_parent"
@@ -110,6 +111,13 @@
             </LinearLayout>
 
         </SlidingDrawer>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="설정하기"
+            android:gravity="center"
+            android:id="@+id/test"
+            />
         <SlidingDrawer
             android:textColor="@color/white"
             android:layout_width="match_parent"
