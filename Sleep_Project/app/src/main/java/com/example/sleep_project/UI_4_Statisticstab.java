@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -34,10 +35,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 public class UI_4_Statisticstab extends AppCompatActivity {
@@ -62,14 +66,12 @@ public class UI_4_Statisticstab extends AppCompatActivity {
     int curday = Integer.parseInt(dayFormay.format(currentTime));
     //어떤 통계인지 텍스트뷰를 통해서 알려줌
     TextView statisticsTitle;
-    private DatabaseReference mDatabase;
+    ArrayList<String> dateChart = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics1);
-        mDatabase = FirebaseDatabase.getInstance().getReference(); //파이어베이스 이용 위한 인스턴스 생성
         barChart = (BarChart) findViewById(R.id.bar_chart);
-        BarInit();
         searchStartDay = (TextView)findViewById(R.id.searchStartDay);
         searchEndDay = (TextView)findViewById(R.id.searchEndDay);
         Button button1 = findViewById(R.id.button1);
@@ -79,7 +81,6 @@ public class UI_4_Statisticstab extends AppCompatActivity {
                 showStartDate();
             }
         });
-
         Button button2 = findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +88,6 @@ public class UI_4_Statisticstab extends AppCompatActivity {
                 showEndDate();
             }
         });
-
-
 
         statisticsTitle = (TextView)findViewById(R.id.statisticsName);
         statisticsTitle.setText("수면시간 통계");
@@ -123,9 +122,6 @@ public class UI_4_Statisticstab extends AppCompatActivity {
                 popupMenu.show();
             }
         });
-
-
-
         /////////////////////////////////////////////
         main = (Button) findViewById(R.id.main); //메인기능버튼
         music = (Button) findViewById(R.id.music); //음악기능 버튼
@@ -160,42 +156,57 @@ public class UI_4_Statisticstab extends AppCompatActivity {
             }
         });
 
-//        mDatabase.child("UserInfo").child("글리온").child("2021-06-19").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (!task.isSuccessful()) {
-//                    Log.e("firebase", "Error getting data", task.getException());
-//                }
-//                else {
-//                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-//                }
-//            }
-//        });
+        //파이어베이스 값 가져오는 방법****
+        FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                        for(DataSnapshot snapshot2 : snapshot1.getChildren()){
+                            String temp = snapshot2.getKey();
+                            if(!temp.equals("PersonalInfo")){
+                                Log.d("ValueEventListener",temp);
+                                dateChart.add(temp);
+                            }
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        BarInit();
     }
     private void BarInit() {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         barEntries.add(new BarEntry(0f, 5f));
         barEntries.add(new BarEntry(1f, 8f));
-        barEntries.add(new BarEntry(2f, 6f));
-        barEntries.add(new BarEntry(3f, 6f));
-        barEntries.add(new BarEntry(4f, 7f));
-        barEntries.add(new BarEntry(5f, 6f));
-        barEntries.add(new BarEntry(6f, 5f));
+//        barEntries.add(new BarEntry(2f, 6f));
+//        barEntries.add(new BarEntry(3f, 6f));
+//        barEntries.add(new BarEntry(4f, 7f));
+//        barEntries.add(new BarEntry(5f, 6f));
+//        barEntries.add(new BarEntry(6f, 5f));
         BarDataSet barDataSet = new BarDataSet(barEntries, "Dates");
         ArrayList<String> theDates = new ArrayList<>();
-        theDates.add("월");
-        theDates.add("화");
-        theDates.add("수");
-        theDates.add("목");
-        theDates.add("금");
-        theDates.add("토");
-        theDates.add("일");
+//        theDates.add("월");
+//        theDates.add("화");
+//        theDates.add("수");
+//        theDates.add("목");
+//        theDates.add("금");
+//        theDates.add("토");
+//        theDates.add("일");
+//        for(int i=0;i<dateChart.size();i++){
+//            Log.d("testtest","asdfasdf"+dateChart.get(i));
+//            theDates.add(dateChart.get(i));
+//        }
         barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(theDates));
         BarData theData = new BarData(barDataSet);
         barChart.setData(theData);
-        barChart.setTouchEnabled(true);
-        barChart.setDragEnabled(true);
-        barChart.setScaleEnabled(true);
+        barChart.setTouchEnabled(false);
+        barChart.setDragEnabled(false);
+        barChart.setScaleEnabled(false);
         barChart.getXAxis().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white)); // X축 텍스트컬러설정
         barChart.getXAxis().setGridColor(ContextCompat.getColor(getApplicationContext(), R.color.white)); // X축 줄의 컬러 설정
         barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -218,13 +229,11 @@ public class UI_4_Statisticstab extends AppCompatActivity {
 
         barChart.animateXY(0,800);
     }
+    //달력띄우는 메소드 2가지
     void showStartDate() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-
-
                 y = year;
                 m = month+1;
                 d = dayOfMonth;
@@ -245,10 +254,15 @@ public class UI_4_Statisticstab extends AppCompatActivity {
                 searchEndDay.setText(y+"/"+m+"/"+d);
             }
         },curYear,curMonth,curday);
-
-
-
         datePickerDialog.setMessage("메시지");
         datePickerDialog.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        for(int i=0;i<dateChart.size();i++){
+            Log.d("testtest","asfasdf"+dateChart.toString()); //안넘어옴
+        }
     }
 }

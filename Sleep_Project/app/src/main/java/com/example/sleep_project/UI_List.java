@@ -37,7 +37,7 @@ public class UI_List extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        String[] sList = {"10:30","11:00","11:30"};
+        String[] sList = {"22:00","23:00","24:00"};
 
         ArrayAdapter<String>  sleepAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, sList);
         sleepList.setAdapter(sleepAdapter);
@@ -54,7 +54,7 @@ public class UI_List extends AppCompatActivity {
         });
 
         breakList = (ListView)findViewById(R.id.breakList);
-        String[] bList = {"10:00","14:00"};
+        String[] bList = {"06:00","07:00"};
         ArrayAdapter<String> breakAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, bList);
         breakList.setAdapter(breakAdapter);
         breakAdapter = new ArrayAdapter<String>(this,R.layout.ui_3_maintimerlist_color,bList);

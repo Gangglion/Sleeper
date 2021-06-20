@@ -36,35 +36,36 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
     RadioGroup sexselect;
     Spinner selectage,selectjob;
 
-
+    String PersonalData;
+    AboutLogin aboutLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ui_1_4_userinfo_layout);
-        //TODO : 파이어베이스 내에 계정이름에 해당하는 정보가 들어가있을경우 해당 액티비티 스킵
-//        if(/*파이어베이스 값 있는지*/){
-//            Intent skipintent = new Intent(getApplicationContext(),UI_2_Maintimertab.class);
-//            startActivity(skipintent);
-//            finish();
-//        }
-
+        aboutLogin = new AboutLogin();
+        //파이어베이스 값 가져오는 방법****
         FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    Log.d("datacheck", "ValueEventListener : " + snapshot.getKey());
-//                    Log.d("datacheck", "ValueEventListener : " + snapshot);
-//                    Log.d("datacheck", "ValueEventListener : " + snapshot.getChildrenCount());
-//                    Log.d("datacheck", "ValueEventListener : " + snapshot.getChildren());
-//                    Log.d("datacheck", "ValueEventListener : " + snapshot.getValue());
                     for(DataSnapshot snapshot1 : snapshot.getChildren()){
-                        Log.d("datacheck", "ValueEventListener : " + snapshot1.getValue());
-                        HashMap <String,String> map = (HashMap<String, String>) snapshot1.getValue(); //hashmap은 JSONArray로 바꿀수없다 -> snapshot1.getvalue() 는 hashmap이다??
-                        Log.d("checkhash",map.toString());
+                        if(snapshot1.getKey() == aboutLogin.getUser().getDisplayName()){
+                            //Log.d("datacheck", "ValueEventListener : " + snapshot1.getValue());
+                            HashMap <String,String> map = (HashMap<String, String>) snapshot1.getValue();
+                            PersonalData = String.valueOf(map.get("PersonalInfo"));
+                            //Log.d("testtest",PersonalData);
+                            //입력한 정보가 있다면 해당 액티비티 스킵
+                            if(PersonalData!=null){
+                                Intent skipintent = new Intent(getApplicationContext(),UI_2_Maintimertab.class);
+                                Toast.makeText(getApplicationContext(),"이미 입력한 정보가 있으므로 정보입력화면을 스킵합니다.",Toast.LENGTH_SHORT).show();
+                                startActivity(skipintent);
+                                finish();
+                            }else{
+                            }
+                        }
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 

@@ -131,12 +131,6 @@ public class UI_2_Maintimertab extends AppCompatActivity{
         int breakHour = intent.getIntExtra("BreakHour",2);
         int breakMin = intent.getIntExtra("BreakMin",3);
 
-
-
-
-
-
-
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
