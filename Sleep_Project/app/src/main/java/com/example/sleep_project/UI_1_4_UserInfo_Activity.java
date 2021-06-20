@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,42 +37,34 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
     Button nextbtn,seeservicebtn,seepersonalbtn;
     RadioGroup sexselect;
     Spinner selectage,selectjob;
-
-    String PersonalData;
-    AboutLogin aboutLogin;
+    Firebaseget firebaseget;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ui_1_4_userinfo_layout);
-        aboutLogin = new AboutLogin();
-        //파이어베이스 값 가져오는 방법****
-        FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
+        firebaseget = new Firebaseget();
+        new Handler().postDelayed(new Runnable()
+        {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    for(DataSnapshot snapshot1 : snapshot.getChildren()){
-                        if(snapshot1.getKey() == aboutLogin.getUser().getDisplayName()){
-                            //Log.d("datacheck", "ValueEventListener : " + snapshot1.getValue());
-                            HashMap <String,String> map = (HashMap<String, String>) snapshot1.getValue();
-                            PersonalData = String.valueOf(map.get("PersonalInfo"));
-                            //Log.d("testtest",PersonalData);
-                            //입력한 정보가 있다면 해당 액티비티 스킵
-                            if(PersonalData!=null){
-                                Intent skipintent = new Intent(getApplicationContext(),UI_2_Maintimertab.class);
-                                Toast.makeText(getApplicationContext(),"이미 입력한 정보가 있으므로 정보입력화면을 스킵합니다.",Toast.LENGTH_SHORT).show();
-                                startActivity(skipintent);
-                                finish();
-                            }else{
-                            }
-                        }
-                    }
-                }
+            public void run()
+            {
+                //딜레이 후 시작할 코드 작성
+                firebaseget.Personaldataget();
             }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        }, 1000);// 1초 정도 딜레이를 준 후 시작
 
-            }
-        });
+//        if(firebaseget.hashMap.isEmpty()){
+//            Log.d("emptytest","비어있음");
+//        }else{
+//            Log.d("emptytest","비어있지않음");
+//        }
+//        if(!firebaseget.hashMap.get("PersonalInfo").equals("null")){
+//            //입력한 정보가 있다면 해당 액티비티 스킵
+//            Intent skipintent = new Intent(getApplicationContext(),UI_2_Maintimertab.class);
+//            Toast.makeText(getApplicationContext(),"이미 입력한 정보가 있으므로 정보입력화면을 스킵합니다.",Toast.LENGTH_SHORT).show();
+//            startActivity(skipintent);
+//            finish();
+//        }
         //나이 드롭박스 항목 세팅
         Spinner agespinner = (Spinner) findViewById(R.id.selectage);
         ArrayAdapter<CharSequence> ageadapter = ArrayAdapter.createFromResource(this,
@@ -81,9 +75,10 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //텍스트 색 흰색, 사이즈20으로 바꿔주기
-                ((TextView)adapterView.getChildAt(0)).setTextColor(Color.WHITE);
-                ((TextView)adapterView.getChildAt(0)).setTextSize(20);
+                ((TextView) adapterView.getChildAt(0)).setTextColor(Color.WHITE);
+                ((TextView) adapterView.getChildAt(0)).setTextSize(20);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -99,33 +94,34 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //텍스트 색 흰색, 사이즈20으로 바꿔주기
-                ((TextView)adapterView.getChildAt(0)).setTextColor(Color.WHITE);
-                ((TextView)adapterView.getChildAt(0)).setTextSize(20);
+                ((TextView) adapterView.getChildAt(0)).setTextColor(Color.WHITE);
+                ((TextView) adapterView.getChildAt(0)).setTextSize(20);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
-        sexselect = (RadioGroup)findViewById(R.id.sexradiobtn);
-        selectage = (Spinner)findViewById(R.id.selectage);
-        selectjob = (Spinner)findViewById(R.id.selectjob);
+        sexselect = (RadioGroup) findViewById(R.id.sexradiobtn);
+        selectage = (Spinner) findViewById(R.id.selectage);
+        selectjob = (Spinner) findViewById(R.id.selectjob);
 
         //다음 버튼 눌렀을때 실행되는 내용 - 파이어베이스에 값 저장, 성공시 다음화면으로 이동
-        nextbtn = (Button)findViewById(R.id.userinfo_nextbtn);
+        nextbtn = (Button) findViewById(R.id.userinfo_nextbtn);
         nextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
+                try {
                     //라디오버튼에 눌린 값 저장
                     int id = sexselect.getCheckedRadioButtonId();
-                    RadioButton selecttxtsex = (RadioButton)findViewById(id);
+                    RadioButton selecttxtsex = (RadioButton) findViewById(id);
                     sex = selecttxtsex.getText().toString();
                     //나이 저장
-                    Spinner agespinner = (Spinner)findViewById(R.id.selectage);
+                    Spinner agespinner = (Spinner) findViewById(R.id.selectage);
                     age = agespinner.getSelectedItem().toString();
                     //직업 저장
-                    Spinner jobspinner = (Spinner)findViewById(R.id.selectjob);
+                    Spinner jobspinner = (Spinner) findViewById(R.id.selectjob);
                     job = jobspinner.getSelectedItem().toString();
 /*                    Log.d("checkdata",sex);
                     Log.d("checkdata",age);
@@ -135,21 +131,21 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
                     AboutLogin aboutLogin = new AboutLogin();
                     username = aboutLogin.getUser().getDisplayName();
 
-                    firebasepost firebasepost = new firebasepost(username,sex,age,job);
+                    firebasepost firebasepost = new firebasepost(username, sex, age, job);
                     firebasepost.postFirebaseDatabase(true);
 
                     Intent nextintent = new Intent(getApplicationContext(), UI_2_Maintimertab.class);
                     startActivity(nextintent);
                     finish();
-                }catch(Exception e){
-                    Log.d("firebaseError",e.toString());
-                    Toast.makeText(getApplicationContext(),"정보 입력 에러. 다시 확인해주십시오",Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Log.d("firebaseError", e.toString());
+                    Toast.makeText(getApplicationContext(), "정보 입력 에러. 다시 확인해주십시오", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         //서비스 이용약관 보기
-        seeservicebtn = (Button)findViewById(R.id.seeservice);
+        seeservicebtn = (Button) findViewById(R.id.seeservice);
         seeservicebtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent seeserviceintent = new Intent(getApplicationContext(), seeservicetab.class);
@@ -157,7 +153,7 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
             }
         });
         //개인정보 방침 보기
-        seepersonalbtn = (Button)findViewById(R.id.seepersonal);
+        seepersonalbtn = (Button) findViewById(R.id.seepersonal);
         seepersonalbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,5 +161,10 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
                 startActivity(seepersonalintent);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }

@@ -2,6 +2,7 @@ package com.example.sleep_project;
 
 import android.app.ActivityManager;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.AppOpsManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -9,6 +10,7 @@ import android.app.PendingIntent;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -77,6 +79,8 @@ public class UI_2_Maintimertab extends AppCompatActivity{
     //기능 실행시 화면 변경 기능을 수행할 핸들러 선언 및 초기화문
     valueHandler handler = new valueHandler();
     Thread thread;
+
+    boolean dlgcheck=false;
     //특정조건에 맞춰 취소키 안먹게 하기
     @Override
     public void onBackPressed() {
@@ -289,6 +293,8 @@ public class UI_2_Maintimertab extends AppCompatActivity{
                 result = Integer.parseInt(putanswer.getText().toString());
                 //문제랑 입력값이랑 같을 시 알람 종료
                 if(result == answer) {
+                    checkTh = true;
+                    thread.interrupt();
                     stopService(alarm_off);
                     timelayout.setVisibility(View.VISIBLE);
                     locklayout.setVisibility(View.INVISIBLE);
@@ -348,6 +354,26 @@ public class UI_2_Maintimertab extends AppCompatActivity{
             }
         });
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(dlgcheck){
+            AlertDialog.Builder dlg = new AlertDialog.Builder(UI_2_Maintimertab.this);
+            dlg.setTitle("지금은 수면시간입니다!"); //제목
+            dlg.setMessage("수면시간동안 어플의 사용이 제한됩니다!"); // 메시지
+            dlg.setIcon(R.drawable.sleeper_icon); // 아이콘 설정
+            //버튼 클릭시 동작
+            dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which) {
+                    //토스트 메시지
+                    //Toast.makeText(UI_2_Maintimertab.this,"확인을 눌르셨습니다.",Toast.LENGTH_SHORT).show();
+                }
+            });
+            dlg.show();
+        }
+    }
+
     //특정조건 하에서 메뉴키 막기 위한 코드
     @Override
     protected void onPause() {
@@ -469,12 +495,16 @@ public class UI_2_Maintimertab extends AppCompatActivity{
                     Log.d("tmdguq_alert", running + "실행되고있습니다");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         if (android.provider.Settings.canDrawOverlays(context)) {
-                            if (!running.equals("com.example.sleep_project")) {
+                            if (!running.equals(getClass().getPackage().getName())) {
                                 Intent sIntent = new Intent(context, UI_2_Maintimertab.class);
                                 sIntent.putExtra("action", "tts");
                                 sIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(sIntent);
+                                dlgcheck=true;
+                            }
+                            else{
+                                dlgcheck=false;
                             }
                         }
                     }
