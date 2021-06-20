@@ -35,6 +35,7 @@ public class UI_3_Musictab extends AppCompatActivity {
     boolean rain_isPlaying,sea_isPlaying,wind_isPlaying;
     int seaDuration,windDuration,rainDuration;
     MediaPlayer[] rainMd,windMd,seaMd;
+
     String[] seaTitle = {"모래 해변가 파도","몽돌 해변가 파도(1)","몽돌 해변가 파도(2)","바위 해변가 파도","자갈 해변가 파도","겟바위의 파도", "큰 파도"};
     MusicThread seaThread,rainThread;
     //버튼이 여러개 있으나 노래가 3개라 9개만 해놈.
@@ -46,9 +47,6 @@ public class UI_3_Musictab extends AppCompatActivity {
         //상단 액션바 숨기는 코드
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
-
-
         /////////////////////////////////////////////
         setTitle("음악");
         main = (Button)findViewById(R.id.main); //메인기능버튼
@@ -64,8 +62,6 @@ public class UI_3_Musictab extends AppCompatActivity {
         seaList = (ListView)findViewById(R.id.seaList);
         windList = (ListView)findViewById(R.id.windList);
 
-
-
         //새 노래와 관련된 부분
         int[] rainSong = {R.raw.asphalt_rain,R.raw.eaves_under_rain,R.raw.large_rain_lightning,
                 R.raw.mountain_path_rain,R.raw.small_field_rain,
@@ -77,6 +73,7 @@ public class UI_3_Musictab extends AppCompatActivity {
         rainAdapter = new ArrayAdapter<String>(this,R.layout.ui_3_musictab_color,rainTitle);
         rainList.setAdapter(rainAdapter);
          rainMd = new MediaPlayer[rainSong.length];
+
         //바다 노래
         int[] seaSong = {R.raw.sand_beach_waves,R.raw.mongdol_beach_waves1,R.raw.mongdol_beach_waves2,R.raw.rock_beach_waves,R.raw.gravel_beach_waves,
                         R.raw.getrock_beach_waves,R.raw.big_wave};
