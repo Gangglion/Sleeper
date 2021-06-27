@@ -146,12 +146,12 @@
             </TableRow>
             <TableRow>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="6월15일" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -160,21 +160,21 @@
                     android:textColor="#FFFFFF"
                     android:text="5시간" />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="1시0분~6시0분" />
             </TableRow>
             <TableRow>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="6월16일" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -183,19 +183,19 @@
                     android:textColor="#FFFFFF"
                     android:text="8시간" />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="10시30분~6시30분" />
             </TableRow>
             <TableRow>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text=""
+                    android:text="6월17일"
                     android:textColor="#FFFFFF"
                     android:textSize="17sp" />
                 <TextView
@@ -206,21 +206,21 @@
                     android:textColor="#FFFFFF"
                     android:text="6시간" />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="0시0분~6시0분" />
             </TableRow>
             <TableRow>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="6월18일" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -229,21 +229,21 @@
                     android:textColor="#FFFFFF"
                     android:text="6시간" />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="11시30분~5시30분" />
             </TableRow>
             <TableRow>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="6월19일" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -252,21 +252,21 @@
                     android:textColor="#FFFFFF"
                     android:text="7시간" />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="0시0분~7시0분" />
             </TableRow>
             <TableRow>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="6월20일" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -275,21 +275,21 @@
                     android:textColor="#FFFFFF"
                     android:text="6시간" />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="0시0분~6시0분" />
             </TableRow>
             <TableRow>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="6월21일" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -298,12 +298,12 @@
                     android:textColor="#FFFFFF"
                     android:text="5시간" />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#FFFFFF"
-                    android:text="" />
+                    android:text="1시0분~6시0분" />
             </TableRow>
         </TableLayout>
         <LinearLayout

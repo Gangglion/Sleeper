@@ -15,33 +15,46 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.concurrent.CountDownLatch;
 
 public class Firebaseget {
     FirebaseDatabase database;
     DatabaseReference databaseRef;
-    static HashMap<String,String> hashMap;
+    HashMap<String,String> hashMap;
+    String firekey;
+    DataVO dataVO;
     public Firebaseget(){
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference();
         hashMap = new HashMap<>();
     }
     //설정한 정보 가져오는 파이어베이스
-    public void Personaldataget(){
+    public void Personaldataget() throws InterruptedException {
         //파이어베이스 값 가져오는 방법****
+        CountDownLatch latch = new CountDownLatch(1);
         databaseRef.addChildEventListener(new ChildEventListener() {  // message는 child의 이벤트를 수신합니다.
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     for(DataSnapshot postSnapshot1 : postSnapshot.getChildren()){
                         if(postSnapshot1.getKey().equals("PersonalInfo")){
+                            firekey = postSnapshot1.getKey();
                             hashMap.put(postSnapshot1.getKey(),String.valueOf(postSnapshot1.getValue()));
-                            Log.d("classfiretest",hashMap.get("PersonalInfo"));
+                            Log.d("classfiretest",hashMap.get(firekey));
+                            latch.countDown();
                         }else{
                             hashMap.put("PersonalInfo","null"); //PersonalInfo가 없다면 PersonalInfo 라는 키 값에 null이라는 문자열넣어줌
                         }
                     }
                 }
+                if(hashMap.isEmpty()){ //함수내부에선 비어있지않음
+                    Log.d("classfiretest"," void함수내부 hashmap 비어있음");
+                }else{
+                    Log.d("classfiretest","void함수내부 hashmap 비어있지않음");
+                    dataVO = new DataVO(hashMap);
+                }
             }
+
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
@@ -59,12 +72,12 @@ public class Firebaseget {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-//        if(hashMap.get("PersonalInfo").equals("null")){ //왜 위에서 저장했는데 널인것이지..
-//            Log.d("emptytest","비어있음");
-//        }else{
-//            Log.d("emptytest","비어있지않음");
-//        }
-//        Log.d("classfiretest",hashMap.get("PersonalInfo"));
+        latch.await();
+        if(dataVO.getHashMap().isEmpty()){ //함수내부에선 비어있지않음
+            Log.d("classfiretest"," 함수내부 hashmap 비어있음");
+        }else{
+            Log.d("classfiretest","함수내부 hashmap 비어있지않음");
+        }
     }
     //날짜 정보 가져오는 파이어베이스
     public void getDatedata(){

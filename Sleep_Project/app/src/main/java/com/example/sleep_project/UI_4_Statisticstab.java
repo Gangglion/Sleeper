@@ -183,24 +183,20 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         barEntries.add(new BarEntry(0f, 5f));
         barEntries.add(new BarEntry(1f, 8f));
-//        barEntries.add(new BarEntry(2f, 6f));
-//        barEntries.add(new BarEntry(3f, 6f));
-//        barEntries.add(new BarEntry(4f, 7f));
-//        barEntries.add(new BarEntry(5f, 6f));
-//        barEntries.add(new BarEntry(6f, 5f));
+        barEntries.add(new BarEntry(2f, 6f));
+        barEntries.add(new BarEntry(3f, 6f));
+        barEntries.add(new BarEntry(4f, 7f));
+        barEntries.add(new BarEntry(5f, 6f));
+        barEntries.add(new BarEntry(6f, 5f));
         BarDataSet barDataSet = new BarDataSet(barEntries, "Dates");
         ArrayList<String> theDates = new ArrayList<>();
-//        theDates.add("월");
-//        theDates.add("화");
-//        theDates.add("수");
-//        theDates.add("목");
-//        theDates.add("금");
-//        theDates.add("토");
-//        theDates.add("일");
-//        for(int i=0;i<dateChart.size();i++){
-//            Log.d("testtest","asdfasdf"+dateChart.get(i));
-//            theDates.add(dateChart.get(i));
-//        }
+        theDates.add("6월15일");
+        theDates.add("6월16일");
+        theDates.add("6월17일");
+        theDates.add("6월18일");
+        theDates.add("6월19일");
+        theDates.add("6월20일");
+        theDates.add("6월21일");
         barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(theDates));
         BarData theData = new BarData(barDataSet);
         barChart.setData(theData);

@@ -38,11 +38,13 @@ public class UI_3_Musictab extends AppCompatActivity {
     boolean rain_isPlaying, sea_isPlaying, wind_isPlaying;
     int seaDuration, windDuration, rainDuration;
     MediaPlayer[] rainMd, windMd, seaMd;
+    MusicHandler seaHandler,windHandler,rainHandler;
+    int nextPosition;
 
     String[] seaTitle = {"모래 해변가 파도", "몽돌 해변가 파도(1)", "몽돌 해변가 파도(2)", "바위 해변가 파도", "자갈 해변가 파도", "겟바위의 파도", "큰 파도"};
     String[] rainTitle = {"아스팔트 위에 내리는 비", "처마밑 비", "굵은비와 번개", "산 오솔길", "자잘밭", "보드블록 위에 내리는 비", "계곡에 내리는 비", "시골에서 내리는 비"};
     String[] windTitle = {"힐링을 위한 바람","폭풍우치는 바람","창문가에 들리는 바람","진한 바람","조금씩 줄어드는 바람","잔잔한 봄바람","시원한 바람","숨속의 바람","백색소음 바람","바람"};
-    MusicThread seaThread, rainThread;
+    MusicThread seaThread, rainThread,windThread;
     //버튼이 여러개 있으나 노래가 3개라 9개만 해놈.
     int currentMediaPlayPosition; // 현재 실행되고 있는 음악 위치
 
@@ -94,7 +96,7 @@ public class UI_3_Musictab extends AppCompatActivity {
 
         int[] windSong = {R.raw.sound_healing_wind, R.raw.storm_wind,R.raw.window_sound_wind,R.raw.deep_noise_wind ,
                 R.raw.littleby_little_noise_wind, R.raw.spring_wind
-               , R.raw.cool_wind,R.raw.forest_in_the_wind,
+                , R.raw.cool_wind,R.raw.forest_in_the_wind,
                 R.raw.white_noise_wind,R.raw.wind_sound,};
 
         ArrayAdapter<String> windAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, windTitle);
@@ -125,6 +127,7 @@ public class UI_3_Musictab extends AppCompatActivity {
                         currentMediaPlayPosition = seaMd[i].getCurrentPosition();
                         seaMd[i].stop();
                         seaMd[i].release();
+                        seaThread.stop();
                     }
                 }
                 if(wind_isPlaying) {
@@ -146,6 +149,11 @@ public class UI_3_Musictab extends AppCompatActivity {
                 }
 
                 rain_isPlaying = true;
+                nextPosition = position;
+                rainHandler = new MusicHandler();
+                rainThread = new MusicThread(rain_isPlaying, rainTitle, position);
+
+                rainThread.start();
 
             }
         });
@@ -194,11 +202,14 @@ public class UI_3_Musictab extends AppCompatActivity {
               /*  Log.d("현재음악위치 : ", Integer.toString(seaMd[position].getCurrentPosition()));
                 Log.d("재생시간 : ", Integer.toString(seaMd[position].getDuration()));*/
                 sea_isPlaying = true;
+                nextPosition = position;
+                seaHandler = new MusicHandler();
                 seaThread = new MusicThread(sea_isPlaying, seaTitle, position);
                 seaThread.start();
 
             }
         });
+
         windList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -236,6 +247,10 @@ public class UI_3_Musictab extends AppCompatActivity {
 
                 }
                 wind_isPlaying = true;
+                nextPosition = position;
+                windHandler = new MusicHandler();
+                windThread = new MusicThread(wind_isPlaying, windTitle, position);
+                windThread.start();
             }
 
         });
@@ -248,8 +263,6 @@ public class UI_3_Musictab extends AppCompatActivity {
             public void onClick(View v) {
                 if (rain_isPlaying) {
                     for (int i = 0; i < rainMd.length; i++) {
-
-
                         currentMediaPlayPosition = rainMd[i].getCurrentPosition();
                         rainMd[i].pause();
                     }
@@ -404,6 +417,7 @@ public class UI_3_Musictab extends AppCompatActivity {
         boolean musicIsPlaying;
         int position;
         String title[];
+        MusicThread(){}
 
         MusicThread(boolean musicIsPlaying, String title[], int position) {
             this.musicIsPlaying = musicIsPlaying;
@@ -420,19 +434,32 @@ public class UI_3_Musictab extends AppCompatActivity {
                         Log.d("재생 시간 : ", Integer.toString(seaMd[position].getDuration()));
                         Log.d("현재 실행중인 음악제목 ", seaTitle[position]);
                         Log.d("포지션 값 ", "다음곡을 재생할거다");
-                        // Message msg = seaHandler.obtainMessage();
-                        // seaHandler.sendMessage(msg);
+                        Message msg = seaHandler.obtainMessage();
+                        seaHandler.sendMessage(msg);
                         Thread.sleep(seaMd[position].getDuration());
+                        rain_isPlaying = false;
+                        wind_isPlaying = false;
 
-
-                    } else if (rain_isPlaying == true) {
+                    }  if (rain_isPlaying == true) {
                         Log.d("현재재생위치 : ", Integer.toString(rainMd[position].getCurrentPosition()));
                         Log.d("재생 시간 : ", Integer.toString(rainMd[position].getDuration()));
                         Log.d("현재 실행중인 음악제목 ", rainTitle[position]);
                         Log.d("포지션 값 ", "다음곡을 재생할거다");
-                        // Message msg = rainHandler.obtainMessage();
-                        //rainHandler.sendMessage(msg);
+                        wind_isPlaying = false;
+                        sea_isPlaying = false;
+                        Message msg = rainHandler.obtainMessage();
+                        rainHandler.sendMessage(msg);
                         Thread.sleep(rainMd[position].getDuration());
+                    } if(wind_isPlaying == true) {
+                        Log.d("현재재생위치 : ", Integer.toString(windMd[position].getCurrentPosition()));
+                        Log.d("재생 시간 : ", Integer.toString(windMd[position].getDuration()));
+                        Log.d("현재 실행중인 음악제목 ", windTitle[position]);
+                        Log.d("포지션 값 ", "다음곡을 재생할거다");
+                        rain_isPlaying = false;
+                        sea_isPlaying = false;
+                        Message msg = windHandler.obtainMessage();
+                        windHandler.sendMessage(msg);
+                        Thread.sleep(windMd[position].getDuration());
                     }
                     //Log.d("인덱스 값 : " , Integer.toString(position));
                     position++;
@@ -447,26 +474,26 @@ public class UI_3_Musictab extends AppCompatActivity {
     }
 
     class MusicHandler extends Handler {
-        int position;
 
-        MusicHandler(int position) {
-            this.position = position;
-        }
+
+
 
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
 
+
+            Log.d("nextPosition 값 : ",  Integer.toString(nextPosition));
             if (sea_isPlaying == true) {
-                musicName.setText(seaTitle[position]);
+                musicName.setText(seaTitle[nextPosition]);
 
-            } else if (rain_isPlaying == true) {
-                musicName.setText(rainTitle[position]);
+            } if (rain_isPlaying == true) {
+                musicName.setText(rainTitle[nextPosition]);
 
-            } else if (wind_isPlaying == true) {
-
+            } if (wind_isPlaying == true) {
+                musicName.setText(windTitle[nextPosition]);
             }
-            position++;
+            nextPosition++;
         }
     }
 

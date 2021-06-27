@@ -38,25 +38,22 @@ public class UI_1_4_UserInfo_Activity extends AppCompatActivity {
     RadioGroup sexselect;
     Spinner selectage,selectjob;
     Firebaseget firebaseget;
+    HashMap<String,String> hashMap = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ui_1_4_userinfo_layout);
-        firebaseget = new Firebaseget();
-        new Handler().postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                //딜레이 후 시작할 코드 작성
-                firebaseget.Personaldataget();
-            }
-        }, 1000);// 1초 정도 딜레이를 준 후 시작
-
-//        if(firebaseget.hashMap.isEmpty()){
-//            Log.d("emptytest","비어있음");
+//        firebaseget = new Firebaseget();
+//        try{
+//            firebaseget.Personaldataget();
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        if(hashMap.isEmpty()){
+//            Log.d("acemptytest","비어있음");
 //        }else{
-//            Log.d("emptytest","비어있지않음");
+//            Log.d("acemptytest","비어있지않음");
 //        }
 //        if(!firebaseget.hashMap.get("PersonalInfo").equals("null")){
 //            //입력한 정보가 있다면 해당 액티비티 스킵

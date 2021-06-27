@@ -32,12 +32,7 @@
         <activity android:name=".BrightControl" />
         <activity android:name=".personaltab" />
         <activity android:name=".seeservicetab" />
-        <activity android:name=".UI_1_4_UserInfo_Activity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".UI_1_4_UserInfo_Activity">
         </activity>
         <activity
             android:name=".SettingsActivity"
@@ -60,11 +55,11 @@
             android:exported="true" />
 
         <activity android:name=".UI_1_1_main">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".UI_1_2_permission_activity" />
         <activity android:name=".UI_1_3_login_activity" />
