@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b384ffc3-4575-455b-a7cf-c41cccac851c" name="Personal_server" url="https://glion.ddns.net:8004">
+        <fileTransfer accessType="SFTP" sshConfigId="99c0d3a7-7256-47bb-98cc-bf8738941c95" sshConfig="Personal_server">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

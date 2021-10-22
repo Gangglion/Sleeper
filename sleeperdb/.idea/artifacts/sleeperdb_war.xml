@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="sleeperdb:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/sleeperdb_war</output-path>
+    <root id="archive" name="sleeperdb_war.war">
+      <element id="artifact" artifact-name="sleeperdb:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mariadb-java-client-1.8.0" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

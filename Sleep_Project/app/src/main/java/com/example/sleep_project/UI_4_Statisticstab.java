@@ -41,12 +41,22 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 public class UI_4_Statisticstab extends AppCompatActivity {
 
     int y=0, m=0, d=0, h=0, mi=0;
+
+    //DB에서 통계 데이터 가져오기 위한 변수 선언
+    String result; //asyncTask에서 가져온 String 저장하기 위한 변수
+    String [][] arrayResult = new String[7][3]; //asyncTask 에서 가져온 String 쪼개서 배열에 맞게 매핑
+    String sendmsg = "read_data";
+    //AboutLogin aboutLogin = new AboutLogin();
+    //String userId = aboutLogin.getUser().getEmail();
+    ////////////////////////////////////////////////
 
     BarChart barChart;
     TextView minuteTextview,searchEndDay,searchStartDay;
@@ -122,6 +132,18 @@ public class UI_4_Statisticstab extends AppCompatActivity {
                 popupMenu.show();
             }
         });
+
+        //DbTask 실행해서 통계 그래프 값 hashmap에 저장
+        result ="";
+        try {
+            result = new DbTask(sendmsg).execute(sendmsg,"o0tmdguq0o@gmail.com").get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //이자리에 String 쪼개서 배열에 저장하는 함수 호출
+        SliceStr(result);
+        //Log.d("result_Debug",result);
+
         /////////////////////////////////////////////
         main = (Button) findViewById(R.id.main); //메인기능버튼
         music = (Button) findViewById(R.id.music); //음악기능 버튼
@@ -155,48 +177,29 @@ public class UI_4_Statisticstab extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
-        //파이어베이스 값 가져오는 방법****
-        FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    for(DataSnapshot snapshot1 : snapshot.getChildren()){
-                        for(DataSnapshot snapshot2 : snapshot1.getChildren()){
-                            String temp = snapshot2.getKey();
-                            if(!temp.equals("PersonalInfo")){
-                                Log.d("ValueEventListener",temp);
-                                dateChart.add(temp);
-                            }
-                        }
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    @Override
+    protected void onStart() {
+        super.onStart();
         BarInit();
     }
+
     private void BarInit() {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(0f, 5f));
-        barEntries.add(new BarEntry(1f, 8f));
-        barEntries.add(new BarEntry(2f, 6f));
-        barEntries.add(new BarEntry(3f, 6f));
-        barEntries.add(new BarEntry(4f, 7f));
-        barEntries.add(new BarEntry(5f, 6f));
-        barEntries.add(new BarEntry(6f, 5f));
+        float[] totalTime = TotalSleepTime(arrayResult);
+        //바 차트 막대 길이 지정하는 부분
+        for(int i=0;i<7;i++)
+        {
+            barEntries.add(new BarEntry(i,totalTime[i]));
+        }
         BarDataSet barDataSet = new BarDataSet(barEntries, "Dates");
         ArrayList<String> theDates = new ArrayList<>();
-        theDates.add("6월15일");
-        theDates.add("6월16일");
-        theDates.add("6월17일");
-        theDates.add("6월18일");
-        theDates.add("6월19일");
-        theDates.add("6월20일");
-        theDates.add("6월21일");
+        //바 차트 항목 이름 - 날짜 지정하는 부분
+        for(int i=0;i<7;i++)
+        {
+            theDates.add(arrayResult[i][2]);
+        }
         barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(theDates));
         BarData theData = new BarData(barDataSet);
         barChart.setData(theData);
@@ -211,7 +214,7 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         barChart.getAxisLeft().setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white)); //Y축 왼쪽 텍스트 컬러 설정
         barChart.getAxisLeft().setGridColor(ContextCompat.getColor(getApplicationContext(), R.color.white)); // Y축 줄의 컬러 설정
         barChart.getAxisLeft().setAxisMinimum(0f);
-        barChart.getAxisLeft().setAxisMaximum(10f);
+        //barChart.getAxisLeft().setAxisMaximum(10f);
 
         YAxis yAxisRight = barChart.getAxisRight(); //Y축의 오른쪽면 설정
         yAxisRight.setDrawLabels(false);
@@ -254,11 +257,42 @@ public class UI_4_Statisticstab extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        for(int i=0;i<dateChart.size();i++){
-            Log.d("testtest","asfasdf"+dateChart.toString()); //안넘어옴
+    //문자열 쪼개서 배열로 매핑하는 함수
+    void SliceStr(String str)
+    {
+        String[] try1 = str.split("//");
+        for(int i=0;i<arrayResult.length;i++)
+        {
+            String[] temp = try1[i].split(",");
+            for(int j=0;j<arrayResult[i].length;j++)
+            {
+                arrayResult[i][j] = temp[j];
+            }
         }
+    }
+
+    //arrayResult 의 시간값 2개 계산하여 잔시간 도출하는 함수
+    float[] TotalSleepTime(String[][] arrayResult)
+    {
+        float[] arrayTotalTime = new float[7];
+        for(int i=0;i<arrayResult.length;i++)
+        {
+            int stH = Integer.parseInt(arrayResult[i][0].substring(0,2));
+            int atH = Integer.parseInt(arrayResult[i][1].substring(0,2));
+            int stM = Integer.parseInt(arrayResult[i][0].substring(3,5));
+            int atM = Integer.parseInt(arrayResult[i][1].substring(3,5));
+
+            if(stH>atH && atH<12 && stH>12)
+            {
+                atH+=24;
+            }
+            if(atM<stM)
+            {
+                atM+=60;
+                atH-=1;
+            }
+            arrayTotalTime[i]=(float)(atH-stH)+((float)(atM-stM)/100f);
+        }
+        return arrayTotalTime;
     }
 }
