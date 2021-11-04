@@ -2,15 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="수면시간 통계"
-        android:id="@+id/sleepTime"
+        android:title="수면시간 통계-막대차트"
+        android:id="@+id/SleepTime_Bar"
         />
     <item
-        android:title="앱 사용 통계"
-        android:id="@+id/appUseTime"
-        />
-    <item
-        android:title="수면시간 비교"
-        android:id="@+id/sleepTimecomparison"
+        android:title="수면시간 통계 - 원차트"
+        android:id="@+id/SleepTime_Pie"
         />
 </menu>

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UI_4_StatisticsTab_Bar"
+
+    style="@style/backgroundimg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/menuOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/infobtn_shape"
+                android:text="메뉴" />
+
+
+            <TextView
+                android:id="@+id/statisticsName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="30dp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/calendarLay"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <Button
+                android:id="@+id/startDateBtn"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/infobtn_shape"
+                android:text="달력"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/searchStartDay"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/startDateBtn"
+                android:gravity="center"
+                android:hint="날짜 입력"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/charc"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/searchStartDay"
+                android:text="~"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:id="@+id/endDateBtn"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_toRightOf="@+id/charc"
+                android:background="@drawable/infobtn_shape"
+                android:text="달력"
+                android:textColor="#FFFFFF" />
+            <TextView
+                android:id="@+id/searchEndDay"
+                android:hint="날짜 입력"
+                android:textSize="18dp"
+                android:layout_toRightOf="@+id/endDateBtn"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:id="@+id/searchBtn"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:background="@drawable/infobtn_shape"
+                android:text="검색"
+                android:textColor="#FFFFFF" />
+
+        </RelativeLayout>
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/bar_chart"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:background="@drawable/table_line"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/table_line"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_height="172dp"
+                android:background="@drawable/table_line">
+                <TextView
+                    android:gravity="center"
+                    android:text="날짜"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+                <TextView
+                    android:gravity="center"
+                    android:text="총 수면시간"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="설정시간"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/date1"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/totaltime1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/settime1"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/date2"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/totaltime2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/settime2"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/date3"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/totaltime3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/settime3"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/date4"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/totaltime4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/settime4"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/date5"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/totaltime5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/settime5"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/date6"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/totaltime6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/settime6"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/date7"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/totaltime7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/settime7"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
+            </TableRow>
+        </TableLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/main"
+                android:layout_weight="1"
+                android:text="메인기능"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#00000000" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/music"
+                android:layout_weight="1"
+                android:text="음악기능"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#00000000" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/statistics"
+                android:layout_weight="1"
+                android:text="통계기능"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#00000000" />
+            <Button
+                android:id="@+id/settingtab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="설정"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#00000000" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -20,19 +20,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rain"
-            android:text="비"
             />
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sea"
-            android:text="바다" />
+            />
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/wind"
-            android:text="바람"
-
             />
 
     </com.google.android.material.tabs.TabLayout>

@@ -41,7 +41,7 @@ public class UI_1_3_login_activity extends AppCompatActivity {
         actionBar.hide();
         /////////////////////////////////////////////
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken("741846607454-8jg548l83066ap18d8scimntofkuukvm.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -66,6 +66,8 @@ public class UI_1_3_login_activity extends AppCompatActivity {
                 signIn();
             }
         });
+
+        //로그인 하지 않고 실행 - 정상동작
         nologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,14 +86,16 @@ public class UI_1_3_login_activity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.d("logintest","인텐트 호출 이후 결과값 받아지는 함수호출됨");
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == aboutLogin.getRcSignIn()) {
+            Log.d("logintest","if문 조건 맞아서 하단으로 떨어짐");
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
+                Log.d("logintest","로그인하는 try문 접근됨");
             } catch (ApiException e) {
             }
         }

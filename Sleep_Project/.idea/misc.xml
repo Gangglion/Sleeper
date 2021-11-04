@@ -3,7 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Sleeper/Sleep_Project/app/src/main/res/layout/statistics1.xml" value="0.4" />
+        <entry key="..\:/Sleeper/Sleep_Project/app/src/main/res/layout/selectapplock_layout.xml" value="0.13072916666666667" />
+        <entry key="..\:/Sleeper/Sleep_Project/app/src/main/res/layout/statistics1.xml" value="0.3268229166666667" />
+        <entry key="..\:/Sleeper/Sleep_Project/app/src/main/res/layout/statistics_bar.xml" value="0.6" />
+        <entry key="..\:/Sleeper/Sleep_Project/app/src/main/res/layout/statistics_pie.xml" value="0.536" />
+        <entry key="..\:/Sleeper/Sleep_Project/app/src/main/res/layout/ui_1_1_fragment4.xml" value="0.13020833333333334" />
+        <entry key="..\:/Sleeper/Sleep_Project/app/src/main/res/layout/ui_2_maintimertab.xml" value="0.13072916666666667" />
+        <entry key="..\:/Sleeper/Sleep_Project/app/src/main/res/layout/ui_3_musictab.xml" value="0.536" />
+        <entry key="..\:/Sleeper/Sleep_Project/app/src/main/res/layout/ui_5_accounttab.xml" value="0.24365942028985507" />
+        <entry key="..\:/Sleeper/Sleep_Project/app/src/main/res/menu/menu.xml" value="0.13072916666666667" />
       </map>
     </option>
   </component>

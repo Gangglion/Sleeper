@@ -15,6 +15,8 @@
   String returns="";
   String type = request.getParameter("type");
   String parameter = request.getParameter("userId");
+  String startCal = request.getParameter("startCal");
+  String endCal = request.getParameter("endCal");
 
 %>
 <%
@@ -28,7 +30,18 @@
   }else if (type.equals("read_data")) {
     System.out.println("값을 리턴합니다.");
     Vision_Board vision_board = Vision_Board.getVision_Board();
-    returns=vision_board.select(parameter);
+    if(startCal==null)
+    {
+      returns = vision_board.select(parameter);
+      System.out.println(returns);
+      System.out.println("날짜지정x 값 리턴");
+    }
+    else if(startCal!=null)
+    {
+      returns=vision_board.select(parameter,startCal,endCal);
+      System.out.println(returns);
+      System.out.println("날짜지정o 값 리턴");
+    }
     out.println(returns);
   }
 %>

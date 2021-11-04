@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UI_4_Statisticstab"
+    tools:context=".UI_4_StatisticsTab_Bar"
 
     style="@style/backgroundimg">
 
@@ -45,25 +45,25 @@
             android:layout_height="40dp">
 
             <Button
-                android:id="@+id/button1"
-                android:layout_gravity="center"
+                android:id="@+id/startDateBtn"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:textColor="#FFFFFF"
+                android:layout_gravity="center"
                 android:background="@drawable/infobtn_shape"
-                android:text="달력" />
+                android:text="달력"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/searchStartDay"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/startDateBtn"
+                android:gravity="center"
                 android:hint="날짜 입력"
-                android:textSize="18dp"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:layout_toRightOf="@+id/button1"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
+                android:textSize="18dp" />
 
             <TextView
                 android:id="@+id/charc"
@@ -77,19 +77,19 @@
                 android:layout_height="match_parent"/>
 
             <Button
-                android:id="@+id/button2"
-                android:layout_gravity="center"
+                android:id="@+id/endDateBtn"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:layout_toRightOf="@+id/charc"
-                android:textColor="#FFFFFF"
                 android:background="@drawable/infobtn_shape"
-                android:text="달력" />
+                android:text="달력"
+                android:textColor="#FFFFFF" />
             <TextView
                 android:id="@+id/searchEndDay"
                 android:hint="날짜 입력"
                 android:textSize="18dp"
-                android:layout_toRightOf="@+id/button2"
+                android:layout_toRightOf="@+id/endDateBtn"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textColor="@color/white"
@@ -99,17 +99,18 @@
                 android:layout_height="match_parent"/>
 
             <Button
-                android:layout_alignParentRight="true"
+                android:id="@+id/searchBtn"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
                 android:layout_gravity="center"
-                android:textColor="#FFFFFF"
                 android:background="@drawable/infobtn_shape"
-                android:text="검색" />
+                android:text="검색"
+                android:textColor="#FFFFFF" />
 
         </RelativeLayout>
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/bar_chart"
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart"
             android:layout_width="match_parent"
             android:layout_height="225dp"
             android:background="@drawable/table_line"/>
@@ -130,180 +131,180 @@
                     android:gravity="center"
                     android:text="날짜"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    android:textSize="13sp" />
                 <TextView
                     android:gravity="center"
-                    android:text="수면시간"
+                    android:text="총 수면시간"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    android:textSize="13sp" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="설정시간"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    android:textSize="13sp" />
             </TableRow>
             <TableRow>
                 <TextView
+                    android:id="@+id/date1"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="6월15일" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/totaltime1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="5시간" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/settime1"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="1시0분~6시0분" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
             </TableRow>
             <TableRow>
                 <TextView
+                    android:id="@+id/date2"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="6월16일" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/totaltime2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="8시간" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/settime2"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="10시30분~6시30분" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
             </TableRow>
             <TableRow>
                 <TextView
+                    android:id="@+id/date3"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="6월17일"
                     android:textColor="#FFFFFF"
-                    android:textSize="17sp" />
+                    android:textSize="13sp" />
                 <TextView
+                    android:id="@+id/totaltime3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="6시간" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/settime3"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="0시0분~6시0분" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
             </TableRow>
             <TableRow>
                 <TextView
+                    android:id="@+id/date4"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="6월18일" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/totaltime4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="6시간" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/settime4"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="11시30분~5시30분" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
             </TableRow>
             <TableRow>
                 <TextView
+                    android:id="@+id/date5"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="6월19일" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/totaltime5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="7시간" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/settime5"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="0시0분~7시0분" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
             </TableRow>
             <TableRow>
                 <TextView
+                    android:id="@+id/date6"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="6월20일" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/totaltime6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="6시간" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/settime6"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="0시0분~6시0분" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
             </TableRow>
             <TableRow>
                 <TextView
+                    android:id="@+id/date7"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="6월21일" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/totaltime7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="5시간" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
                 <TextView
+                    android:id="@+id/settime7"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="17sp"
-                    android:textColor="#FFFFFF"
-                    android:text="1시0분~6시0분" />
+                    android:textSize="13sp"
+                    android:textColor="#FFFFFF" />
             </TableRow>
         </TableLayout>
         <LinearLayout

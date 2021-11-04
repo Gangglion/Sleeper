@@ -19,8 +19,9 @@ public class TimepickerColorChange {
             View child = numberPicker.getChildAt(i);
             if (child instanceof EditText) {
                 try {
-                    Field selectorWheelPaintField = numberPicker.getClass()
-                            .getDeclaredField("mSelectorWheelPaint");
+//                    Field selectorWheelPaintField = numberPicker.getClass()
+//                            .getDeclaredField("mSelectorWheelPaint");
+                    Field selectorWheelPaintField = numberPicker.getClass().getDeclaredField("mSelectorWheelPaint");
                     selectorWheelPaintField.setAccessible(true);
                     ((Paint) selectorWheelPaintField.get(numberPicker)).setColor(color);
                     ((EditText) child).setTextColor(color);

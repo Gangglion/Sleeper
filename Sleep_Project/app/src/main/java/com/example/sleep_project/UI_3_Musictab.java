@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -47,6 +48,8 @@ public class UI_3_Musictab extends AppCompatActivity {
     MusicThread seaThread, rainThread,windThread;
     //버튼이 여러개 있으나 노래가 3개라 9개만 해놈.
     int currentMediaPlayPosition; // 현재 실행되고 있는 음악 위치
+
+    NetworkStatus networkStatus = new NetworkStatus();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -314,9 +317,12 @@ public class UI_3_Musictab extends AppCompatActivity {
 
             }
         });
-        //새 , 바람 , 바다 탭
+        //새 , 바람 , 바다 탭 이미지 설정
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.addOnTabSelectedListener(onTabSelectedListener);
+        tabLayout.getTabAt(0).setIcon(R.drawable.rain);
+        tabLayout.getTabAt(1).setIcon(R.drawable.sea);
+        tabLayout.getTabAt(2).setIcon(R.drawable.wind);
         //새,바다,바람에 대한 노래들 출력되는곳
         rain_layout = findViewById(R.id.rain_layout);
         sea_layout = findViewById(R.id.sea_layout);
@@ -342,9 +348,20 @@ public class UI_3_Musictab extends AppCompatActivity {
         statistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_4_Statisticstab.class);
-                startActivity(intent);
-                finish();
+                if(networkStatus.isConnected(context))
+                {
+                    Log.d("networkstatus","연결됨");
+                    Intent intent = new Intent(getApplicationContext(), UI_4_StatisticsTab_Bar.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else
+                {
+                    Log.d("networkstatus","연결안됨");
+                    Toast.makeText(UI_3_Musictab.this, "통계를 보려면 인터넷에 연결된 상태여야 합니다.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), UI_2_Maintimertab.class);
+                    startActivity(intent);
+                }
             }
         });
 

@@ -44,9 +44,7 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class UI_2_Maintimertab extends AppCompatActivity{
     Button lockmsg,main, music, statistics,Settings, setBtn, confirm,plusBtn,lockcall,lockclear;
@@ -90,6 +88,10 @@ public class UI_2_Maintimertab extends AppCompatActivity{
             super.onBackPressed();
         }
     }
+
+    //인터넷 연결정보 확인해서 bool 값으로 반환해주는 클래스 객체생성
+    NetworkStatus networkStatus = new NetworkStatus();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,7 +158,7 @@ public class UI_2_Maintimertab extends AppCompatActivity{
 //        if(prefOb.getQuesvalue()){
 //            question.setText(temp); //문제 TextView에 설정
 //        }
-        question.setText(temp); //문제 TextView에 설정
+        question.setText(temp + " 정답은 ??"+"("+answer+")"); //문제 TextView에 설정
 
 
         //Log.d("alarmQ",alarmQ.getQuestion());
@@ -164,7 +166,7 @@ public class UI_2_Maintimertab extends AppCompatActivity{
         //Log.d("alarmQ 텍스트뷰",question.getText().toString());
         alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE); // 알람매니저 설정
 
-        sleep_timePicker = findViewById(R.id.sleepTime); // 잠들시간 타임피커 설정
+        sleep_timePicker = findViewById(R.id.SleepTime_Bar); // 잠들시간 타임피커 설정
         sleep_timePicker.setHour(sleepHour);
         sleep_timePicker.setMinute(sleepMin);
         alarm_timePicker = findViewById(R.id.breakTime); // 일어날시간 타임피커 설정
@@ -341,9 +343,20 @@ public class UI_2_Maintimertab extends AppCompatActivity{
         statistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UI_4_Statisticstab.class);
-                startActivity(intent);
-                finish();
+                if(networkStatus.isConnected(context))
+                {
+                    Log.d("networkstatus","연결됨");
+                    Intent intent = new Intent(getApplicationContext(), UI_4_StatisticsTab_Bar.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else
+                {
+                    Log.d("networkstatus","연결안됨");
+                    Toast.makeText(UI_2_Maintimertab.this, "통계를 보려면 인터넷에 연결된 상태여야 합니다.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), UI_2_Maintimertab.class);
+                    startActivity(intent);
+                }
             }
         });
         Settings.setOnClickListener(new View.OnClickListener() { // UI변경 후 좌측 상단 설정버튼 - 태현
@@ -552,7 +565,7 @@ public class UI_2_Maintimertab extends AppCompatActivity{
                 // 밝기 설정 적용
                 getWindow().setAttributes(params);
                 String nowbright = Float.toString(brightness);//바뀐 이후의 밝기 String 타입으로 저장
-                Toast.makeText(UI_2_Maintimertab.this, "변경되는 밝기값은 "+nowbright+" 입니다.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(UI_2_Maintimertab.this, "변경되는 밝기값은 "+nowbright+" 입니다.", Toast.LENGTH_SHORT).show();
                 alarm_intent.putExtra("state", "alarm on");  // receiver에 string 값 넘겨주기
 
                 pendingIntent = PendingIntent.getBroadcast(UI_2_Maintimertab.this, 0, alarm_intent,

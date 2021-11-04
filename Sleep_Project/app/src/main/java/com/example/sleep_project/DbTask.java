@@ -39,7 +39,14 @@ public class DbTask extends AsyncTask<String, Void, String> {
 
             if(sendMsg.equals("read_data"))
             {
-                sendMsg = "userId="+strings[1]+"&type="+strings[0];
+                if(strings[2]=="" && strings[3]=="")
+                {
+                    sendMsg = "userId="+strings[1]+"&type="+strings[0];
+                }
+                else if(strings[2]!=""&&strings[3]!="")
+                {
+                    sendMsg = "userId="+strings[1]+"&type="+strings[0]+"&startCal="+strings[2]+"&endCal="+strings[3];
+                }
                 Log.d("codeDebug",sendMsg);
             }
             else if(sendMsg.equals("write_data"))
@@ -61,6 +68,7 @@ public class DbTask extends AsyncTask<String, Void, String> {
                     buffer.append(str);
                 }
                 receiveMsg = buffer.toString();
+                Log.d("receiveMsg_Debug",receiveMsg);
             } else {
                 Log.i("통신 결과", conn.getResponseCode()+"에러");
             }

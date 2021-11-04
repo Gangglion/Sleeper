@@ -190,7 +190,7 @@
                 android:text="목표 수면 시간" />
 
             <TimePicker
-                android:id="@+id/sleepTime"
+                android:id="@+id/SleepTime_Bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:timePickerMode="spinner" />
