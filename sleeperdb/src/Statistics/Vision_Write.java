@@ -17,14 +17,14 @@ public class Vision_Write {
   //private String url="jdbc:mariadb://localhost:3307/localtest?user=root&password=root";
 
   //remote test
-  private String url="jdbc:mariadb://glion.ddns.net:3306/localtest?user=glion&password=setterGetter4s^g";
-  public String write(String content) {
+  private String url="jdbc:mariadb://glion.ddns.net:3306/Sleeper?user=glion&password=setterGetter4s^g";
+  public String write(String userId,String startT,String endT,String nowDate) {
     try {
       Class.forName("org.mariadb.jdbc.Driver");
       conn = DriverManager.getConnection(url);
 
       Statement stmt = conn.createStatement();
-      String seq = "select max(num) from market_vision";
+      String seq = "select max(num) from mem_statistic";
       ResultSet rs = stmt.executeQuery(seq);
 
       int num = -1;
@@ -32,12 +32,7 @@ public class Vision_Write {
         num = rs.getInt(1);
       num++;
 
-      String nowTime = getCurrentTime("YYYY,M,d");
-      System.out.println(nowTime);
-
-      System.out.println("시간확인" + nowTime);
-
-      String sql = "insert into market_vision(num,day,content) values('"+ num +"','" + nowTime + "','" + content + "')";
+      String sql = "insert into mem_statistic value('"+ num+"','"+userId+"','"+startT+"','"+endT+"','"+nowDate+"')";
       pstmt = conn.prepareStatement(sql);
       pstmt.executeUpdate();
       returns = "success";
