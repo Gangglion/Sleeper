@@ -2,6 +2,8 @@ package com.example.Sleeper;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -45,7 +47,7 @@ public class UI_5_AccountTab extends AppCompatActivity {
         actionBar.hide();
         /////////////////////////////////////////////
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken("741846607454-8jg548l83066ap18d8scimntofkuukvm.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
         aboutLogin.setGoogleSignInClient(GoogleSignIn.getClient(this, gso));
@@ -132,9 +134,20 @@ public class UI_5_AccountTab extends AppCompatActivity {
     }
     private void updateUI(FirebaseUser user) { //update ui code here
         if (user != null) {
-            Intent intent = new Intent(this, UI_2_Maintimertab.class);
-            startActivity(intent);
-            finish();
+            try {
+//                long nowt = System.currentTimeMillis();
+//                String nowDate = (String) DateFormat.format("yyyy-MM-dd", nowt);
+//                String result = new DbTask("write_loginData").execute("write_loginData",user.getEmail()
+//                        ,user.getDisplayName(),nowDate).get();
+//                Log.d("DBTest",result);
+                Intent intent = new Intent(this, UI_2_Maintimertab.class);
+                startActivity(intent);
+                finish();
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }

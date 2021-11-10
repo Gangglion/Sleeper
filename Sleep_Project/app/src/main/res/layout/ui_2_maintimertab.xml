@@ -81,18 +81,21 @@
                     android:id="@+id/lockcall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="invisible"
                     android:text="전화" />
 
                 <Button
                     android:id="@+id/lockclear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="invisible"
                     android:text="잠금해제" />
 
                 <Button
                     android:id="@+id/lockmsg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="invisible"
                     android:text="문자" />
 
             </LinearLayout>

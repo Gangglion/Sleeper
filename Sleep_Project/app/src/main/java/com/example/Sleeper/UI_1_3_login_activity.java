@@ -120,10 +120,11 @@ public class UI_1_3_login_activity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) { //update ui code here
         if (user != null) {
             try {
-                long nowt = System.currentTimeMillis();
-                String nowDate = (String) DateFormat.format("yyyy-MM-dd", nowt);
-                String result = new DbTask("write_loginData").execute("write_loginData",user.getEmail()
-                        ,user.getDisplayName(),nowDate).get();
+//                long nowt = System.currentTimeMillis();
+//                String nowDate = (String) DateFormat.format("yyyy-MM-dd", nowt);
+//                String result = new DbTask("write_loginData").execute("write_loginData",user.getEmail()
+//                        ,user.getDisplayName(),nowDate).get();
+//                Log.d("DBTest",result);
                 Intent intent = new Intent(this, UI_2_Maintimertab.class);
                 startActivity(intent);
                 finish();

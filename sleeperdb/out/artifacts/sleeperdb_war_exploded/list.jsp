@@ -47,11 +47,5 @@
       System.out.println("날짜지정o 값 리턴");
     }
     out.println(returns);
-  }else if(type.equals("write_loginData"))
-  {
-    System.out.println("값을받았습니다."+ userId+"\t"+ userNick+"\t"+ nowDate);
-    Login_Write login_write = Login_Write.getWrite();
-    returns = login_write.write(userId,userNick,nowDate);
-    out.println(returns);
   }
 %>

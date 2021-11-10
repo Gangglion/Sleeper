@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -132,6 +133,8 @@ public class UI_4_StatisticsTab_Bar extends AppCompatActivity {
         result ="";
         try
         {
+            long nowt = System.currentTimeMillis();
+            String nowDate = (String) DateFormat.format("yyyy-MM-dd", nowt);
             result = new DbTask(sendmsg).execute(sendmsg,"o0tmdguq0o@gmail.com","","").get();
             //이자리에 String 쪼개서 배열에 저장하는 함수 호출
             SliceStr(result);

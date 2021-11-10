@@ -39,10 +39,12 @@ public class DbTask extends AsyncTask<String, Void, String> {
             if(sendMsg.equals("read_data"))
             {
                 //통계 내역 받아오기위한 jsp 통신
+                //기본일때 - 오늘날짜에서 7일까지
                 if(strings[2]=="" && strings[3]=="")
                 {
                     sendMsg = "userId="+strings[1]+"&type="+strings[0];
                 }
+                //날짜 지정했을때
                 else if(strings[2]!=""&&strings[3]!="")
                 {
                     sendMsg = "userId="+strings[1]+"&type="+strings[0]+"&startCal="+strings[2]+"&endCal="+strings[3];
@@ -57,8 +59,7 @@ public class DbTask extends AsyncTask<String, Void, String> {
             else if(sendMsg.equals("write_loginData"))
             {
                 // 로그인 데이터 저장 jsp 통신
-                sendMsg = "userId="+strings[1]+"&type="+strings[0]+"&startT="+strings[2]+"&endT="+strings[3]
-                        +"&nowDate="+strings[4];
+                sendMsg = "userId="+strings[1]+"&type="+strings[0]+"&userNick="+strings[2]+"&nowDate="+strings[3];
             }
             osw.write(sendMsg);
             osw.flush();

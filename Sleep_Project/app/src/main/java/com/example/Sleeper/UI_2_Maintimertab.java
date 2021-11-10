@@ -543,17 +543,17 @@ public class UI_2_Maintimertab extends AppCompatActivity{
                 Message msg = handler.obtainMessage();
                 handler.sendMessage(msg);
                 if (!checkPermission()) continue;
-                running = getPackageName(getApplicationContext());
+                running = getPackageName(getApplicationContext()); //실행되고있는어플
                 //해당 어플이 아닌 다른 어플이 실행되었을 경우 종료 - 현재 if문이 작동하지 않는다...
                 if (!running.equals("")) {
                     Log.d("tmdguq_alert", running + "실행되고있습니다");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         if (android.provider.Settings.canDrawOverlays(context)) {
-                            if (!running.equals(getClass().getPackage().getName())) {
+                            if (!running.equals("com.example.Sleeper")) {
+                                Log.d("tmdguq_alert","if문 걸림");
                                 Intent sIntent = new Intent(context, UI_2_Maintimertab.class);
                                 sIntent.putExtra("action", "tts");
                                 sIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                sIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(sIntent);
                                 dlgcheck=true;
                             }

@@ -76,7 +76,10 @@ public class Vision_Board{
     try {
       Class.forName("org.mariadb.jdbc.Driver");
       con = DriverManager.getConnection(url);
-      String query = "SELECT sleep_t, awake_t, CAST(sleep_date AS char) as sleep_date FROM mem_statistic where mem_id = '"+memId+"'order by num";
+      String query = "SELECT sleep_t, awake_t, CAST(sleep_date AS char) as sleep_date " +
+              "FROM mem_statistic where mem_id = '"+memId+"'and  sleep_date >= (SELECT sleep_date FROM mem_statistic " +
+              "where sleep_date IN (select date_add(current_date,INTERVAL -6 DAY) FROM mem_statistic)) and sleep_date <= (SELECT CURDATE()" +
+              ") order by num";
       //String query = "SELECT sleep_t, awake_t, sleep_date FROM mem_statistic";
       pstmt = con.prepareStatement(query);
       rs = pstmt.executeQuery();
